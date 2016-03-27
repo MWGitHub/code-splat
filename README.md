@@ -1,4 +1,4 @@
-# RGC (Temp Name)
+# CodeSplat
 
 [Heroku link][heroku] **NB:** This should be a link to your production site
 
@@ -6,9 +6,9 @@
 
 ## Minimum Viable Product
 
-RGC is a code review site inspired by Rap Genius' note system built using Ruby on Rails and React.js.
+CodeSplat is a code review site inspired by Rap Genius' note system built using Ruby on Rails and React.js.
 
-RGC allows users to:
+CodeSplat allows users to:
 
 <!-- This is a Markdown checklist. Use it to keep track of your
 progress. Put an x between the brackets for a checkmark: [x] -->
