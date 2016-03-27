@@ -20,34 +20,53 @@
 
 ## JSON API
 
-### Notes
+### Projects
 
-- `GET /api/notes`
-  - Notes index/search
-  - accepts `tag_name` query param to list notes by tag
-  - accepts pagination params (if I get there)
-- `POST /api/notes`
-- `GET /api/notes/:id`
-- `PATCH /api/notes/:id`
-- `DELETE /api/notes/:id`
+- `GET /api/projects`
+  - Projects index/search
+- `POST /api/projects`
+- `GET /api/projects/:id`
+- `PATCH /api/projects/:id`
+- `DELETE /api/projects/:id`
+- `GET /api/projects/:id/files`
+  - Project files search
+  - Index of all files for a project
+- `GET /api/projects/:id/replies`
+  - Index of all replies for a project
 
-### Notebooks
+### Files
 
-- `GET /api/notebooks`
-- `POST /api/notebooks`
-- `GET /api/notebooks/:id`
-- `PATCH /api/notebooks/:id`
-- `DELETE /api/notebooks/:id`
-- `GET /api/notebooks/:id/notes`
-  - index of all notes for a notebook
-  - accepts pagination params (if I get there)
+- `GET /api/files`
+  - Files search
+- `POST /api/files`
+- `GET /api/files/:id`
+- `PATCH /api/files/:id`
+- `DELETE /api/files/:id`
+- `GET /api/files/:id/replies`
+  - Index of all replies for a file
+- `GET /api/files/:id/explanations`
+  - Explanations for a file
 
-### Tags
+### Replies
 
-- A note's tags will be included in the note show template
-- `GET /api/tags`
-  - includes query param for typeahead suggestions
-- `POST /api/notes/:note_id/tags`: add tag to note by name
-  - if note doesn't already exist, it will be created
-- `DELETE /api/notes/:note_id/tags/:tag_name`: remove tag from note by
-  name
+- `GET /api/replies`
+- `POST /api/replies`
+- `GET /api/replies/:id`
+- `PATCH /api/replies/:id`
+- `DELETE /api/replies/:id`
+
+### Explanations
+
+- `POST /api/files/:id/explanations`
+- `GET /api/explanations/:id`
+- `PATCH /api/explanations/:id`
+- `DELETE /api/explanations/:id`
+- `GET /api/explanations/:id/suggestions`
+  - Suggestions for an explanation
+
+### Suggestions
+
+- `POST /api/explanations/:id/suggestions`
+- `GET /api/explanations/:id`
+- `PATCH /api/explanations/:id`
+- `DELETE /api/explanations/:id`

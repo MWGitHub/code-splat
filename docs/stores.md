@@ -1,49 +1,30 @@
 # Flux Stores
 
-### NoteStore
+### ProjectStore
 
-Holds all persisted note data.
-
-##### Actions:
-- `receiveAllNotes`
-- `receiveSingleNote`
-- `removeNote`
-
-##### Listeners:
-- `NotesIndex` (passes to `NoteIndexItem` via props)
-- `NoteDetail`
-
-### NoteFormStore
-
-Holds un-persisted note data to send to the API.
+Holds a project detail, comments, and shallow file ids
 
 ##### Actions:
-- `receiveNoteFormParams`
+- `receiveAllProjects`
+- `receiveSingleProject`
+- `removeProject`
 
 ##### Listeners:
-- `NoteForm`
+- `ProjectList`
+- `ProjectDetail`
 
-### NotebookStore
+### FileStore
 
-Holds all persisted notebook data.
+Holds file details, explanations, suggestions, and comments
 
 ##### Actions:
-- `receiveAllNotebooks`
-- `receiveSingleNotebook`
-- `removeNotebook`
+- `receiveAllFiles`
+- `receiveSingleFile`
+- `removeFile`
 
 ##### Listeners:
-- `NotebookIndex`
-
-### NotebookFormStore
-
-Holds un-persisted notebook data to send to the API.
-
-##### Actions:
-- `receiveNotebookFormParams`
-
-##### Listeners:
-- `NotebookForm`
+- `FileList`
+- `FileDetail`
 
 ### SearchStore
 

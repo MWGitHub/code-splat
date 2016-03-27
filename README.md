@@ -1,23 +1,27 @@
-# FresherNote
+# RGC (Temp Name)
 
 [Heroku link][heroku] **NB:** This should be a link to your production site
 
-[heroku]: http://www.herokuapp.com
+[heroku]: https://mw-rgc.herokuapp.com/
 
 ## Minimum Viable Product
 
-FresherNote is a web application inspired by Evernote built using Ruby on Rails
-and React.js. FresherNote allows users to:
+RGC is a code review site inspired by Rap Genius' note system built using Ruby on Rails and React.js.
+
+RGC allows users to:
 
 <!-- This is a Markdown checklist. Use it to keep track of your
 progress. Put an x between the brackets for a checkmark: [x] -->
 
 - [ ] Create an account
 - [ ] Log in / Log out
+- [ ] Upload project files to generate code pages
+- [ ] Create, read, edit, and delete code pages
+- [ ] Organize code pages into projects
 - [ ] Create, read, edit, and delete notes
-- [ ] Organize notes within Notebooks
-- [ ] Tag notes with multiple tags
-- [ ] Apply complex styling to notes while editing
+- [ ] Allow other users to vote on notes
+- [ ] Link code pages to other code pages
+- [ ] Apply styling to code
 
 ## Design Docs
 * [View Wireframes][views]

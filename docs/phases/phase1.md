@@ -1,20 +1,25 @@
-# Phase 1: User Authentication, Note Model and JSON API
+# Phase 1: User Authentication, Project Model, File Model, Changes Model, and JSON API
 
 ## Rails
 ### Models
 * User
-* Note
+* Project
+* File
+* Changes
 
 ### Controllers
 * UsersController (create, new)
 * SessionsController (create, new, destroy)
-* Api::NotesController (create, destroy, index, show, update)
+* Api::ProjectController (create, destroy, index, show, update)
+* Api::FileController (create, destroy, index, show, update)
 
 ### Views
 * users/new.html.erb
 * session/new.html.erb
-* notes/index.json.jbuilder
-* notes/show.json.jbuilder
+* projects/index.json.jbuilder
+* projects/show.json.jbuilder
+* files/index.json.jbuilder
+* files/show.json.jbuilder
 
 ## Flux
 ### Views (React Components)

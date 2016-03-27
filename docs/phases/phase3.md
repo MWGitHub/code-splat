@@ -1,44 +1,59 @@
-# Phase 3: Notebooks and Tags (2 days)
+# Phase 3: Projects and Files Comments, Explanations, Suggestions, Votes (2 days)
 
 ## Rails
 ### Models
-* Notebook
-* Tag
-* Tagging
+* Reply
+* Explanation
+* Votes
 
 ### Controllers
-* Api::NotebooksController (create, destroy, index, show, update)
+* Api::RepliesController (create, destroy, index, show, update)
+* Api::VotesController (create, destroy, index, show, update)
 
 ### Views
-* notebooks/index.json.jbuilder
-* notebooks/show.json.jbuilder
-* tags/show.json.jbuilder
+* replies/index.json.jbuilder
+* replies/show.json.jbuilder
+* votes/index.json.jbuilder
+* votes/show.json.jbuilder
 
 ## Flux
 ### Views (React Components)
-* NotebooksIndex
-  - NotebookIndexItem
-* NotebookForm
+* RepliesIndex
+  - ReplyIndexItem
+* ReplyForm
+* VoteForm
 * SearchIndex
 
-### Stores
-* Notebook
-
 ### Actions
-* ApiActions.receiveAllNotebooks -> triggered by ApiUtil
-* ApiActions.receiveSingleNotebook
-* ApiActions.deleteNotebook
-* NotebookActions.fetchAllNotebooks -> triggers ApiUtil
-* NotebookActions.fetchSingleNotebook
-* NotebookActions.createNotebook
-* NotebookActions.editNotebook
-* NotebookActions.destroyNotebook
+* ApiActions.receiveAllReplies -> triggered by ApiUtil
+* ApiActions.receiveSingleReply
+* ApiActions.deleteReply
+* ReplyActions.fetchAllReplies -> triggers ApiUtil
+* ReplyActions.fetchSingleReply
+* ReplyActions.createReply
+* ReplyActions.editReply
+* ReplyActions.destroyReply
+
+* ApiActions.receiveAllVotes -> triggered by ApiUtil
+* ApiActions.receiveSingleVote
+* ApiActions.deleteVote
+* VoteActions.fetchAllVotes -> triggers ApiUtil
+* VoteActions.fetchSingleVote
+* VoteActions.createVote
+* VoteActions.editVote
+* VoteActions.destroyVote
 
 ### ApiUtil
-* ApiUtil.fetchAllNotebooks
-* ApiUtil.fetchSingleNotebook
-* ApiUtil.createNotebook
-* ApiUtil.editNotebook
-* ApiUtil.destroyNotebook
+* ApiUtil.fetchAllReplies
+* ApiUtil.fetchSingleReply
+* ApiUtil.createReply
+* ApiUtil.editReply
+* ApiUtil.destroyReply
+
+* ApiUtil.fetchAllVotes
+* ApiUtil.fetchSingleVote
+* ApiUtil.createVote
+* ApiUtil.editVote
+* ApiUtil.destroyVote
 
 ## Gems/Libraries
