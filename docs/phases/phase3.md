@@ -1,4 +1,4 @@
-# Phase 3: Projects and Files Comments, Explanations, Suggestions, Votes (2 days)
+# Phase 3: Project Comments, Files Comment, Explanations, Suggestions, and Votes (2 days)
 
 ## Rails
 ### Models

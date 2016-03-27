@@ -4,7 +4,7 @@
 ### Models
 
 ### Controllers
-* Api::ChangesController (create, destroy, index, show, update)
+* Api::ChangesController (index, show)
 
 ### Views
 * changes/index.json.jbuilder
