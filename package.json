@@ -1,0 +1,28 @@
+{
+  "engines": {
+    "node": "5.9.1",
+    "npm": "3.8.3"
+  },
+  "name": "rgc",
+  "version": "1.0.0",
+  "description": "[Heroku link][heroku] **NB:** This should be a link to your production site",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MWGitHub/rgclone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MWGitHub/rgclone/issues"
+  },
+  "homepage": "https://github.com/MWGitHub/rgclone#readme"
+}
