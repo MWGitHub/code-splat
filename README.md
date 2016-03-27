@@ -127,7 +127,7 @@ user interface.
 - [ ] add CodeMirror to allow syntax highlighting and editing
 - [ ] highlight text in file code to create or edit explanations
 
-### Phase 8: Styling Cleanup and Seeding (1 day)
+### Phase 7: Styling Cleanup and Seeding (1 day)
 
 **objective:** Make the site look better and be more usable
 
