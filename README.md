@@ -6,7 +6,7 @@
 
 ## Minimum Viable Product
 
-CodeSplat is a code review site inspired by Rap Genius' note system built using Ruby on Rails and React.js.
+CodeSplat is a code review site inspired by Rap Genius' annotation system built using Ruby on Rails and React.js.
 
 CodeSplat allows users to:
 
