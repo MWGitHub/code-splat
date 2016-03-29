@@ -8,13 +8,13 @@
 
 ### Users
 
-- `POST /users`
-- `PATCH /users`
+- `POST /api/users`
+- `PATCH /api/users`
 
 ### Session
 
-- `POST /session`
-- `DELETE /session`
+- `POST /api/session`
+- `DELETE /api/session`
 
 ## JSON API
 
