@@ -30,6 +30,9 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'bourbon'
+gem 'neat'
+
 group :production do
   gem 'newrelic_rpm'
   gem 'rails_12factor'
