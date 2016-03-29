@@ -26,12 +26,12 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_credentials(username, password)
-    user = User.find(username: username)
+    user = User.find_by(username: username)
     user.try(:is_password?, password) ? user : nil
   end
 
   def self.find_by_session_token(token)
-    User.find(session_token: token)
+    User.find_by(session_token: token)
   end
 
   def self.generate_session_token

@@ -12,6 +12,10 @@ class Login extends React.Component {
     };
   }
 
+  componentWillMount() {
+    if (UserStore.isLoggedIn()) this.context.router.push('/');
+  }
+
   componentDidMount() {
     this.changeToken = UserStore.addListener(this._onChange.bind(this));
   }
@@ -28,6 +32,11 @@ class Login extends React.Component {
 
   _handleSubmit(e) {
     e.preventDefault();
+
+    UserUtil.login({
+      username: this.state.username,
+      password: this.state.password
+    });
 
     this.setState({
       username: '',
@@ -73,9 +82,7 @@ class Login extends React.Component {
   }
 }
 Login.contextTypes = {
-  router: function () {
-    return React.PropTypes.func.isRequired;
-  }
+  router: React.PropTypes.object.isRequired
 };
 
 export default Login;

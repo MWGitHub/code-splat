@@ -12,6 +12,10 @@ class Register extends React.Component {
     };
   }
 
+  componentWillMount() {
+    if (UserStore.isLoggedIn()) this.context.router.push('/');
+  }
+
   componentDidMount() {
     this.changeToken = UserStore.addListener(this._onChange.bind(this));
   }
@@ -77,9 +81,7 @@ class Register extends React.Component {
   }
 }
 Register.contextTypes = {
-  router: function () {
-    return React.PropTypes.func.isRequired;
-  }
+  router: React.PropTypes.object.isRequired
 };
 
 export default Register;

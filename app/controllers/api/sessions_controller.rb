@@ -1,14 +1,11 @@
 class Api::SessionsController < ApplicationController
   def create
     session = session_params
-    @user = User.find(
-      username: session[:username],
-      password: password[:password]
-    )
+    @user = User.find_by_credentials(session[:username], session[:password])
 
     if @user
       sign_in(@user)
-      render '/api/users/user', user: @user, show_session: true
+      render :login
     end
   end
 

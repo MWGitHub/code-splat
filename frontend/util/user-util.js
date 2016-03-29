@@ -10,7 +10,21 @@ export default {
         user: options
       },
       success: function (data) {
-        UserActions.retrieveLogin(data);
+        UserActions.receiveLogin(data);
+      }
+    });
+  },
+
+  login: function (options) {
+    $.ajax({
+      type: 'POST',
+      url: '/api/session/',
+      dataType: 'json',
+      data: {
+        session: options
+      },
+      success: function (data) {
+        UserActions.receiveLogin(data);
       }
     });
   }

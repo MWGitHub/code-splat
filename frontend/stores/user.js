@@ -21,6 +21,10 @@ UserStore.__onDispatch = function (payload) {
       _user = payload.user;
       UserStore.__emitChange();
       break;
+    case UserConstants.RECEIVE_LOGOUT:
+      _user = null;
+      UserStore.__emitChange();
+      break;
   }
 };
 
