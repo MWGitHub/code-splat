@@ -40,6 +40,9 @@ body {
   }
 
   .input-icon {
+    position: absolute;
+    right: 0.75rem;
+    top: 0.85rem;
     font-size: 1rem;
   }
 }
@@ -78,8 +81,4 @@ body {
     font-size: 0.8rem;
     padding: 0.6rem;
   }
-}
-
-.input-icon {
-  margin-left: rem(-20);
 }
