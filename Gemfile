@@ -32,6 +32,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'bourbon'
 gem 'neat'
+gem 'font-awesome-sass'
 
 group :production do
   gem 'newrelic_rpm'

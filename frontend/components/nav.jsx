@@ -7,6 +7,7 @@ class Nav extends React.Component {
       <nav className="main-nav group">
         <div className="search">
           <input type="text" placeholder="Search projects &amp; files" />
+          <span className="input-icon fa fa-search"></span>
         </div>
         <div className="logo">
           <h2><Link to='/'>CodeSplat</Link></h2>
