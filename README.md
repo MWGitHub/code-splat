@@ -13,7 +13,7 @@ CodeSplat allows users to:
 <!-- This is a Markdown checklist. Use it to keep track of your
 progress. Put an x between the brackets for a checkmark: [x] -->
 
-- [ ] Create an account
+- [x] Create an account
 - [ ] Log in / Log out
 - [ ] Upload project files to generate code pages
 - [ ] Create, read, edit, and delete code pages
@@ -40,18 +40,18 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 ## Implementation Timeline
 
 ### Phase 0: Setup
-- [ ] create new project
-- [ ] create documentation
-- [ ] set up production server
+- [x] create new project
+- [x] create documentation
+- [x] set up production server
 
 ### Phase 1: Backend setup and User Authentication (0.5 days)
 
 **Objective:** Functioning rails project with Authentication
 
-- [ ] create `User` model
+- [x] create `User` model
 - [ ] authentication
 - [ ] user signup/signin pages
-- [ ] blank landing page after signin
+- [x] blank landing page after signin
 
 ### Phase 2: Project Model, File Model, Changes Model, and JSON API (1 day)
 
