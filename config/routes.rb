@@ -4,8 +4,12 @@ Rails.application.routes.draw do
     resource :session, only: [:show, :create, :destroy]
     resources :projects, only: [:index, :show, :create, :update, :destroy] do
       resources :source_files, only: [:create]
+      get 'text_changes', to: 'text_changes#index_project'
     end
-    resources :source_files, only: [:show, :update, :destroy]
+    resources :source_files, only: [:show, :update, :destroy] do
+      get 'text_changes', to: 'text_changes#index_source_file'
+    end
+    resources :text_changes, only: [:show]
   end
 
   root to: 'static_pages#root'
