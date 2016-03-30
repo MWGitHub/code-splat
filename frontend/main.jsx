@@ -6,6 +6,7 @@ import Register from './components/register';
 import Login from './components/login';
 import Modal from 'react-modal';
 import UserUtil from './util/user-util';
+import NotFound from './components/not-found';
 
 class App extends React.Component {
   render() {
@@ -23,6 +24,7 @@ var router = (
     <Route path='/' component={App}>
       <Route path='register' component={Register} />
       <Route path='login' component={Login} />
+      <Route path='*' component={NotFound} />
     </Route>
   </Router>
 );

@@ -14,7 +14,7 @@ CodeSplat allows users to:
 progress. Put an x between the brackets for a checkmark: [x] -->
 
 - [x] Create an account
-- [ ] Log in / Log out
+- [x] Log in / Log out
 - [ ] Upload project files to generate code pages
 - [ ] Create, read, edit, and delete code pages
 - [ ] Organize code pages into projects
@@ -49,8 +49,8 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 **Objective:** Functioning rails project with Authentication
 
 - [x] create `User` model
-- [ ] authentication
-- [ ] user signup/signin pages
+- [x] authentication
+- [x] user signup/signin pages
 - [x] blank landing page after signin
 
 ### Phase 2: Project Model, File Model, Changes Model, and JSON API (1 day)
