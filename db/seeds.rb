@@ -5,3 +5,16 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+User.destroy_all
+Project.destroy_all
+
+tester = User.create!(username: 'test', password: 'password')
+tester.projects.create(title: 'test project')
+
+5.times do |_|
+  FactoryGirl.create(:user)
+end
+
+5.times do |_|
+  FactoryGirl.create(:user_with_projects)
+end

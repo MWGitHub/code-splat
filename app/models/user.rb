@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6, allow_nil: true }
   validates :session_token, :username, uniqueness: true
 
+  has_many :projects, foreign_key: "author_id"
+
   def is_password?(unencrypted)
     BCrypt::Password.new(self.password_digest).is_password?(unencrypted)
   end
