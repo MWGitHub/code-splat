@@ -10,6 +10,11 @@ class User < ActiveRecord::Base
 
   has_many :projects, foreign_key: :author_id
   has_many :source_files, foreign_key: :author_id
+  has_many (
+    :contributions,
+    class_name: 'TextChange',
+    foreign_key: :author_id
+  )
 
   def is_password?(unencrypted)
     BCrypt::Password.new(self.password_digest).is_password?(unencrypted)
