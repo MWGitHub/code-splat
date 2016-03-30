@@ -57,9 +57,9 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 
 **Objective:** Projects and files can be created, edited, and deleted. Changes are tracked for each action.
 
-- [ ] create `Project` model
-- [ ] create `File` model
-- [ ] create `Change` model
+- [x] create `Project` model
+- [x] create `File` model
+- [x] create `Change` model
 - [ ] seed the database with a small amount of test data
 - [ ] CRUD API for projects (`ProjectsController`)
 - [ ] jBuilder views for projects

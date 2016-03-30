@@ -6,4 +6,8 @@ class Project < ActiveRecord::Base
   has_many :source_files
 
   has_many :text_changes, as: :changeable
+
+  def description
+    self.text_changes.last[:body]
+  end
 end
