@@ -8,6 +8,10 @@ class SourceFile < ActiveRecord::Base
   has_many :text_changes, as: :changeable, dependent: :destroy
 
   def body
-    self.text_changes.last[:body]
+    result = ''
+    recent = self.text_changes.last
+    if recent && recent[:body]
+      result = recent[:body]
+    end
   end
 end

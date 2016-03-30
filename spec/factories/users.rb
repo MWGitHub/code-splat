@@ -15,9 +15,11 @@ FactoryGirl.define do
       after(:create) do |user, evaluator|
         3.times do |_|
           project = user.projects.create(attributes_for(:project))
-          factory_attr = attributes_for(:source_file)
-          factory_attr[:author_id] = user.id
-          project.source_files.create(factory_attr)
+          3.times do |_|
+            factory_attr = attributes_for(:source_file)
+            factory_attr[:author_id] = user.id
+            project.source_files.create(factory_attr)
+          end
         end
       end
     end
@@ -26,16 +28,23 @@ FactoryGirl.define do
       after(:create) do |user, evaluator|
         3.times do |_|
           project = user.projects.create(attributes_for(:project))
-          change_attr = attributes_for(:description)
-          change_attr[:author_id] = user.id
-          project.text_changes.create(change_attr)
+          3.times do |_|
+            change_attr = attributes_for(:description)
+            change_attr[:author_id] = user.id
+            project.text_changes.create(change_attr)
+          end
 
-          factory_attr = attributes_for(:source_file)
-          factory_attr[:author_id] = user.id
-          source_file = project.source_files.create(factory_attr)
-          change_attr = attributes_for(:code)
-          change_attr[:author_id] = user.id
-          source_file.text_changes.create(change_attr)
+          3.times do |_|
+            factory_attr = attributes_for(:source_file)
+            factory_attr[:author_id] = user.id
+            source_file = project.source_files.create(factory_attr)
+
+            3.times do |_|
+              change_attr = attributes_for(:code)
+              change_attr[:author_id] = user.id
+              source_file.text_changes.create(change_attr)
+            end
+          end
         end
       end
     end

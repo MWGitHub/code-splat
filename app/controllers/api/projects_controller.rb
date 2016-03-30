@@ -1,8 +1,10 @@
 class Api::ProjectsController < ApplicationController
-  before_filter :require_signed_in!, only: [:create, :update, :destroy]
+  before_filter :require_signed_in!, only: [
+    :create, :update, :destroy
+  ]
 
   def index
-    @projects = @current_user.projects
+    @projects = Project.all
   end
 
   def show

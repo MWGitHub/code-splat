@@ -8,6 +8,11 @@ class Project < ActiveRecord::Base
   has_many :text_changes, as: :changeable, dependent: :destroy
 
   def description
-    self.text_changes.last[:body]
+    result = ''
+    recent = self.text_changes.last
+    if recent && recent[:body]
+      result = recent[:body]
+    end
+    result
   end
 end

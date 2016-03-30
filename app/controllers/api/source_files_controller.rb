@@ -7,9 +7,11 @@ class Api::SourceFilesController < ApplicationController
 
   def create
     @project = Project.find(params[:project_id])
-    @source_file = project.create!(source_file_params)
+    input = {author_id: @project.author_id}.merge(source_file_params)
+    @source_file = project.create!(input)
     if @source_file && source_file_params[:body]
-      @source_file.text_changes.create!(source_file_params[:body])
+      input = {author_id: @project.author_id}.merge(source_file_params)
+      @source_file.text_changes.create!(input)
     end
     render :show
   end
