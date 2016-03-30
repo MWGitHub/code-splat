@@ -43,8 +43,6 @@ class Login extends React.Component {
       password: ''
     });
 
-    this._onChange();
-
     e.target.reset();
   }
 
@@ -58,8 +56,17 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>SIGN IN</h1>
+      <div className="modal">
+        <h1 className="modal-title">SIGN IN</h1>
+        <a href="#" className="auth-button auth-facebook">
+          <i className="fa fa-facebook-official"></i>Sign in with Facebook
+        </a>
+        <a href="#" className="auth-button auth-twitter">
+          <i className="fa fa-twitter"></i>Sign in with Twitter
+        </a>
+        <a href="#" className="auth-button auth-google">
+          <i className="fa fa-google-plus"></i>Sign in with Google
+        </a>
         <form onSubmit={this._handleSubmit.bind(this)}>
           <div>
             <label>Username

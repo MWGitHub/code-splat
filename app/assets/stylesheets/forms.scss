@@ -1,0 +1,40 @@
+.auth-button {
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-radius: 3px;
+  font-size: 1.1rem;
+  padding: 0.4rem;
+  color: #fff;
+
+  .fa {
+    margin-right: 0.5rem;
+    font-size: 1.3rem;
+  }
+}
+
+.auth-facebook {
+  background-color: #4c70ba;
+
+  &:hover {
+    background-color: tint(#4c70ba, 20%);
+  }
+}
+
+.auth-twitter {
+  background-color: #1e9ed5;
+
+  &:hover {
+    background-color: tint(#1e9ed5, 20%);
+  }
+}
+
+.auth-google {
+  background-color: #e47365;
+
+  &:hover {
+    background-color: tint(#e47365, 20%);
+  }
+}

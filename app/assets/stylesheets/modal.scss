@@ -1,0 +1,16 @@
+.modal {
+  background-color: $modal-background-color;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  color: #fff;
+  text-align: center;
+}
+
+.modal-title {
+  color: $nav-background-color;
+  font-size: 2rem;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 1rem;
+}

@@ -4,6 +4,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import Nav from './components/nav';
 import Register from './components/register';
 import Login from './components/login';
+import Modal from 'react-modal';
 
 class App extends React.Component {
   render() {
@@ -26,5 +27,6 @@ var router = (
 );
 
 $(function () {
+  Modal.setAppElement(document.body);
   ReactDOM.render(router, $('#content')[0]);
 });

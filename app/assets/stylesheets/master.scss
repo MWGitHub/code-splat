@@ -1,6 +1,10 @@
+@import 'modal';
+@import 'forms';
+
 body {
   font-family: sans-serif;
   font-size: 100%;
+  background-color: $dark-background-color;
 }
 
 .group:after {
@@ -14,6 +18,7 @@ body {
   background-color: $nav-background-color;
   color: $nav-color;
   line-height: 140%;
+  position: relative;
 
   a {
     color: $nav-color;
@@ -31,7 +36,7 @@ body {
   input {
     width: 100%;
     border: 0;
-    padding: 0.31rem 0.5rem;
+    padding: 0.31rem 0.5rem 0.2rem 0.5rem;
     font-weight: $weight-bold;
 
     @include placeholder {
