@@ -23,7 +23,7 @@ project_id      integer       fk (projects)
 id              integer       not null, pk
 file_id         integer       not null, fk (files)
 
-## changes
+## text_changes
 id              integer       not null, pk
 body            text          
 author_id       integer       not null, fk (user)

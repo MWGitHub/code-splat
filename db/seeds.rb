@@ -23,3 +23,7 @@ end
 5.times do |_|
   FactoryGirl.create(:user_with_projects_with_files)
 end
+
+5.times do |_|
+  FactoryGirl.create(:user_with_changes)
+end

@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :project do
-    title { Faker::App.name + Faker::App.name }
+    title do
+      Faker::App.name + Faker::App.name + SecureRandom::urlsafe_base64
+    end
   end
 end
