@@ -5,12 +5,14 @@ import Login from './login';
 import Modal from 'react-modal';
 import UserStore from '../stores/user';
 import CSS from '../constants/css';
+import UserUtil from '../util/user-util';
 
 class Nav extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      profileMenuShown: false,
       shownModal: null
     };
   }
@@ -53,6 +55,18 @@ class Nav extends React.Component {
     });
   }
 
+  _profileMenuClick() {
+    this.setState({
+      profileMenuShown: !this.state.profileMenuShown
+    });
+  }
+
+  _handleLogoutClick(e) {
+    e.preventDefault();
+
+    UserUtil.logout();
+  }
+
   render() {
     var modal = "";
     if (this.state.shownModal) {
@@ -67,6 +81,38 @@ class Nav extends React.Component {
       )
     }
 
+    var profileBar = "";
+    if (UserStore.isLoggedIn()) {
+      var user = UserStore.getUser();
+      var profileMenu = '';
+      if (this.state.profileMenuShown) {
+        profileMenu = (
+          <ul className="group">
+            <li><a href="/logout"
+              onClick={this._handleLogoutClick.bind(this)}>Sign Out</a></li>
+          </ul>
+        );
+      }
+      profileBar = (
+        <div className="menu-profile">
+          <div className="menu-profile-button"
+            onClick={this._profileMenuClick.bind(this)}>
+            <span>{user.username} 0<i className="fa fa-caret-down"></i></span>
+          </div>
+          {profileMenu}
+        </div>
+      );
+    } else {
+      profileBar = (
+        <ul className="group">
+          <li><a href="/register"
+            onClick={this._handleRegisterClick.bind(this)}>SIGN UP</a></li>
+          <li><a href="/login"
+            onClick={this._handleLoginClick.bind(this)}>SIGN IN</a></li>
+        </ul>
+      );
+    }
+
     return (
       <nav className="main-nav group">
         <div className="search">
@@ -77,12 +123,7 @@ class Nav extends React.Component {
           <h2><Link to='/'>CodeSplat</Link></h2>
         </div>
         <div className="menu">
-          <ul className="group">
-            <li><a href="/register"
-              onClick={this._handleRegisterClick.bind(this)}>SIGN UP</a></li>
-            <li><a href="/login"
-              onClick={this._handleLoginClick.bind(this)}>SIGN IN</a></li>
-          </ul>
+          {profileBar}
         </div>
         {modal}
       </nav>

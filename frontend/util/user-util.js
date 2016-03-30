@@ -27,5 +27,31 @@ export default {
         UserActions.receiveLogin(data);
       }
     });
+  },
+
+  checkLogin: function (onComplete) {
+    $.ajax({
+      type: 'GET',
+      url: '/api/session',
+      dataType: 'json',
+      success: function (data) {
+        UserActions.receiveLogin(data);
+        if (onComplete) onComplete(data);
+      },
+      error: function () {
+        if (onComplete) onComplete();
+      }
+    });
+  },
+
+  logout: function () {
+    $.ajax({
+      type: 'DELETE',
+      url: '/api/session/',
+      dataType: 'json',
+      success: function (data) {
+        UserActions.receiveLogout();
+      }
+    });
   }
 };

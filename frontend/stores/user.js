@@ -6,6 +6,13 @@ var _user = null;
 
 var UserStore = new Store(Dispatcher);
 
+function logIn(user) {
+  if (user.id) {
+    _user = user;
+  } else {
+    _user = null;
+  }
+}
 
 UserStore.isLoggedIn = function () {
   return !!_user;
@@ -18,7 +25,7 @@ UserStore.getUser = function () {
 UserStore.__onDispatch = function (payload) {
   switch (payload.actionType) {
     case UserConstants.RECEIVE_LOGIN:
-      _user = payload.user;
+      logIn(payload.user);
       UserStore.__emitChange();
       break;
     case UserConstants.RECEIVE_LOGOUT:

@@ -5,6 +5,7 @@ import Nav from './components/nav';
 import Register from './components/register';
 import Login from './components/login';
 import Modal from 'react-modal';
+import UserUtil from './util/user-util';
 
 class App extends React.Component {
   render() {
@@ -27,6 +28,8 @@ var router = (
 );
 
 $(function () {
-  Modal.setAppElement(document.body);
-  ReactDOM.render(router, $('#content')[0]);
+  UserUtil.checkLogin(data => {
+    Modal.setAppElement(document.body);
+    ReactDOM.render(router, $('#content')[0]);
+  });
 });

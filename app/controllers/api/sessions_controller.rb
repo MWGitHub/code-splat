@@ -1,4 +1,14 @@
 class Api::SessionsController < ApplicationController
+  def show
+    @user = nil
+    if signed_in?
+      @user = current_user
+      render :login
+    else
+      render :json => {}
+    end
+  end
+
   def create
     session = session_params
     @user = User.find_by_credentials(session[:username], session[:password])
@@ -11,6 +21,7 @@ class Api::SessionsController < ApplicationController
 
   def destroy
     sign_out
+    render :json => {}
   end
 
   private
