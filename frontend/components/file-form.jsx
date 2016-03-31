@@ -24,6 +24,7 @@ class FileForm extends React.Component {
 
     if (this.props.file) {
       WebUtil.updateSourceFile(
+        this.props.projectSlug,
         this.props.file.slug,
         {
           name: this.state.name,
@@ -31,10 +32,13 @@ class FileForm extends React.Component {
         }, this.props.onSuccess
       );
     } else {
-      WebUtil.createProject({
-        name: this.state.name,
-        body: this.state.body
-      }, this.props.onSuccess);
+      WebUtil.createSourceFile(
+        this.props.projectSlug,
+        {
+          name: this.state.name,
+          body: this.state.body
+        }, this.props.onSuccess
+      );
 
       this.setState({
         name: '',
@@ -46,34 +50,34 @@ class FileForm extends React.Component {
   }
 
   render() {
-    let handleTitleChange = e => {
+    let handleNameChange = e => {
       this.setState({name: e.target.value});
     };
-    let handleDescChange = e => {
+    let handleBodyChange = e => {
       this.setState({body: e.target.value});
     };
-    let headerText = 'Create Project';
-    let buttonText = 'Create Project';
+    let headerText = 'Create File';
+    let buttonText = 'Create File';
     if (this.props.file) {
-      headerText = 'Update Project';
-      buttonText = 'Update Project';
+      headerText = 'Update File';
+      buttonText = 'Update File';
     }
 
     return (
       <form className="form" onSubmit={this._onSubmit.bind(this)}>
         <h1>{headerText}</h1>
         <div className="form-group">
-          <label htmlFor="name">Title</label>
+          <label htmlFor="name">Name</label>
           <input type="text"
             id="name"
-            onChange={handleTitleChange}
+            onChange={handleNameChange}
             value={this.state.name} />
         </div>
 
         <div className="form-group">
           <label htmlFor="body">Description</label>
-          <textarea onChange={handleDescChange} id="body"
-            value={this.state.description}></textarea>
+          <textarea onChange={handleBodyChange} id="body"
+            value={this.state.body}></textarea>
         </div>
 
         <div className="form-group">
@@ -84,38 +88,38 @@ class FileForm extends React.Component {
   }
 }
 
-class NewProjectForm extends React.Component {
+class NewFileForm extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
     return (
-      <FileForm onSuccess={file => {
-        this.context.router.push('/projects/' + file.slug);
+      <FileForm projectSlug={this.props.params.slug} onSuccess={file => {
+        this.context.router.push('/projects/' + this.props.params.slug + '/files/' + file.slug);
       }} />
     );
   }
 }
-NewProjectForm.contextTypes = {
+NewFileForm.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
-module.exports.NewProjectForm = NewProjectForm;
+module.exports.NewFileForm = NewFileForm;
 
-class EditProjectForm extends React.Component {
+class EditFileForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      file: FileStore.find(this.props.params.slug)
+      file: FileStore.find(this.props.params.fileSlug)
     };
   }
 
   componentDidMount() {
     this.projectToken = FileStore.addListener(() => {
-      this.setState({file: FileStore.find(this.props.params.slug)});
+      this.setState({file: FileStore.find(this.props.params.fileSlug)});
     });
-    WebUtil.fetchProject(this.props.params.slug);
+    WebUtil.fetchSourceFile(this.props.params.slug, this.props.params.fileSlug);
   }
 
   componentWillUnmount() {
@@ -123,24 +127,24 @@ class EditProjectForm extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    WebUtil.fetchProject(this.props.params.slug);
+    WebUtil.fetchSourceFile(this.props.params.slug, this.props.params.fileSlug);
   }
 
   render() {
     if (!this.state.file) return <div></div>;
 
     return (
-      <FileForm file={this.state.file}
+      <FileForm projectSlug={this.props.params.slug} file={this.state.file}
         onSuccess={file => {
-        this.context.router.push('/projects/' + file.slug);
+        this.context.router.push('/projects/' + this.props.params.slug + '/files/' + file.slug);
       }} />
     )
   }
 }
-EditProjectForm.contextTypes = {
+EditFileForm.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
-module.exports.EditProjectForm = EditProjectForm;
+module.exports.EditFileForm = EditFileForm;
 
 
 export default FileForm;

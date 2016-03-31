@@ -83,9 +83,9 @@ user interface.
   - [x] `ProjectIndexItem`
   - [x] `ProjectForm`
 - implement each files component, building out the flux loop as needed.
-  - [ ] `FilesIndex`
-  - [ ] `FileIndexItem`
-  - [ ] `FileForm`
+  - [x] `FilesIndex`
+  - [x] `FileIndexItem`
+  - [x] `FileForm`
 - implement each project component, building out the flux loop as needed.
   - [ ] `TextChangesIndex`
   - [ ] `TextChangeIndexItem`

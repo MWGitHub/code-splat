@@ -37,10 +37,12 @@ class FileDetail extends React.Component {
   render() {
     if (!this.state.file) return <div></div>;
 
+    var editUrl = '/projects/' + this.props.params.slug +
+      '/files/' + this.props.params.fileSlug + '/edit';
     return (
       <div>
         <h1>{this.state.file.name}</h1>
-        <Link to={'edit'}>Edit</Link>
+        <Link to={editUrl}>Edit</Link>
         <a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>
         <p>{this.state.file.body}</p>
       </div>

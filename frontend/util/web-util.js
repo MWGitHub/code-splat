@@ -105,7 +105,7 @@ export default {
 
   updateSourceFile: function (projectSlug, fileSlug, sourceFile, onSuccess) {
     $.ajax({
-      type: 'POST',
+      type: 'PATCH',
       url: '/api/projects/' + projectSlug + '/source_files/' + fileSlug,
       dataType: 'json',
       data: {
