@@ -5,8 +5,7 @@ class Api::ProjectsController < ApplicationController
 
   def index
     @projects = Project.includes(
-      :text_changes,
-      source_files: :text_changes
+      :text_changes, source_files: :text_changes
     ).all
   end
 

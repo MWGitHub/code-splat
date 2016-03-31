@@ -77,10 +77,10 @@ export default {
 
 
 
-  fetchSourceFile: function (id) {
+  fetchSourceFile: function (projectSlug, slug) {
     $.ajax({
       type: 'GET',
-      url: '/api/source_files/' + id,
+      url: '/api/projects/' + projectSlug + '/source_files/' + slug,
       dataType: 'json',
       success: function (data) {
         WebActions.receiveSourceFile(data);
@@ -88,42 +88,41 @@ export default {
     });
   },
 
-  createSourceFile: function (projectId, sourceFile) {
+  createSourceFile: function (projectSlug, sourceFile, onSuccess) {
     $.ajax({
       type: 'POST',
-      url: '/api/projects/' + projectId + '/source_files',
+      url: '/api/projects/' + projectSlug + '/source_files',
       dataType: 'json',
       data: {
         source_file: sourceFile
       },
       success: function (data) {
         WebActions.receiveSourceFile(data);
+        onSuccess && onSuccess(data);
       }
     });
   },
 
-  updateSourceFile: function (sourceFile) {
+  updateSourceFile: function (projectSlug, fileSlug, sourceFile, onSuccess) {
     $.ajax({
       type: 'POST',
-      url: '/api/source_files/' + sourceFile.id,
+      url: '/api/projects/' + projectSlug + '/source_files/' + fileSlug,
       dataType: 'json',
       data: {
         source_file: sourceFile
       },
       success: function (data) {
         WebActions.receiveSourceFile(data);
+        onSuccess && onSuccess(data);
       }
     });
   },
 
-  destroySourceFile: function (id) {
+  destroySourceFile: function (projectSlug, fileSlug) {
     $.ajax({
       type: 'DELETE',
-      url: '/api/source_files/' + sourceFile.id,
+      url: '/api/projects/' + projectSlug + '/source_files/' + fileSlug,
       dataType: 'json',
-      data: {
-        source_file: sourceFile
-      },
       success: function (data) {
         WebActions.removeSourceFile(data);
       }

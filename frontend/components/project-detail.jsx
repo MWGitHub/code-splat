@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import ProjectStore from '../stores/project';
 import WebUtil from '../util/web-util';
+import FileList from './file-list';
 
 class ProjectDetail extends React.Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class ProjectDetail extends React.Component {
 
   _handleDelete(e) {
     e.preventDefault();
-    
+
     WebUtil.destroyProject(this.state.project.slug);
     this.context.router.push('/projects');
   }
@@ -42,7 +43,10 @@ class ProjectDetail extends React.Component {
         <h1>{this.state.project.title}</h1>
         <Link to={'/projects/' + this.state.project.slug + '/edit'}>Edit</Link>
         <a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>
+        <Link to={'/projects/' + this.state.project.slug + '/files/new'}>Create File</Link>
         <p>{this.state.project.description}</p>
+        <FileList files={this.state.project.source_files}
+          projectSlug={this.state.project.slug} />
       </div>
     );
   }

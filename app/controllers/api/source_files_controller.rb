@@ -2,11 +2,12 @@ class Api::SourceFilesController < ApplicationController
   before_filter :require_signed_in!, only: [:create, :update, :destroy]
 
   def show
-    @source_file = SourceFile.find(params[:id])
+    project = Project.find_by(slug: params[:project_slug])
+    @source_file = project.source_files.find_by(slug: params[:slug])
   end
 
   def create
-    @project = Project.find(params[:project_id])
+    @project = Project.find_by(slug: params[:project_slug])
     input = {author_id: @project.author_id}.merge(source_file_params)
     @source_file = project.create!(input)
     if @source_file && source_file_params[:body]
@@ -27,7 +28,8 @@ class Api::SourceFilesController < ApplicationController
   end
 
   def destroy
-    @source_file = SourceFile.find(params[:id])
+    project = Project.find_by(slug: params[:project_slug])
+    @source_file = project.source_files.find_by(slug: params[:slug])
     @source_file.destroy
     render :show
   end

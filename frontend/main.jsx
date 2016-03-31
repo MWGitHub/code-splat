@@ -13,6 +13,7 @@ import Home from './components/home';
 import ProjectDetail from './components/project-detail';
 import { NewProjectForm, EditProjectForm } from './components/project-form';
 import SessionStore from './stores/session';
+import FileDetail from './components/file-detail';
 
 class App extends React.Component {
   render() {
@@ -39,7 +40,7 @@ var router = (
       <Route path='projects/:slug/edit'
         component={EditProjectForm} onEnter={checkLoggedIn} />
       <Route path='projects/:slug' component={ProjectDetail} />
-
+      <Route path='projects/:slug/files/:fileSlug' component={FileDetail} />
       <Route path='*' component={NotFound} />
     </Route>
   </Router>

@@ -1,1 +1,1 @@
-json.partial! 'project', project: @project
+json.partial! 'project', project: @project, show_files: true
