@@ -61,14 +61,14 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 - [x] create `File` model
 - [x] create `Change` model
 - [x] seed the database with a small amount of test data
-- [ ] CRUD API for projects (`ProjectsController`)
-- [ ] jBuilder views for projects
-- [ ] CRUD API for projects (`FilesController`)
-- [ ] jBuilder views for files
-- [ ] API for changes (`ChangesController`)
-- [ ] jBuilder views for changes
+- [x] CRUD API for projects (`ProjectsController`)
+- [x] jBuilder views for projects
+- [x] CRUD API for projects (`FilesController`)
+- [x] jBuilder views for files
+- [x] API for changes (`ChangesController`)
+- [x] jBuilder views for changes
 - [x] setup Webpack & Flux scaffold
-- [ ] setup `APIUtil` to interact with the API
+- [x] setup `APIUtil` to interact with the API
 - [ ] test out API interaction in the console.
 
 ### Phase 3: Flux Architecture and Project/File/Changes CRUD (1.5 days)
@@ -76,8 +76,8 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 **Objective:** Notes can be created, read, edited and destroyed with the
 user interface.
 
-- [ ] setup the flux loop with skeleton files
-- [ ] setup React Router
+- [x] setup the flux loop with skeleton files
+- [x] setup React Router
 - implement each project component, building out the flux loop as needed.
   - [ ] `ProjectsIndex`
   - [ ] `ProjectIndexItem`

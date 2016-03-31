@@ -1,12 +1,35 @@
+.form-title {
+  color: $nav-background-color;
+  font-size: 2rem;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.form-sub-header {
+  color: $nav-background-color;
+}
+
+.form-link {
+  font-size: 0.9rem;
+  color: $form-link-color;
+  text-decoration: none;
+
+  &:hover {
+    color: tint($form-link-color, 20%);
+  }
+}
+
 .auth-button {
   width: 100%;
   display: block;
   text-decoration: none;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   text-align: center;
-  border-radius: 3px;
-  font-size: 1.1rem;
-  padding: 0.4rem;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  padding: 0.45rem;
   color: #fff;
 
   .fa {
@@ -15,26 +38,122 @@
   }
 }
 
+$fb-color: #4c70ba;
 .auth-facebook {
-  background-color: #4c70ba;
+  background-color: $fb-color;
+  border: 1px solid $fb-color;
 
   &:hover {
-    background-color: tint(#4c70ba, 20%);
+    background-color: tint($fb-color, 20%);
   }
 }
 
+$tw-color: #1e9ed5;
 .auth-twitter {
-  background-color: #1e9ed5;
+  background-color: $tw-color;
+  border: 1px solid $tw-color;
 
   &:hover {
-    background-color: tint(#1e9ed5, 20%);
+    background-color: tint($tw-color, 20%);
   }
 }
 
+$google-color: #e47365;
 .auth-google {
-  background-color: #e47365;
+  background-color: $google-color;
+  border: 1px solid $google-color;
 
   &:hover {
-    background-color: tint(#e47365, 20%);
+    background-color: tint($google-color, 20%);
   }
+
+  .fa {
+    font-size: 1rem;
+  }
+}
+
+$email-color: #444;
+.auth-email {
+  background-color: $email-color;
+  border: 1px solid $email-color;
+
+  &:hover {
+    background-color: tint($email-color, 20%);
+  }
+
+  .fa {
+    font-size: 1rem;
+  }
+}
+
+.form {
+  width: 100%;
+  border: 1px solid $dark-gray-border-color;
+  background-color: $gray-light-background-color;
+  padding: 0.75rem;
+  border-radius: $border-radius;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  text-align: left;
+
+  label {
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 0.3rem;
+    cursor: pointer;
+  }
+
+  .label-sub {
+    font-size: 0.8rem;
+  }
+
+  input {
+    outline: none;
+    margin-bottom: 0.3rem;
+  }
+
+  input[type="text"], input[type="password"], input[type="email"] {
+    color: $dark-contrast-color;
+    width: 100%;
+    background-color: $gray-light-background-color;
+    border: 1px solid $gray-border-color;
+    border-radius: $border-radius;
+    padding: 0.4rem;
+
+    &:focus {
+      border: 1px solid $gray-border-highlight-color;
+    }
+
+  }
+
+  input[type="submit"] {
+    background-color: $gray-background-color;
+    border: 1px solid $gray-border-color;
+    color: $dark-contrast-color;
+    font-size: 0.8rem;
+    padding: 0.3rem;
+    margin-bottom: 0;
+
+    &:hover {
+      border: 1px solid tint($gray-border-color, 10%);
+      background-color: tint($gray-background-color, 10%);
+    }
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.sub-form {
+  background-color: $sub-form-background-color;
+}
+
+.form-group + .description {
+  font-size: 0.9rem;
+  line-height: 1.5;
 }

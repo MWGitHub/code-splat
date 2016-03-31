@@ -7,6 +7,9 @@ import UserStore from '../stores/user';
 import CSS from '../constants/css';
 import UserUtil from '../util/user-util';
 
+const LOGIN_MODAL = 'LOGIN_MODAL';
+const REGISTER_MODAL = 'REGISTER_MODAL';
+
 class Nav extends React.Component {
   constructor(props) {
     super(props);
@@ -36,7 +39,7 @@ class Nav extends React.Component {
     e.stopPropagation();
 
     this.setState({
-      shownModal: <Register />
+      shownModal: REGISTER_MODAL
     });
   }
 
@@ -45,14 +48,30 @@ class Nav extends React.Component {
     e.stopPropagation();
 
     this.setState({
-      shownModal: <Login />
+      shownModal: LOGIN_MODAL
     });
   }
 
-  _closeModal() {
+  _closeModal(e) {
+    if (e) e.preventDefault();
+
     this.setState({
       shownModal: null
     });
+  }
+
+  _switchModal(e) {
+    e.preventDefault();
+
+    if (this.state.shownModal === LOGIN_MODAL) {
+      this.setState({
+        shownModal: REGISTER_MODAL
+      });
+    } else if (this.state.shownModal === REGISTER_MODAL) {
+      this.setState({
+        shownModal: LOGIN_MODAL
+      });
+    }
   }
 
   _profileMenuClick() {
@@ -68,23 +87,35 @@ class Nav extends React.Component {
   }
 
   render() {
-    var modal = "";
+    let modal = "";
     if (this.state.shownModal) {
+      let shownModal = null;
+      if (this.state.shownModal === LOGIN_MODAL) {
+        shownModal = <Login
+          onClose={this._closeModal.bind(this)}
+          onSwitch={this._switchModal.bind(this)}
+        />
+      } else {
+        shownModal = <Register
+          onClose={this._closeModal.bind(this)}
+          onSwitch={this._switchModal.bind(this)}
+        />
+      }
       modal = (
         <Modal
           isOpen={!!this.state.shownModal}
           onRequestClose={this._closeModal.bind(this)}
           style={CSS.modal}
           >
-          {this.state.shownModal}
+          {shownModal}
         </Modal>
       )
     }
 
-    var profileBar = "";
+    let profileBar = "";
     if (UserStore.isLoggedIn()) {
-      var user = UserStore.getUser();
-      var profileMenu = '';
+      let user = UserStore.getUser();
+      let profileMenu = '';
       if (this.state.profileMenuShown) {
         profileMenu = (
           <ul className="group">

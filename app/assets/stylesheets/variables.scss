@@ -1,6 +1,16 @@
 $dark-background-color: #000;
-$dark-contrast-color: #fff;
-$gray-background-color: #333;
+
+$dark-contrast-color: #EBE6E7;
+$gray-background-color: #292929;
+
+$form-link-color: #5ba7c2;
+$sub-form-background-color: #333;
+
+$dark-gray-border-color: #444;
+$gray-border-color: #555;
+$gray-border-highlight-color: tint($gray-border-color, 30%);
+
+$gray-light-background-color: #222;
 $modal-background-color: #292929;
 $nav-background-color: #ffff64;
 $nav-color: #000;
@@ -10,3 +20,5 @@ $dark-link-color: #7d8fe8;
 
 $weight-standard: 400;
 $weight-bold: 700;
+
+$border-radius: 3px;

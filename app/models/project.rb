@@ -1,4 +1,6 @@
 class Project < ActiveRecord::Base
+  include Changeable
+
   validates :title, :author_id, presence: true
   validates :title, uniqueness: true
 
@@ -6,13 +8,4 @@ class Project < ActiveRecord::Base
   has_many :source_files, dependent: :destroy
 
   has_many :text_changes, as: :changeable, dependent: :destroy
-
-  def description
-    result = ''
-    recent = self.text_changes.last
-    if recent && recent[:body]
-      result = recent[:body]
-    end
-    result
-  end
 end

@@ -5,11 +5,12 @@ export default {
     },
     content: {
       backgroundColor: '#292929',
-      top: '5rem',
+      top: '4rem',
       bottom: 'auto',
       width: '30rem',
       left: 'calc(50% - 17.5rem)',
-      border: '1px solid #444'
+      border: '0',
+      padding: '0'
     }
   }
 }

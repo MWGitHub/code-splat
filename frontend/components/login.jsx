@@ -57,7 +57,10 @@ class Login extends React.Component {
   render() {
     return (
       <div className="modal">
-        <h1 className="modal-title">SIGN IN</h1>
+        <h1 className="form-title">SIGN IN</h1>
+        <a className="close-button" href="#" onClick={this.props.onClose}>
+          <i className="fa fa-times"></i>
+        </a>
         <a href="#" className="auth-button auth-facebook">
           <i className="fa fa-facebook-official"></i>Sign in with Facebook
         </a>
@@ -67,23 +70,27 @@ class Login extends React.Component {
         <a href="#" className="auth-button auth-google">
           <i className="fa fa-google-plus"></i>Sign in with Google
         </a>
-        <form onSubmit={this._handleSubmit.bind(this)}>
-          <div>
-            <label>Username
-              <input type="text" value={this.state.username}
-                onChange={this._handleUsernameChange.bind(this)} />
-            </label>
+        <form className="form sub-form"
+          onSubmit={this._handleSubmit.bind(this)}>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input type="text" value={this.state.username} id="username"
+              onChange={this._handleUsernameChange.bind(this)} />
           </div>
-          <div>
-            <label>Password
-              <input type="password" value={this.state.password}
-                onChange={this._handlePasswordChange.bind(this)} />
-            </label>
+          <div className="form-group">
+            <label htmlFor="password">Password <a className="form-link label-sub" href="#">(I forgot my password)</a></label>
+            <input type="password" value={this.state.password} id="password"
+              onChange={this._handlePasswordChange.bind(this)} />
           </div>
-          <div>
+          <div className="form-group">
             <input type="submit" value="Login" />
           </div>
         </form>
+        <p>Don't have an account? <a
+          href="#"
+          className="form-link"
+          onClick={this.props.onSwitch}
+          >Sign up here.</a></p>
       </div>
     );
   }

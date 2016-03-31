@@ -9,6 +9,7 @@ import UserUtil from './util/user-util';
 import NotFound from './components/not-found';
 import ProjectStore from './stores/project';
 import WebUtil from './util/web-util';
+import Home from './components/home';
 
 class App extends React.Component {
   render() {

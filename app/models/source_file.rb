@@ -1,4 +1,6 @@
 class SourceFile < ActiveRecord::Base
+  include Changeable
+
   validates :name, :author_id, :project_id, presence: true
   validates :name, uniqueness: { scope: :project_id }
 
@@ -6,12 +8,4 @@ class SourceFile < ActiveRecord::Base
   belongs_to :author, class_name: "User", foreign_key: :author_id
 
   has_many :text_changes, as: :changeable, dependent: :destroy
-
-  def body
-    result = ''
-    recent = self.text_changes.last
-    if recent && recent[:body]
-      result = recent[:body]
-    end
-  end
 end

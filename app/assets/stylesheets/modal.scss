@@ -1,16 +1,15 @@
 .modal {
   background-color: $modal-background-color;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding: 1rem 3.5rem;
   color: #fff;
   text-align: center;
-}
+  position: relative;
 
-.modal-title {
-  color: $nav-background-color;
-  font-size: 2rem;
-  width: 100%;
-  text-align: center;
-  margin: 0;
-  margin-bottom: 1rem;
+  .close-button {
+    color: $light-contrast-color;
+    font-size: 1.3rem;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
 }
