@@ -1,4 +1,7 @@
 class SourceFile < ActiveRecord::Base
+  include FriendlyId
+  friendly_id :name, use: :scoped, scope: :project
+
   include Changeable
 
   validates :name, :author_id, :project_id, presence: true

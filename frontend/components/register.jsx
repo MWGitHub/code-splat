@@ -1,6 +1,6 @@
 import React from 'react';
 import UserUtil from '../util/user-util';
-import UserStore from '../stores/user';
+import SessionStore from '../stores/session';
 
 class Register extends React.Component {
   constructor(props) {
@@ -15,11 +15,11 @@ class Register extends React.Component {
   }
 
   componentWillMount() {
-    if (UserStore.isLoggedIn()) this.context.router.push('/');
+    if (SessionStore.isLoggedIn()) this.context.router.push('/');
   }
 
   componentDidMount() {
-    this.changeToken = UserStore.addListener(this._onChange.bind(this));
+    this.changeToken = SessionStore.addListener(this._onChange.bind(this));
   }
 
   componentWillUnmount() {
@@ -27,7 +27,7 @@ class Register extends React.Component {
   }
 
   _onChange() {
-    if (UserStore.isLoggedIn()) {
+    if (SessionStore.isLoggedIn()) {
       this.context.router.push('/');
     }
   }

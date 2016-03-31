@@ -11,19 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160331013928) do
+ActiveRecord::Schema.define(version: 20160331191617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.string   "title",      null: false
     t.integer  "author_id",  null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "slug",       null: false
   end
 
   add_index "projects", ["author_id"], name: "index_projects_on_author_id", using: :btree
+  add_index "projects", ["slug"], name: "index_projects_on_slug", unique: true, using: :btree
   add_index "projects", ["title"], name: "index_projects_on_title", unique: true, using: :btree
 
   create_table "source_files", force: :cascade do |t|
@@ -32,10 +47,12 @@ ActiveRecord::Schema.define(version: 20160331013928) do
     t.integer  "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "slug",       null: false
   end
 
   add_index "source_files", ["author_id"], name: "index_source_files_on_author_id", using: :btree
   add_index "source_files", ["name", "project_id"], name: "index_source_files_on_name_and_project_id", unique: true, using: :btree
+  add_index "source_files", ["project_id", "slug"], name: "index_source_files_on_project_id_and_slug", unique: true, using: :btree
   add_index "source_files", ["project_id"], name: "index_source_files_on_project_id", using: :btree
 
   create_table "text_changes", force: :cascade do |t|

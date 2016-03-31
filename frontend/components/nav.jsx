@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import Register from './register';
 import Login from './login';
 import Modal from 'react-modal';
-import UserStore from '../stores/user';
+import SessionStore from '../stores/session';
 import CSS from '../constants/css';
 import UserUtil from '../util/user-util';
 
@@ -21,7 +21,7 @@ class Nav extends React.Component {
   }
 
   componentDidMount() {
-    this.userToken = UserStore.addListener(this._handleUserChange.bind(this));
+    this.userToken = SessionStore.addListener(this._handleUserChange.bind(this));
   }
 
   componentWillUnmount() {
@@ -113,8 +113,8 @@ class Nav extends React.Component {
     }
 
     let profileBar = "";
-    if (UserStore.isLoggedIn()) {
-      let user = UserStore.getUser();
+    if (SessionStore.isLoggedIn()) {
+      let user = SessionStore.getUser();
       let profileMenu = '';
       if (this.state.profileMenuShown) {
         profileMenu = (
@@ -145,19 +145,24 @@ class Nav extends React.Component {
     }
 
     return (
-      <nav className="main-nav group">
-        <div className="search">
-          <input type="text" placeholder="Search projects &amp; files" />
-          <span className="input-icon fa fa-search"></span>
-        </div>
-        <div className="logo">
-          <h2><Link to='/'>CodeSplat</Link></h2>
-        </div>
-        <div className="menu">
-          {profileBar}
-        </div>
-        {modal}
-      </nav>
+      <div>
+        <nav className="main-nav group">
+          <div className="search">
+            <input type="text" placeholder="Search projects &amp; files" />
+            <span className="input-icon fa fa-search"></span>
+          </div>
+          <div className="logo">
+            <h2><Link to='/'>CodeSplat</Link></h2>
+          </div>
+          <div className="menu">
+            {profileBar}
+          </div>
+          {modal}
+        </nav>
+        <nav className="secondary-nav group">
+          <Link to="/projects/new">Add Project</Link>
+        </nav>
+      </div>
     );
   }
 }

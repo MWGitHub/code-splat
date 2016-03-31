@@ -25,14 +25,15 @@ class ApplicationController < ActionController::Base
   end
 
   def require_signed_in!
+    return if signed_in?
+    
     respond_to do |format|
       format.html do
         flash[:error] = 'Access denied'
         redirect_to root_url
       end
       format.json do
-        self.status = :unauthorized
-        render json: { error: 'Access denied' }
+        render json: { error: 'Access denied' }, status: :unauthorized
       end
     end
   end

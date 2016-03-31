@@ -39,5 +39,8 @@
     "react-modal": "^0.6.1",
     "react-router": "^2.0.1",
     "webpack": "^1.12.14"
+  },
+  "devDependencies": {
+    "eslint": "^2.5.3"
   }
 }

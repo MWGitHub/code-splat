@@ -9,12 +9,20 @@ let ProjectStore = new Store(Dispatcher);
 function resetProjects(projects) {
   for (let i = 0; i < projects.length; i++) {
     let project = projects[i];
-    _projects[project.id] = project;
+    _projects[project.slug] = project;
   }
 }
 
 ProjectStore.all = function () {
-  return _projects;
+  let projects = [];
+  for (let key in _projects) {
+    projects.push(_projects[key]);
+  }
+  return projects;
+}
+
+ProjectStore.find = function (slug) {
+  return _projects[slug];
 }
 
 ProjectStore.__onDispatch = function (payload) {
@@ -25,11 +33,11 @@ ProjectStore.__onDispatch = function (payload) {
       break;
     case WebConstants.RECEIVE_PROJECT:
       let project = payload.project;
-      _projects[project.id] = project;
+      _projects[project.slug] = project;
       ProjectStore.__emitChange();
       break;
     case WebConstants.REMOVE_PROJECT:
-      delete _projects[payload.project.id]
+      delete _projects[payload.project.slug]
       ProjectStore.__emitChange();
       break;
   }

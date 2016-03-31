@@ -6,32 +6,42 @@ class Api::ProjectsController < ApplicationController
   def index
     @projects = Project.includes(
       :text_changes,
-      source_files: :text_changes).all
+      source_files: :text_changes
+    ).all
   end
 
   def show
-    @project = Project.find(params[:id])
+    @project = Project.includes(
+      :text_changes, source_files: :text_changes
+    ).friendly.find(params[:slug])
   end
 
   def create
-    @project = @current_user.projects.create!(project_params)
+    @project = current_user.projects.create!(title: project_params[:title])
     if @project && project_params[:description]
-      @project.text_changes.create!(project_params[:description])
+      @project.text_changes.create!(
+        body: project_params[:description],
+        author_id: current_user[:id]
+      )
     end
     render :show
   end
 
   def update
-    @project = Project.find(params[:id])
-    @project.update!(project_params)
+    @project = Project.friendly.find(params[:slug])
+    @project.slug = nil
+    @project.update!(title: project_params[:title])
     if @project && project_params[:description]
-      @project.text_changes.create!(project_params[:description])
+      @project.text_changes.create!(
+        body: project_params[:description],
+        author_id: current_user[:id]
+      )
     end
     render :show
   end
 
   def destroy
-    @project = Project.find(params[:id])
+    @project = Project.friendly.find(params[:slug])
     @project.destroy
     render :show
   end

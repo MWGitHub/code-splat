@@ -18,6 +18,7 @@ class Api::SourceFilesController < ApplicationController
 
   def update
     @source_file = SourceFile.find(params[:id])
+    @source_file.slug = nil
     @source_file.update!(source_file_params)
     if @source_file && source_file_params[:body]
       @source_file.text_changes.create!(source_file_params[:body])

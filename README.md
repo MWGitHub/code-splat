@@ -79,17 +79,17 @@ user interface.
 - [x] setup the flux loop with skeleton files
 - [x] setup React Router
 - implement each project component, building out the flux loop as needed.
-  - [ ] `ProjectsIndex`
-  - [ ] `ProjectIndexItem`
-  - [ ] `ProjectForm`
+  - [x] `ProjectsIndex`
+  - [x] `ProjectIndexItem`
+  - [x] `ProjectForm`
 - implement each files component, building out the flux loop as needed.
   - [ ] `FilesIndex`
   - [ ] `FileIndexItem`
   - [ ] `FileForm`
 - implement each project component, building out the flux loop as needed.
-  - [ ] `ChangesIndex`
-  - [ ] `ChangeIndexItem`
-  - [ ] `ChangeForm`
+  - [ ] `TextChangesIndex`
+  - [ ] `TextChangeIndexItem`
+  - [ ] `TextChangeForm`
 
 ### Phase 4: Start Styling (0.5 days)
 

@@ -1,3 +1,5 @@
+@import 'variables';
+
 .form-title {
   color: $nav-background-color;
   font-size: 2rem;
@@ -13,11 +15,11 @@
 
 .form-link {
   font-size: 0.9rem;
-  color: $form-link-color;
+  color: $link-color;
   text-decoration: none;
 
   &:hover {
-    color: tint($form-link-color, 20%);
+    color: $link-color-highlight;
   }
 }
 
@@ -35,6 +37,10 @@
   .fa {
     margin-right: 0.5rem;
     font-size: 1.3rem;
+  }
+
+  &:hover {
+    color: #fff;
   }
 }
 

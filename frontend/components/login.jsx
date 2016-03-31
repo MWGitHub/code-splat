@@ -1,6 +1,6 @@
 import React from 'react';
 import UserUtil from '../util/user-util';
-import UserStore from '../stores/user';
+import SessionStore from '../stores/session';
 
 class Login extends React.Component {
   constructor(props) {
@@ -13,11 +13,11 @@ class Login extends React.Component {
   }
 
   componentWillMount() {
-    if (UserStore.isLoggedIn()) this.context.router.push('/');
+    if (SessionStore.isLoggedIn()) this.context.router.push('/');
   }
 
   componentDidMount() {
-    this.changeToken = UserStore.addListener(this._onChange.bind(this));
+    this.changeToken = SessionStore.addListener(this._onChange.bind(this));
   }
 
   componentWillUnmount() {
@@ -25,7 +25,7 @@ class Login extends React.Component {
   }
 
   _onChange() {
-    if (UserStore.isLoggedIn()) {
+    if (SessionStore.isLoggedIn()) {
       this.context.router.push('/');
     }
   }
@@ -78,7 +78,7 @@ class Login extends React.Component {
               onChange={this._handleUsernameChange.bind(this)} />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password <a className="form-link label-sub" href="#">(I forgot my password)</a></label>
+            <label htmlFor="password">Password <a className="form-link label-sub" href="#" tabIndex="10">(I forgot my password)</a></label>
             <input type="password" value={this.state.password} id="password"
               onChange={this._handlePasswordChange.bind(this)} />
           </div>

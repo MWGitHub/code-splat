@@ -1,9 +1,12 @@
+@import 'bourbon';
+
 $dark-background-color: #000;
 
-$dark-contrast-color: #EBE6E7;
+$dark-contrast-color: #c4c0c0;
 $gray-background-color: #292929;
 
-$form-link-color: #5ba7c2;
+$link-color: #5ba7c2;
+$link-color-highlight: tint($link-color, 20%);
 $sub-form-background-color: #333;
 
 $dark-gray-border-color: #444;
