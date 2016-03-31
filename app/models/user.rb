@@ -4,9 +4,10 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
   validates :username, :password_digest, :session_token, presence: true
+  validates :email, presence: true
   validates :username, length: { minimum: 1 }
   validates :password, length: { minimum: 6, allow_nil: true }
-  validates :session_token, :username, uniqueness: true
+  validates :session_token, :username, :email, uniqueness: true
 
   has_many :projects, foreign_key: :author_id
   has_many :source_files, foreign_key: :author_id
@@ -35,6 +36,11 @@ class User < ActiveRecord::Base
 
   def self.find_by_credentials(username, password)
     user = User.find_by(username: username)
+    user.try(:is_password?, password) ? user : nil
+  end
+
+  def self.find_by_email(email, password)
+    user = User.find_by(email: email)
     user.try(:is_password?, password) ? user : nil
   end
 

@@ -9,7 +9,11 @@ User.destroy_all
 Project.destroy_all
 SourceFile.destroy_all
 
-tester = User.create!(username: 'test', password: 'password')
+tester = User.create!(
+  username: 'test',
+  password: 'password',
+  email: 'test@test.com'
+)
 tester.projects.create(title: 'test project')
 
 5.times do |_|

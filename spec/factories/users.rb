@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :user do
     username { Faker::Internet.user_name }
     password 'password'
+    email { Faker::Internet.safe_email }
 
     factory :user_with_projects do
       after(:create) do |user, evaluator|

@@ -12,6 +12,7 @@ class Api::SessionsController < ApplicationController
   def create
     session = session_params
     @user = User.find_by_credentials(session[:username], session[:password])
+    @user ||= User.find_by_email(session[:username], session[:password])
 
     if @user
       sign_in(@user)
