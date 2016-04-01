@@ -37,6 +37,9 @@ gem 'bourbon'
 gem 'neat'
 gem 'font-awesome-sass'
 
+gem 'factory_girl_rails'
+gem 'faker'
+
 group :production do
   gem 'newrelic_rpm'
   gem 'rails_12factor'
@@ -45,8 +48,6 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  gem 'factory_girl_rails'
-  gem 'faker'
   gem 'capybara'
   gem 'rspec-rails'
 end
