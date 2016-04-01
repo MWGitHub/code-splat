@@ -16,7 +16,7 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 - [x] Create an account
 - [x] Log in / Log out
 - [ ] ~~Upload project files to generate code pages~~
-- [ ] Upload images in replices and suggestions
+- [ ] Upload images in replies and suggestions
 - [x] Create, read, edit, and delete code pages
 - [x] Organize code pages into projects
 - [ ] Create, read, edit, and delete suggestions
@@ -92,13 +92,16 @@ user interface.
   - [x] `TextChangeIndexItem`
   - [ ] ~~`TextChangeForm`~~
 
-### Phase 4: Start Styling (0.5 days)
+### Phase 4: Start Styling and add Pages(0.5 days)
 
-**Objective:** Existing pages (including singup/signin) will look good and be responsive.
+**Objective:** Existing pages (including sign up/sign in) will look good and be responsive.
 
-- [ ] create a basic style guide
-- [ ] position elements on the page
-- [ ] add basic colors & styles
+- [x] create a basic style guide
+- [x] position elements on the page
+- [x] add basic colors & styles
+- [ ] style home page
+- [ ] style project page
+- [ ] style file page
 
 ### Phase 5: Project Comments, Files Comment, Explanations, Suggestions, and Votes (2 days)
 

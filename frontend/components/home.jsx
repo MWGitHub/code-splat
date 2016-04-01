@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectList from './project-list';
+import { ProjectListHot } from './project-list';
 import ProjectStore from '../stores/project';
 import WebUtil from '../util/web-util';
 
@@ -16,7 +16,9 @@ class Home extends React.Component {
     this.projectToken = ProjectStore.addListener(() => {
       this.setState({ projects: ProjectStore.all() });
     });
-    WebUtil.fetchProjects();
+    WebUtil.fetchProjects({
+			type: 'hot'
+		});
   }
 
   componentWillUnmount() {
@@ -41,7 +43,7 @@ class Home extends React.Component {
             </div>
           </div>
           <p>Hot on Code Splat</p>
-          <ProjectList projects={this.state.projects} />
+          <ProjectListHot projects={this.state.projects} />
         </div>
       </div>
     );

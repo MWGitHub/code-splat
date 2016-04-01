@@ -4,9 +4,15 @@ class Api::ProjectsController < ApplicationController
   ]
 
   def index
-    @projects = Project.includes(
-      :text_changes, source_files: :text_changes
-    ).all
+		if params[:type] == 'hot'
+			@projects = Project.includes(:text_changes)
+				.order(created_at: :desc)
+				.limit(20)
+		else
+	    @projects = Project.includes(
+	      :text_changes, source_files: :text_changes
+	    ).all
+		end
   end
 
   def show

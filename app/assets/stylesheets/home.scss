@@ -1,0 +1,109 @@
+@import 'variables';
+
+.hot {
+	width: 100%;
+	position: relative;
+	font-weight: $weight-bold;
+
+	a {
+		color: $dark-contrast-color;
+
+		&:hover {
+			color: tint($dark-contrast-color, 80%);
+		}
+	}
+}
+
+.hot-project-main {
+	width: 100%;
+	min-height: rem(135);
+	border: 1px solid $gray-light-background-color;
+	position: relative;
+	background-color: $hot-main-background-color;
+	margin-bottom: 1.5rem;
+	font-size: 0.9rem;
+
+	h2 {
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 100%;
+	}
+
+	a {
+		position: absolute;
+		display: block;
+		width: 100%;
+		height: 100%;
+		padding: 0.5rem 0.8rem;
+		top: 0;
+		bottom: 0;
+	}
+
+}
+
+.hot-project-top-four {
+	width: 100%;
+	font-size: 0.9rem;
+
+	.hot-project-mid {
+		float: left;
+		width: 48%;
+
+		&:nth-child(odd) {
+			margin-right: 4%;
+		}
+
+		min-height: rem(135);
+		border: 1px solid $gray-light-background-color;
+		position: relative;
+		background-color: $hot-top-four-background-color;
+		margin-bottom: 1.5rem;
+
+		h3 {
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+		}
+
+		a {
+			position: absolute;
+			display: block;
+			width: 100%;
+			height: 100%;
+			padding: 0.5rem 0.8rem;
+			top: 0;
+			bottom: 0;
+		}
+	}
+}
+
+.hot-project-list {
+	width: 100%;
+	font-size: 1rem;
+	position: relative;
+
+	div {
+		width: 100%;
+		min-height: rem(45);
+		border: 1px solid $gray-light-background-color;
+		position: relative;
+		background-color: $hot-top-four-background-color;
+		margin-bottom: 1.5rem;
+	}
+
+	a {
+		position: absolute;
+		display: block;
+		width: 100%;
+		height: 100%;
+		padding: 0.8rem 0.8rem;
+		top: 0;
+		bottom: 0;
+	}
+}

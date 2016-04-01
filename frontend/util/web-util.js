@@ -1,11 +1,12 @@
 import WebActions from '../actions/web-actions';
 
 export default {
-  fetchProjects: function () {
+  fetchProjects: function (queries) {
     $.ajax({
       type: 'GET',
       url: '/api/projects',
       dataType: 'json',
+			data: queries,
       success: function (data) {
         WebActions.receiveProjects(data);
       }
