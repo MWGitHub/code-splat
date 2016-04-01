@@ -145,3 +145,6 @@ user interface.
 [phase-three]: ./docs/phases/phase3.md
 [phase-four]: ./docs/phases/phase4.md
 [phase-five]: ./docs/phases/phase5.md
+
+### TODO
+- [ ] fix not truly logging in on account creation on Heroku
