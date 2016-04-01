@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20160331191617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -29,9 +30,9 @@ ActiveRecord::Schema.define(version: 20160331191617) do
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
-  create_table "projects", force: :cascade do |t|
+  create_table "projects", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "title",      null: false
-    t.integer  "author_id",  null: false
+    t.uuid     "author_id",  null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "slug",       null: false
@@ -41,10 +42,10 @@ ActiveRecord::Schema.define(version: 20160331191617) do
   add_index "projects", ["slug"], name: "index_projects_on_slug", unique: true, using: :btree
   add_index "projects", ["title"], name: "index_projects_on_title", unique: true, using: :btree
 
-  create_table "source_files", force: :cascade do |t|
+  create_table "source_files", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name",       null: false
-    t.integer  "author_id",  null: false
-    t.integer  "project_id", null: false
+    t.uuid     "author_id",  null: false
+    t.uuid     "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "slug",       null: false
@@ -55,10 +56,10 @@ ActiveRecord::Schema.define(version: 20160331191617) do
   add_index "source_files", ["project_id", "slug"], name: "index_source_files_on_project_id_and_slug", unique: true, using: :btree
   add_index "source_files", ["project_id"], name: "index_source_files_on_project_id", using: :btree
 
-  create_table "text_changes", force: :cascade do |t|
+  create_table "text_changes", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.text     "body"
-    t.integer  "author_id",       null: false
-    t.integer  "changeable_id",   null: false
+    t.uuid     "author_id",       null: false
+    t.uuid     "changeable_id",   null: false
     t.string   "changeable_type", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
@@ -67,7 +68,7 @@ ActiveRecord::Schema.define(version: 20160331191617) do
   add_index "text_changes", ["author_id"], name: "index_text_changes_on_author_id", using: :btree
   add_index "text_changes", ["changeable_type", "changeable_id"], name: "index_text_changes_on_changeable_type_and_changeable_id", using: :btree
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "username",        null: false
     t.string   "password_digest", null: false
     t.string   "session_token",   null: false

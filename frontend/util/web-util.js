@@ -38,10 +38,10 @@ export default {
     });
   },
 
-  updateProject: function (slug, project, onSuccess) {
+  updateProject: function (id, project, onSuccess) {
     $.ajax({
       type: 'PATCH',
-      url: '/api/projects/' + slug,
+      url: '/api/projects/' + id,
       dataType: 'json',
       data: {
         project: project
@@ -53,10 +53,10 @@ export default {
     });
   },
 
-  destroyProject: function (slug) {
+  destroyProject: function (id) {
     $.ajax({
       type: 'DELETE',
-      url: '/api/projects/' + slug,
+      url: '/api/projects/' + id,
       dataType: 'json',
       success: function (data) {
         WebActions.removeProject(data);
@@ -67,7 +67,7 @@ export default {
   fetchProjectChanges: function (id) {
     $.ajax({
       type: 'GET',
-      url: '/api/projects/' + id + '/text_changes',
+      url: '/api/projects/' + slug + '/text_changes',
       dataType: 'json',
       success: function (data) {
         WebActions.receiveProjectChanges(data);
@@ -129,10 +129,11 @@ export default {
     });
   },
 
-  fetchSourcefileChanges: function (id) {
+  fetchSourcefileChanges: function (projectSlug, fileSlug) {
     $.ajax({
       type: 'GET',
-      url: '/api/source_files/' + id + '/text_changes',
+      url: '/api/projects/' + projectSlug + '/source_files/' +
+        fileSlug + '/text_changes',
       dataType: 'json',
       success: function (data) {
         WebActions.receiveSourceFileChanges(data);

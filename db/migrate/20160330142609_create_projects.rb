@@ -1,8 +1,8 @@
 class CreateProjects < ActiveRecord::Migration
   def change
-    create_table :projects do |t|
+    create_table :projects, id: :uuid do |t|
       t.string :title, null: false
-      t.integer :author_id, null: false
+      t.uuid :author_id, null: false
       t.text :description
 
       t.timestamps null: false

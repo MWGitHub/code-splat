@@ -1,10 +1,10 @@
 class CreateSourceFiles < ActiveRecord::Migration
   def change
-    create_table :source_files do |t|
+    create_table :source_files, id: :uuid do |t|
       t.string :name, null: false
       t.text :body
-      t.integer :author_id, null: false
-      t.integer :project_id, null: false
+      t.uuid :author_id, null: false
+      t.uuid :project_id, null: false
 
       t.timestamps null: false
     end

@@ -2,12 +2,14 @@ class Api::SourceFilesController < ApplicationController
   before_filter :require_signed_in!, only: [:create, :update, :destroy]
 
   def show
-    project = Project.find_by(slug: params[:project_slug])
-    @source_file = project.source_files.find_by(slug: params[:slug])
+    @source_file = SourceFile.find_by_path(
+      params[:project_id],
+      params[:id]
+    )
   end
 
   def create
-    project = Project.find_by(slug: params[:project_slug])
+    project = Project.find_by(slug: params[:project_id])
     input = {
       author_id: current_user.id,
       name: source_file_params[:name]
@@ -24,8 +26,8 @@ class Api::SourceFilesController < ApplicationController
   end
 
   def update
-    project = Project.find_by(slug: params[:project_slug])
-    @source_file = project.source_files.find_by(slug: params[:slug])
+    project = Project.find_by(slug: params[:project_id])
+    @source_file = project.source_files.find_by(slug: params[:id])
     @source_file.slug = nil
     @source_file.update!(name: source_file_params[:name])
     if @source_file && source_file_params[:body]
@@ -38,8 +40,8 @@ class Api::SourceFilesController < ApplicationController
   end
 
   def destroy
-    project = Project.find_by(slug: params[:project_slug])
-    @source_file = project.source_files.find_by(slug: params[:slug])
+    project = Project.find_by(slug: params[:project_id])
+    @source_file = project.source_files.find_by(slug: params[:id])
     @source_file.destroy
     render :show
   end

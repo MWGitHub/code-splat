@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import ProjectStore from '../stores/project';
+import ChangeStore from '../stores/change';
 import WebUtil from '../util/web-util';
 import FileList from './file-list';
 
@@ -31,7 +32,7 @@ class ProjectDetail extends React.Component {
   _handleDelete(e) {
     e.preventDefault();
 
-    WebUtil.destroyProject(this.state.project.slug);
+    WebUtil.destroyProject(this.state.project.id);
     this.context.router.push('/projects');
   }
 

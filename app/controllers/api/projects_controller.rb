@@ -27,7 +27,7 @@ class Api::ProjectsController < ApplicationController
   end
 
   def update
-    @project = Project.friendly.find(params[:slug])
+    @project = Project.find(params[:id])
     @project.slug = nil
     @project.update!(title: project_params[:title])
     if @project && project_params[:description]
@@ -40,7 +40,7 @@ class Api::ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = Project.friendly.find(params[:slug])
+    @project = Project.find(params[:id])
     @project.destroy
     render :show
   end

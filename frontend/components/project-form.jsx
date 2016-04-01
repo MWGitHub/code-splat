@@ -24,7 +24,7 @@ class ProjectForm extends React.Component {
 
     if (this.props.project) {
       WebUtil.updateProject(
-        this.props.project.slug,
+        this.props.project.id,
         {
           title: this.state.title,
           description: this.state.description,
@@ -132,7 +132,7 @@ class EditProjectForm extends React.Component {
     return (
       <ProjectForm project={this.state.project}
         onSuccess={project => {
-        this.context.router.push('/projects/' + project.slug);
+          this.context.router.push('/projects/' + project.slug);
       }} />
     )
   }

@@ -40,6 +40,11 @@ ProjectStore.__onDispatch = function (payload) {
       delete _projects[payload.project.slug]
       ProjectStore.__emitChange();
       break;
+    case WebConstants.RECEIVE_PROJECT_CHANGES:
+      let slug = payload.slug;
+      _projects[slug].changes = payload.changes;
+      ProjectStore.__emitChange();
+      break;
   }
 };
 
