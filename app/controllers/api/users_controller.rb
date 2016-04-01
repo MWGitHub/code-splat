@@ -1,6 +1,7 @@
 class Api::UsersController < ApplicationController
   def create
     @user = User.create!(user_params)
+		sign_in(@user)
     render :create
   end
 

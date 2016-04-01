@@ -108,21 +108,17 @@ user interface.
 **Objective:** Projects and files can be commented. Explanations can be made for lines in files. Comments, suggestions, and explanations can be voted on.
 
 - [x] create `Reply` model
-- [ ] create `Explanation` model
-- [ ] create `Vote` model
+- [x] create `Explanation` model
 - [ ] CRUD API for projects (`RepliesController`)
 - [ ] jBuilder views for projects
 - [ ] CRUD API for projects (`ExplanationsController`)
 - [ ] jBuilder views for files
-- [ ] API for changes (`VotesController`)
 - build out API, Flux loop, and components for:
   - [ ] Reply CRUD
   - [ ] Explanation CRUD
-  - [ ] Vote CRUD
   - [ ] adding comments requires a file or project
   - [ ] viewing comments by file or project
-  - [ ] viewing votes on comments, explanations, and suggestions
-- Use CSS to style new views
+- [ ] Use CSS to style new views
 
 ### Phase 6: Allow Complex Styling in Code and text selection (1 day)
 
@@ -147,6 +143,12 @@ user interface.
 - [ ] refactor code
 - [ ] optimize slow requests
 - [ ] check for memory leaks
+
+- [ ] create `Vote` model
+- [ ] API for changes (`VotesController`)
+- build out API, Flux loop, and components for:
+  - [ ] Vote CRUD
+	- [ ] viewing votes on comments, explanations, and suggestions
 
 [phase-one]: ./docs/phases/phase1.md
 [phase-two]: ./docs/phases/phase2.md
