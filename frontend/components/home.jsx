@@ -2,6 +2,7 @@ import React from 'react';
 import { ProjectListHot } from './project-list';
 import ProjectStore from '../stores/project';
 import WebUtil from '../util/web-util';
+import { Link } from 'react-router';
 
 class Home extends React.Component {
   constructor(props) {
@@ -44,6 +45,11 @@ class Home extends React.Component {
           </div>
           <p>Hot on Code Splat</p>
           <ProjectListHot projects={this.state.projects} />
+					<p className="home-aside">
+						<Link to='/projects'>
+							See more on Code Splat &raquo;
+						</Link>
+					</p>
         </div>
       </div>
     );

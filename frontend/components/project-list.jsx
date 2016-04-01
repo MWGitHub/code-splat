@@ -59,16 +59,16 @@ class ProjectList extends React.Component {
   render() {
     let projects = this.props.projects.map(project => {
       return (
-        <div key={'project-' + project.slug}>
+        <li className="list-result" key={'project-' + project.slug}>
           <Link to={"/projects/" + project.slug}>{project.title}</Link>
-        </div>
+        </li>
       );
     });
 
     return (
-      <div>
+      <ul className="primary-list">
         {projects}
-      </div>
+      </ul>
     );
   }
 }

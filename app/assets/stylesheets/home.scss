@@ -1,5 +1,50 @@
 @import 'variables';
 
+.home {
+  font-size: 0.85rem;
+
+  p {
+    margin: 0 0 0.25rem 0;
+  }
+}
+
+.home-left {
+  float: left;
+  width: 50%;
+  display: block;
+}
+
+.home-right {
+  float: left;
+  width: 50%;
+  display: block;
+}
+
+.home-about {
+  padding: 0.5rem 1rem;
+  border: 1px solid $gray-light-background-color;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.home-about-icon {
+  float: left;
+  width: 30%;
+  color: $nav-background-color;
+  text-align: center;
+
+  img {
+    width: 80%;
+    vertical-align: top;
+  }
+}
+
+.home-about-description {
+  float: right;
+  right: 0;
+  width: 70%;
+}
+
 .hot {
 	width: 100%;
 	position: relative;
@@ -17,7 +62,7 @@
 .hot-project-main {
 	width: 100%;
 	min-height: rem(135);
-	border: 1px solid $gray-light-background-color;
+	border: 1px solid $sub-form-background-color;
 	position: relative;
 	background-color: $hot-main-background-color;
 	margin-bottom: 1.5rem;
@@ -57,7 +102,7 @@
 		}
 
 		min-height: rem(135);
-		border: 1px solid $gray-light-background-color;
+		border: 1px solid $sub-form-background-color;
 		position: relative;
 		background-color: $hot-top-four-background-color;
 		margin-bottom: 1.5rem;
@@ -91,10 +136,14 @@
 	div {
 		width: 100%;
 		min-height: rem(45);
-		border: 1px solid $gray-light-background-color;
+		border: 1px solid $sub-form-background-color;
 		position: relative;
 		background-color: $hot-top-four-background-color;
 		margin-bottom: 1.5rem;
+
+		&:last-child {
+			margin-bottom: 0.5rem;
+		}
 	}
 
 	a {
@@ -106,4 +155,10 @@
 		top: 0;
 		bottom: 0;
 	}
+}
+
+.home-aside {
+	width: 100%;
+	text-align: right;
+	font-size: 0.9rem;
 }

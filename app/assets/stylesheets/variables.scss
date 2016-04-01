@@ -1,8 +1,11 @@
 @import 'bourbon';
 
+$secondary-nav-link-color: #99a7ee;
+
 $dark-background-color: #000;
 
 $dark-contrast-color: #c4c0c0;
+$dark-contrast-highlight-color: #eee;
 $gray-background-color: #292929;
 
 $link-color: #5ba7c2;
@@ -28,3 +31,5 @@ $border-radius: 3px;
 
 $hot-main-background-color: #222;
 $hot-top-four-background-color: shade($hot-main-background-color, 30%);
+
+$list-border-color: #1E1E1E;

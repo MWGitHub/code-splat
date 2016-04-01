@@ -159,8 +159,11 @@ class Nav extends React.Component {
           </div>
           {modal}
         </nav>
-        <nav className="secondary-nav group">
-          <Link to="/projects/new">Add Project</Link>
+        <nav className="secondary-nav">
+					<ul className="group">
+						<li><Link to="/projects">All Projects</Link></li>
+						<li><Link to="/projects/new">Add Project</Link></li>
+					</ul>
         </nav>
       </div>
     );

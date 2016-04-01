@@ -140,6 +140,8 @@ user interface.
 - [ ] Add modals, transitions, and other styling flourishes.
 
 ### Bonus Features (TBD)
+- [ ] add search
+- [ ] add pagination
 - [ ] refactor code
 - [ ] optimize slow requests
 - [ ] check for memory leaks

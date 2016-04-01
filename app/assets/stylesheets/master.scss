@@ -2,6 +2,7 @@
 @import 'forms';
 @import 'nav';
 @import 'home';
+@import 'list';
 @import 'variables';
 
 
@@ -46,47 +47,6 @@ p {
   padding-right: 1rem;
 }
 
-.home {
-  font-size: 0.85rem;
-
-  p {
-    margin: 0 0 0.25rem 0;
-  }
-}
-
-.home-left {
-  float: left;
-  width: 50%;
-  display: block;
-}
-
-.home-right {
-  float: left;
-  width: 50%;
-  display: block;
-}
-
-.home-about {
-  padding: 0.5rem 1rem;
-  border: 1px solid $gray-light-background-color;
-  position: relative;
-  margin-bottom: 1.5rem;
-}
-
-.home-about-icon {
-  float: left;
-  width: 30%;
-  color: $nav-background-color;
-  text-align: center;
-
-  img {
-    width: 80%;
-    vertical-align: top;
-  }
-}
-
-.home-about-description {
-  float: right;
-  right: 0;
-  width: 70%;
+.highlight {
+	color: $dark-contrast-highlight-color;
 }

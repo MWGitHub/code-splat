@@ -1,0 +1,35 @@
+.list-index {
+	p {
+		font-size: 0.9rem;
+		margin-bottom: 0.5rem;
+	}
+}
+
+.primary-list {
+	width: 100%;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+}
+
+.list-result {
+	width: 100%;
+	transition: all 0.25s;
+
+	&:hover {
+		border-left: 3px solid $nav-background-color;
+		padding-left: 0.5rem;
+	}
+
+	a {
+		border-top: 1px solid $list-border-color;
+		color: $dark-contrast-highlight-color;
+		display: block;
+		padding: 1rem 0;
+
+		&:hover {
+			color: $dark-contrast-color;
+		}
+	}
+}
