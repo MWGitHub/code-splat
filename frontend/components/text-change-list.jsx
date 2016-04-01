@@ -6,11 +6,18 @@ class TextChangeList extends React.Component {
   }
 
   render() {
+		let changes = this.props.changes.map(change => {
+			return (
+				<div key={'change-' + change.id}>
+					<p>{change.body}</p>
+				</div>
+			);
+		});
     return (
       <div>
-        Changes
+        {changes}
       </div>
-    )
+    );
   }
 }
 

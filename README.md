@@ -15,9 +15,10 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 
 - [x] Create an account
 - [x] Log in / Log out
-- [ ] Upload project files to generate code pages
-- [ ] Create, read, edit, and delete code pages
-- [ ] Organize code pages into projects
+- [ ] ~~Upload project files to generate code pages~~
+- [ ] Upload images in replices and suggestions
+- [x] Create, read, edit, and delete code pages
+- [x] Organize code pages into projects
 - [ ] Create, read, edit, and delete suggestions
 - [ ] Create, read, edit, and delete replies
 - [ ] Allow other users to vote on replies
@@ -69,7 +70,7 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 - [x] jBuilder views for changes
 - [x] setup Webpack & Flux scaffold
 - [x] setup `APIUtil` to interact with the API
-- [ ] test out API interaction in the console.
+- [x] test out API interaction in the console.
 
 ### Phase 3: Flux Architecture and Project/File/Changes CRUD (1.5 days)
 
@@ -87,9 +88,9 @@ user interface.
   - [x] `FileIndexItem`
   - [x] `FileForm`
 - implement each project component, building out the flux loop as needed.
-  - [ ] `TextChangesIndex`
-  - [ ] `TextChangeIndexItem`
-  - [ ] `TextChangeForm`
+  - [x] `TextChangesIndex`
+  - [x] `TextChangeIndexItem`
+  - [ ] ~~`TextChangeForm`~~
 
 ### Phase 4: Start Styling (0.5 days)
 

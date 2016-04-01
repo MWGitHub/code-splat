@@ -64,7 +64,7 @@ export default {
     });
   },
 
-  fetchProjectChanges: function (id) {
+  fetchProjectChanges: function (slug) {
     $.ajax({
       type: 'GET',
       url: '/api/projects/' + slug + '/text_changes',
