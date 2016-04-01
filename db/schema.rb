@@ -11,11 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160401190633) do
+ActiveRecord::Schema.define(version: 20160401194640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "explanations", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "source_file_id", null: false
+    t.text     "fragment",       null: false
+    t.integer  "fragment_start", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false

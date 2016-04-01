@@ -19,5 +19,9 @@ FactoryGirl.define do
         output
       end
     end
+
+		factory :suggestion do
+			body { Faker::Hacker.say_something_smart }
+		end
   end
 end

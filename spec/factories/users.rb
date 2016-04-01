@@ -77,6 +77,24 @@ FactoryGirl.define do
 							attributes = attributes_for(:reply)
 							attributes[:author_id] = User.order("RANDOM()").first.id
 							source_file.replies.create(attributes)
+
+							length = rand(source_file.body.length)
+							start = rand(source_file.body.length - length)
+							fragment = source_file.body[start..length + start]
+							attributes = {
+								fragment: fragment,
+								fragment_start: start
+							}
+							explanation = source_file.explanations.create(attributes)
+							3.times do |_|
+								attributes = attributes_for(:suggestion)
+								attributes[:author_id] = User.order("RANDOM()").first.id
+								explanation.text_changes.create(attributes)
+
+								attributes = attributes_for(:suggestion)
+								attributes[:author_id] = User.order("RANDOM()").first.id
+								explanation.replies.create(attributes)
+							end
             end
           end
         end

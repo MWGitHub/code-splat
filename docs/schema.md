@@ -21,7 +21,9 @@ project_id      integer       fk (projects)
 
 ## explanations
 id              integer       not null, pk
-file_id         integer       not null, fk (files)
+source_file_id  integer       not null, fk (files)
+fragment				text					not null
+fragment_start	text					not null
 
 ## text_changes
 id              integer       not null, pk
