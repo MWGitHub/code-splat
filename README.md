@@ -107,7 +107,7 @@ user interface.
 
 **Objective:** Projects and files can be commented. Explanations can be made for lines in files. Comments, suggestions, and explanations can be voted on.
 
-- [ ] create `Reply` model
+- [x] create `Reply` model
 - [ ] create `Explanation` model
 - [ ] create `Vote` model
 - [ ] CRUD API for projects (`RepliesController`)
@@ -140,6 +140,8 @@ user interface.
 - [ ] Add modals, transitions, and other styling flourishes.
 
 ### Bonus Features (TBD)
+- [ ] add user page
+- [ ] add user karma
 - [ ] add search
 - [ ] add pagination
 - [ ] refactor code

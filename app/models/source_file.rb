@@ -11,6 +11,7 @@ class SourceFile < ActiveRecord::Base
   belongs_to :author, class_name: "User", foreign_key: :author_id
 
   has_many :text_changes, as: :changeable, dependent: :destroy
+	has_many :replies, as: :repliable, dependent: :destroy
 
   def self.find_by_path(project_slug, file_slug)
     project = Project.friendly.find(project_slug)

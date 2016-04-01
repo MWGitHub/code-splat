@@ -11,4 +11,5 @@ class Project < ActiveRecord::Base
   has_many :source_files, dependent: :destroy
 
   has_many :text_changes, as: :changeable, dependent: :destroy
+	has_many :replies, as: :repliable, dependent: :destroy
 end

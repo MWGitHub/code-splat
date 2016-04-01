@@ -49,5 +49,38 @@ FactoryGirl.define do
         end
       end
     end
+
+		factory :user_with_all do
+			after(:create) do |user, evaluator|
+        3.times do |_|
+          project = user.projects.create(attributes_for(:project))
+          3.times do |_|
+            change_attr = attributes_for(:description)
+            change_attr[:author_id] = user.id
+            project.text_changes.create(change_attr)
+
+						attributes = attributes_for(:reply)
+						attributes[:author_id] = User.order("RANDOM()").first.id
+						project.replies.create(attributes)
+          end
+
+          3.times do |_|
+            factory_attr = attributes_for(:source_file)
+            factory_attr[:author_id] = user.id
+            source_file = project.source_files.create(factory_attr)
+
+            3.times do |_|
+              change_attr = attributes_for(:code)
+              change_attr[:author_id] = user.id
+              source_file.text_changes.create(change_attr)
+
+							attributes = attributes_for(:reply)
+							attributes[:author_id] = User.order("RANDOM()").first.id
+							source_file.replies.create(attributes)
+            end
+          end
+        end
+      end
+		end
   end
 end

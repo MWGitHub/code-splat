@@ -8,6 +8,8 @@
 User.destroy_all
 Project.destroy_all
 SourceFile.destroy_all
+TextChange.destroy_all
+Reply.destroy_all
 
 tester = User.create!(
   username: 'test',
@@ -30,4 +32,8 @@ end
 
 5.times do |_|
   FactoryGirl.create(:user_with_changes)
+end
+
+5.times do |_|
+	FactoryGirl.create(:user_with_all)
 end

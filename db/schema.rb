@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160331191617) do
+ActiveRecord::Schema.define(version: 20160401190633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,18 @@ ActiveRecord::Schema.define(version: 20160331191617) do
   add_index "projects", ["author_id"], name: "index_projects_on_author_id", using: :btree
   add_index "projects", ["slug"], name: "index_projects_on_slug", unique: true, using: :btree
   add_index "projects", ["title"], name: "index_projects_on_title", unique: true, using: :btree
+
+  create_table "replies", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.text     "body",           null: false
+    t.uuid     "author_id",      null: false
+    t.uuid     "repliable_id",   null: false
+    t.string   "repliable_type", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "replies", ["author_id"], name: "index_replies_on_author_id", using: :btree
+  add_index "replies", ["repliable_type", "repliable_id"], name: "index_replies_on_repliable_type_and_repliable_id", using: :btree
 
   create_table "source_files", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name",       null: false
