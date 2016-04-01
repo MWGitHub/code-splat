@@ -8,7 +8,7 @@ export default {
       top: '4rem',
       bottom: 'auto',
       width: '30rem',
-      left: 'calc(50% - 17.5rem)',
+      left: 'calc(50% - 15rem)',
       border: '0',
       padding: '0'
     }
