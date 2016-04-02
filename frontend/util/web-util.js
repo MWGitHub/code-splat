@@ -105,13 +105,14 @@ export default {
 
 
 
-  fetchSourceFile: function (projectSlug, slug) {
+  fetchSourceFile: function (projectSlug, slug, onSuccess) {
     $.ajax({
       type: 'GET',
       url: '/api/projects/' + projectSlug + '/source_files/' + slug,
       dataType: 'json',
       success: function (data) {
         WebActions.receiveSourceFile(data);
+				onSuccess && onSuccess(data);
       }
     });
   },
@@ -157,7 +158,7 @@ export default {
     });
   },
 
-  fetchSourcefileChanges: function (projectSlug, fileSlug) {
+  fetchSourceFileChanges: function (projectSlug, fileSlug) {
     $.ajax({
       type: 'GET',
       url: '/api/projects/' + projectSlug + '/source_files/' +
@@ -168,4 +169,43 @@ export default {
       }
     });
   },
+
+	fetchSourceFileReplies: function (id) {
+		$.ajax({
+			type: 'GET',
+			url: '/api/source_files/' + id + '/replies',
+			dataType: 'json',
+			success: function (data) {
+				WebActions.receiveSourceFileReplies(data);
+			}
+		})
+	},
+
+	createSourceFileReply: function (id, reply) {
+		$.ajax({
+			type: 'POST',
+			url: '/api/source_files/' + id + '/replies',
+			dataType: 'json',
+			data: {
+				reply: reply
+			},
+			success: function (data) {
+				WebActions.receiveSourceFileReply(data);
+			}
+		})
+	},
+
+
+
+
+	destroyReply: function (id) {
+		$.ajax({
+      type: 'DELETE',
+      url: '/api/replies/' + id,
+      dataType: 'json',
+      success: function (data) {
+        WebActions.removeReply(data);
+      }
+    });
+	}
 };

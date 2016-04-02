@@ -67,4 +67,27 @@ export default {
       changes: sourceFileChanges
     });
   },
+
+	receiveSourceFileReplies: function (replies) {
+		Dispatcher.dispatch({
+			actionType: WebConstants.RECEIVE_FILE_REPLIES,
+			replies: replies
+		});
+	},
+
+	receiveSourceFileReply: function (reply) {
+		Dispatcher.dispatch({
+			actionType: WebConstants.RECEIVE_FILE_REPLY,
+			reply: reply
+		});
+	},
+
+
+
+	removeReply: function (reply) {
+		Dispatcher.dispatch({
+			actionType: WebConstants.REMOVE_REPLY,
+			reply: reply
+		});
+	}
 };

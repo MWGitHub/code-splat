@@ -157,4 +157,4 @@ user interface.
 [phase-five]: ./docs/phases/phase5.md
 
 ### TODO
-- [ ] fix not truly logging in on account creation on Heroku
+- [ ] fix order of store items

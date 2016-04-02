@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
 		resources :source_files, only: [] do
 			resources :explanations, only: [:index, :create]
-			resource :replies, only: [:index, :create]
+			resources :replies, only: [:index, :create]
 		end
     resources :projects, only: [:show], param: :slug
 		resources :explanations, except: [:index, :create] do

@@ -3,7 +3,10 @@ import { Link } from 'react-router';
 import FileStore from '../stores/file';
 import WebUtil from '../util/web-util';
 import ChangeStore from '../stores/change';
+import ReplyStore from '../stores/reply';
 import TextChangeList from './text-change-list';
+import ReplyForm from './reply-form';
+import ReplyDetail from './reply-detail';
 
 class FileDetail extends React.Component {
   constructor(props) {
@@ -11,7 +14,8 @@ class FileDetail extends React.Component {
 
     this.state = {
       file: FileStore.find(this.props.params.fileSlug),
-			changes: null
+			changes: null,
+			replies: null
     };
   }
 
@@ -22,18 +26,33 @@ class FileDetail extends React.Component {
 		this.changeToken = ChangeStore.addListener(() => {
 			this.setState({ changes: ChangeStore.all() });
 		});
-    WebUtil.fetchSourceFile(this.props.params.slug, this.props.params.fileSlug);
+		this.replyToken = ReplyStore.addListener(() => {
+			this.setState({
+				replies: ReplyStore.allSourceFileReplies()
+			});
+		})
+    WebUtil.fetchSourceFile(
+			this.props.params.slug,
+			this.props.params.fileSlug, (file) => {
+				WebUtil.fetchSourceFileReplies(file.id);
+			});
   }
 
   componentWillUnmount() {
     this.fileToken.remove();
 		this.changeToken.remove();
+		this.replyToken.remove();
   }
 
   componentWillReceiveProps(newProps) {
-    WebUtil.fetchSourceFile(newProps.params.slug, newProps.params.fileSlug);
+		WebUtil.fetchSourceFile(
+			this.props.params.slug,
+			this.props.params.fileSlug, (file) => {
+				WebUtil.fetchSourceFileReplies(file.id);
+			});
 		this.setState({
-			changes: null
+			changes: null,
+			replies: null
 		});
   }
 
@@ -48,7 +67,11 @@ class FileDetail extends React.Component {
 		e.preventDefault();
 
 		let params = this.props.params;
-		WebUtil.fetchSourcefileChanges(params.slug, this.state.file.slug);
+		WebUtil.fetchSourceFileChanges(params.slug, this.state.file.slug);
+	}
+
+	_handleReply(reply) {
+		WebUtil.createSourceFileReply(this.state.file.id, reply);
 	}
 
   render() {
@@ -62,6 +85,15 @@ class FileDetail extends React.Component {
 			changes = <TextChangeList changes={this.state.changes} />
 		}
 
+		let replies = '';
+		if (this.state.replies) {
+			replies = this.state.replies.map(reply => {
+				return (
+					<ReplyDetail key={'reply-' + reply.id} reply={reply} />
+				);
+			});
+		}
+
     return (
       <div className="file-detail detail">
         <h1>{this.state.file.name}</h1>
@@ -69,6 +101,8 @@ class FileDetail extends React.Component {
         <a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>
 				<a href='#' onClick={this._handleContributions.bind(this)}>Contributions</a>
         <p>{this.state.file.body}</p>
+				<ReplyForm onSubmit={this._handleReply.bind(this)} />
+				{replies}
 				{changes}
       </div>
     );

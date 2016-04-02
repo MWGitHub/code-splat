@@ -25,11 +25,17 @@ function retrieveAll(replies) {
 	return output;
 }
 
+function removeReply(id) {
+	delete _projectReplies[id];
+	delete _fileReplies[id];
+	delete _explanationReplies[id];
+}
+
 ReplyStore.allProjectReplies = function () {
 	return retrieveAll(_projectReplies);
 };
 
-ReplyStore.allFileReplies = function () {
+ReplyStore.allSourceFileReplies = function () {
 	return retrieveAll(_fileReplies);
 };
 
@@ -45,6 +51,26 @@ ReplyStore.__onDispatch = function (payload) {
 			break;
 		case WebConstants.RECEIVE_PROJECT_REPLY:
 			_projectReplies[payload.reply.id] = payload.reply;
+			ReplyStore.__emitChange();
+			break;
+		case WebConstants.RECEIVE_FILE_REPLIES:
+			_fileReplies = resetReplies(payload.replies);
+			ReplyStore.__emitChange();
+			break;
+		case WebConstants.RECEIVE_FILE_REPLY:
+			_fileReplies[payload.reply.id] = payload.reply;
+			ReplyStore.__emitChange();
+			break;
+		case WebConstants.RECEIVE_EXPLANATION_REPLIES:
+			_explanationReplies = resetReplies(payload.replies);
+			ReplyStore.__emitChange();
+			break;
+		case WebConstants.RECEIVE_EXPLANATION_REPLY:
+			_explanationReplies[payload.reply.id] = payload.reply;
+			ReplyStore.__emitChange();
+			break;
+		case WebConstants.REMOVE_REPLY:
+			removeReply(payload.reply.id)
 			ReplyStore.__emitChange();
 			break;
 	}
