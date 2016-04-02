@@ -1,4 +1,8 @@
 class Api::RepliesController < ApplicationController
+	before_filter :require_signed_in!, only: [
+    :create, :update, :destroy
+  ]
+
 	def index
 		if params[:project_id]
 			project = Project.find(params[:project_id])
@@ -49,6 +53,6 @@ class Api::RepliesController < ApplicationController
 
 	private
 	def replies_param
-		param.require(:reply).permit(:body)
+		params.require(:reply).permit(:body)
 	end
 end

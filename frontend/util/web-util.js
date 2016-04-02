@@ -1,7 +1,7 @@
 import WebActions from '../actions/web-actions';
 
 export default {
-  fetchProjects: function (queries) {
+  fetchProjects: function (queries, onSuccess) {
     $.ajax({
       type: 'GET',
       url: '/api/projects',
@@ -9,17 +9,19 @@ export default {
 			data: queries || {},
       success: function (data) {
         WebActions.receiveProjects(data);
+				onSuccess && onSuccess(data);
       }
     });
   },
 
-  fetchProject: function (slug) {
+  fetchProject: function (slug, onSuccess) {
     $.ajax({
       type: 'GET',
       url: '/api/projects/' + slug,
       dataType: 'json',
       success: function (data) {
         WebActions.receiveProject(data);
+				onSuccess && onSuccess(data);
       }
     });
   },
@@ -75,6 +77,31 @@ export default {
       }
     });
   },
+
+	fetchProjectReplies: function (id) {
+		$.ajax({
+			type: 'GET',
+			url: '/api/projects/' + id + '/replies',
+			dataType: 'json',
+			success: function (data) {
+				WebActions.receiveProjectReplies(data);
+			}
+		})
+	},
+
+	createProjectReply: function (id, reply) {
+		$.ajax({
+			type: 'POST',
+			url: '/api/projects/' + id + '/replies',
+			dataType: 'json',
+			data: {
+				reply: reply
+			},
+			success: function (data) {
+				WebActions.receiveProjectReply(data);
+			}
+		})
+	},
 
 
 

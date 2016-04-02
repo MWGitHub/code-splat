@@ -63,7 +63,7 @@ class FileDetail extends React.Component {
 		}
 
     return (
-      <div>
+      <div className="file-detail detail">
         <h1>{this.state.file.name}</h1>
         <Link to={editUrl}>Edit</Link>
         <a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>

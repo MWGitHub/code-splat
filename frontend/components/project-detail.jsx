@@ -2,9 +2,12 @@ import React from 'react';
 import { Link } from 'react-router';
 import ProjectStore from '../stores/project';
 import ChangeStore from '../stores/change';
+import ReplyStore from '../stores/reply';
 import WebUtil from '../util/web-util';
 import FileList from './file-list';
 import TextChangeList from './text-change-list';
+import ReplyForm from './reply-form';
+import ReplyDetail from './reply-detail';
 
 class ProjectDetail extends React.Component {
   constructor(props) {
@@ -12,7 +15,8 @@ class ProjectDetail extends React.Component {
 
     this.state = {
       project: ProjectStore.find(this.props.params.slug),
-			changes: null
+			changes: null,
+			replies: null
     };
   }
 
@@ -27,18 +31,29 @@ class ProjectDetail extends React.Component {
 				changes: ChangeStore.all()
 			});
 		});
-    WebUtil.fetchProject(this.props.params.slug);
+		this.replyToken = ReplyStore.addListener(() => {
+			this.setState({
+				replies: ReplyStore.allProjectReplies()
+			});
+		})
+    WebUtil.fetchProject(this.props.params.slug, (project) => {
+			WebUtil.fetchProjectReplies(project.id);
+		});
   }
 
   componentWillUnmount() {
     this.projectToken.remove();
 		this.changeToken.remove();
+		this.replyToken.remove();
   }
 
   componentWillReceiveProps(newProps) {
-    WebUtil.fetchProject(newProps.params.slug);
 		this.setState({
-			changes: null
+			changes: null,
+			replies: null
+		});
+    WebUtil.fetchProject(newProps.params.slug, (project) => {
+			WebUtil.fetchProjectReplies(project.id);
 		});
   }
 
@@ -55,6 +70,10 @@ class ProjectDetail extends React.Component {
 		WebUtil.fetchProjectChanges(this.state.project.slug);
 	}
 
+	_handleReply(reply) {
+		WebUtil.createProjectReply(this.state.project.id, reply);
+	}
+
   render() {
     if (!this.state.project) return <div></div>;
 
@@ -63,16 +82,27 @@ class ProjectDetail extends React.Component {
 			changes = <TextChangeList changes={this.state.changes} />
 		}
 
+		let replies = '';
+		if (this.state.replies) {
+			replies = this.state.replies.map(reply => {
+				return (
+					<ReplyDetail key={'reply-' + reply.id} reply={reply} />
+				);
+			});
+		}
+
     return (
-      <div>
+      <div className="project-detail detail">
         <h1>{this.state.project.title}</h1>
         <Link to={'/projects/' + this.state.project.slug + '/edit'}>Edit</Link>
         <a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>
         <Link to={'/projects/' + this.state.project.slug + '/files/new'}>Create File</Link>
 				<a href='#' onClick={this._handleContributions.bind(this)}>Contributions</a>
+				<ReplyForm onSubmit={this._handleReply.bind(this)} />
         <p>{this.state.project.description}</p>
         <FileList files={this.state.project.source_files}
           projectSlug={this.state.project.slug} />
+				{replies}
 				{changes}
       </div>
     );

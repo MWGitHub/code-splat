@@ -30,6 +30,22 @@ export default {
     });
   },
 
+	receiveProjectReplies: function (projectReplies) {
+		Dispatcher.dispatch({
+			actionType: WebConstants.RECEIVE_PROJECT_REPLIES,
+			replies: projectReplies
+		});
+	},
+
+	receiveProjectReply: function (projectReply) {
+		Dispatcher.dispatch({
+			actionType: WebConstants.RECEIVE_PROJECT_REPLY,
+			reply: projectReply
+		});
+	},
+
+
+
 
   receiveSourceFile: function (sourceFile) {
     Dispatcher.dispatch({
@@ -50,5 +66,5 @@ export default {
       actionType: WebConstants.RECEIVE_FILE_CHANGES,
       changes: sourceFileChanges
     });
-  }
+  },
 };
