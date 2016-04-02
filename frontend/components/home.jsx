@@ -39,7 +39,7 @@ class Home extends React.Component {
               <img src="/assets/images/home-code-icon.png" />
             </div>
             <div className="home-about-description">
-              <p>Code Splat is dedicated to crowd-sourced annotation of source code, from “Rapper’s Delight” to To Pimp A Butterfly. Fan favorites Rap Stats & The Rap Map also call Rap Genius home.</p>
+              <p>Code Splat is dedicated to crowd-sourced annotation of source code, from <a href="#">“Rapper’s Delight”</a> to <a href="#">To Pimp A Butterfly</a>. Fan favorites Rap Stats & The Rap Map also call Code Splat home.</p>
               <p>Find out all the latest on <a href="#">Twitter</a> and <a href="#">Facebook</a></p>
             </div>
           </div>
