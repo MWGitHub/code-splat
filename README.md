@@ -109,8 +109,8 @@ user interface.
 
 - [x] create `Reply` model
 - [x] create `Explanation` model
-- [ ] CRUD API for projects (`RepliesController`)
-- [ ] jBuilder views for projects
+- [x] CRUD API for projects (`RepliesController`)
+- [x] jBuilder views for projects
 - [ ] CRUD API for projects (`ExplanationsController`)
 - [ ] jBuilder views for files
 - build out API, Flux loop, and components for:
