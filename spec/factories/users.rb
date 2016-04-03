@@ -16,6 +16,8 @@ FactoryGirl.define do
       after(:create) do |user, evaluator|
         3.times do |_|
           project = user.projects.create(attributes_for(:project))
+          next unless project.persisted?
+
           3.times do |_|
             factory_attr = attributes_for(:source_file)
             factory_attr[:author_id] = user.id
@@ -29,6 +31,8 @@ FactoryGirl.define do
       after(:create) do |user, evaluator|
         3.times do |_|
           project = user.projects.create(attributes_for(:project))
+          next unless project.persisted?
+
           3.times do |_|
             change_attr = attributes_for(:description)
             change_attr[:author_id] = user.id
@@ -39,6 +43,7 @@ FactoryGirl.define do
             factory_attr = attributes_for(:source_file)
             factory_attr[:author_id] = user.id
             source_file = project.source_files.create(factory_attr)
+            next unless source_file.persisted?
 
             3.times do |_|
               change_attr = attributes_for(:code)
@@ -54,6 +59,8 @@ FactoryGirl.define do
 			after(:create) do |user, evaluator|
         3.times do |_|
           project = user.projects.create(attributes_for(:project))
+          next unless project.persisted?
+
           3.times do |_|
             change_attr = attributes_for(:description)
             change_attr[:author_id] = user.id
@@ -68,6 +75,7 @@ FactoryGirl.define do
             factory_attr = attributes_for(:source_file)
             factory_attr[:author_id] = user.id
             source_file = project.source_files.create(factory_attr)
+            next unless source_file.persisted?
 
             3.times do |_|
               change_attr = attributes_for(:code)
@@ -86,6 +94,8 @@ FactoryGirl.define do
 								fragment_start: start
 							}
 							explanation = source_file.explanations.create(attributes)
+              next unless explanation.persisted?
+
 							3.times do |_|
 								attributes = attributes_for(:suggestion)
 								attributes[:author_id] = User.order("RANDOM()").first.id

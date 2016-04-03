@@ -10,6 +10,7 @@ Project.destroy_all
 SourceFile.destroy_all
 TextChange.destroy_all
 Reply.destroy_all
+Explanation.destroy_all
 
 tester = User.create!(
   username: 'test',
