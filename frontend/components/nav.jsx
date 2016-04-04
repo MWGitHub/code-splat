@@ -139,7 +139,7 @@ class Nav extends React.Component {
           <li><a href="/register"
             onClick={this._handleRegisterClick.bind(this)}>SIGN UP</a></li>
           <li><a href="/login"
-            onClick={this._handleLoginClick.bind(this)}>SIGN IN</a></li>
+            onClick={this._handleLoginClick.bind(this)}>SIGN IN / GUEST</a></li>
         </ul>
       );
     }

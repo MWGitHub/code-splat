@@ -53,5 +53,12 @@ export default {
         UserActions.receiveLogout();
       }
     });
-  }
+  },
+
+	loginAsGuest: function () {
+		this.login({
+			username: 'demo',
+			password: 'password'
+		})
+	}
 };

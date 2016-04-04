@@ -54,6 +54,12 @@ class Login extends React.Component {
     this.setState({ password: e.target.value });
   }
 
+	_signInGuest(e) {
+		e.preventDefault();
+
+		UserUtil.loginAsGuest();
+	}
+
   render() {
     return (
       <div className="modal">
@@ -69,6 +75,10 @@ class Login extends React.Component {
         </a>
         <a href="#" className="auth-button auth-google">
           <i className="fa fa-google-plus"></i>Sign in with Google
+        </a>
+				<a href="#" className="auth-button auth-email"
+          onClick={this._signInGuest.bind(this)}>
+          <i className="fa fa-envelope"></i>Sign in as Guest
         </a>
         <form className="form sub-form"
           onSubmit={this._handleSubmit.bind(this)}>
