@@ -1,6 +1,6 @@
 class Explanation < ActiveRecord::Base
 	include Changeable
-	
+
 	before_validation :set_fragment_end
 
 	validates(
@@ -40,18 +40,18 @@ class Explanation < ActiveRecord::Base
 	def does_not_overlap_fragment
 		set_fragment_end
 
-		return if overlapping_fragments.empty?
+		return true if overlapping_fragments.empty?
 
-		p 'overlapping'
-		raise 'Fragment should not overlap with other fragments'
+		errors.add(:fragment, 'Fragment should not overlap with other fragments')
+		return false
 	end
 
 	def start_before_end
 		set_fragment_end
 
-		return if fragment_start < fragment_end
+		return true if fragment_start < fragment_end
 
-		p 'start end wrong'
-		raise 'Fragment start must be before end'
+		errors.add(:fragment, 'Fragment start must be before end')
+		return false
 	end
 end
