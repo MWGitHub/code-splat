@@ -2,16 +2,19 @@ import { Store } from 'flux/utils';
 import Dispatcher from '../dispatcher/dispatcher';
 import WebConstants from '../constants/web-constants';
 
-let _projects = {};
+let _projects = [];
 let _projectsFront = [];
 
 let ProjectStore = new Store(Dispatcher);
 
 function resetProjects(projects) {
-  for (let i = 0; i < projects.length; i++) {
-    let project = projects[i];
-    _projects[project.slug] = project;
-  }
+	_projects = projects.slice();
+}
+
+function receiveProject(project) {
+	if (_projects.indexOf(project) === -1) {
+		_projects.push(project);
+	}
 }
 
 ProjectStore.allFront = function () {
@@ -19,15 +22,17 @@ ProjectStore.allFront = function () {
 }
 
 ProjectStore.all = function () {
-  let projects = [];
-  for (let key in _projects) {
-    projects.shift(_projects[key]);
-  }
-  return projects;
+  return _projects.slice();
 }
 
 ProjectStore.find = function (slug) {
-  return _projects[slug];
+	for (let i = 0; i < _projects.length; ++i) {
+		let project = _projects[i];
+		if (project.slug === slug) {
+			return project;
+		}
+	}
+	return null;
 }
 
 ProjectStore.__onDispatch = function (payload) {
@@ -38,7 +43,7 @@ ProjectStore.__onDispatch = function (payload) {
       break;
     case WebConstants.RECEIVE_PROJECT:
       let project = payload.project;
-      _projects[project.slug] = project;
+      receiveProject(project);
       ProjectStore.__emitChange();
       break;
     case WebConstants.REMOVE_PROJECT:

@@ -4,6 +4,7 @@ class ProgramSeeds
 
 		project = user.projects.create(
 			title: 'Simple Sorting',
+			language: 'ruby'
 		)
 		project.text_changes.create(
 			author_id: user.id,
@@ -14,6 +15,7 @@ class ProgramSeeds
 		)
 		file = project.source_files.create(
 			name: 'merge_sort.rb',
+			language: 'ruby',
 			author_id: user.id
 		)
 		file.text_changes.create(

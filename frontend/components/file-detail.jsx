@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import FileStore from '../stores/file';
 import WebUtil from '../util/web-util';
@@ -7,8 +8,9 @@ import ReplyStore from '../stores/reply';
 import TextChangeList from './text-change-list';
 import ReplyForm from './reply-form';
 import ReplyDetail from './reply-detail';
-import Codemirror from 'react-codemirror';
+import CodeMirror from 'react-codemirror';
 import Ruby from 'codemirror/mode/ruby/ruby';
+import SimpleScrollBars from 'codemirror/addon/scroll/simplescrollbars';
 
 class FileDetail extends React.Component {
   constructor(props) {
@@ -18,7 +20,8 @@ class FileDetail extends React.Component {
       file: FileStore.find(this.props.params.fileSlug),
 			changes: null,
 			replies: null,
-			isEditing: false
+			isEditing: false,
+			selection: null
     };
   }
 
@@ -44,6 +47,7 @@ class FileDetail extends React.Component {
     this.fileToken.remove();
 		this.changeToken.remove();
 		this.replyToken.remove();
+		clearInterval(this.selectionInterval);
   }
 
   componentWillReceiveProps(newProps) {
@@ -60,6 +64,17 @@ class FileDetail extends React.Component {
 
 	_handleFilechange() {
 	  this.setState({ file: FileStore.find(this.props.params.fileSlug) });
+
+		if (this.refs.codemirror) {
+			let codeMirrorDOM = ReactDOM.findDOMNode(this.refs.codemirror);
+			codeMirrorDOM.addEventListener('mouseup', e => {
+				let codeMirror = this.refs.codemirror.getCodeMirror();
+				let selection = codeMirror.getSelection();
+				let start = codeMirror.getCursor();
+				console.log(selection);
+				console.log(start);
+			});
+		}
 	}
 
   _handleDelete(e) {
@@ -107,11 +122,24 @@ class FileDetail extends React.Component {
 			});
 		}
 
+		let theme = 'material';
+		if (this.state.isEditing) {
+			theme += '-editing';
+		}
 		let options = {
-			mode: 'ruby',
-			readOnly: !this.state.isEditing,
-			theme: 'material'
+			mode: this.state.file.language,
+			readOnly: !!this.state.isEditing,
+			theme: theme,
+			tabSize: 2,
+			scrollbarStyle: 'simple'
 		};
+
+		let codeMirror = (
+			<CodeMirror ref="codemirror"
+				value={this.state.file.body} 	onChange={this._handleBodyUpdate.bind(this)}
+				options={options}
+			/>
+		);
 
     return (
       <div className="file-detail detail group">
@@ -120,10 +148,7 @@ class FileDetail extends React.Component {
 				</div>
 				<div className="left">
 					<div className="code">
-						<Codemirror
-							value={this.state.file.body} 	onChange={this._handleBodyUpdate.bind(this)}
-							options={options}
-							/>
+						{codeMirror}
 					</div>
 					<ReplyForm onSubmit={this._handleReply.bind(this)} />
 					{replies}

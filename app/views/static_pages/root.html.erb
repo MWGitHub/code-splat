@@ -1,4 +1,14 @@
 <div id="content">
+	<script type="text/javascript">
+		var codeSplat = {
+			codeLanguages: []
+		};
+		window.codeSplat = codeSplat;
+		<% Project::CODE_LANGUAGES.each do |language| %>
+			codeSplat.codeLanguages.push(<%= "\"#{language}\"".html_safe %>);
+		<% end %>
+		codeSplat.homeIconPath = "<%= asset_path('home-code-icon.png') %>";
+	</script>
   <h1>CodeSplat</h1>
   <p>Loading...</p>
   <!-- <p>Sorry, your browser is not supported.</p> -->

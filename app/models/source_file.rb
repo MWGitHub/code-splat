@@ -4,8 +4,11 @@ class SourceFile < ActiveRecord::Base
 
   include Changeable
 
-  validates :name, :author_id, :project_id, presence: true
+  validates :name, :author_id, :project_id, :language, presence: true
   validates :name, uniqueness: { scope: :project_id }
+	validates :language, inclusion: {
+		in: Project::CODE_LANGUAGES
+	}
 
   belongs_to :project
   belongs_to :author, class_name: "User", foreign_key: :author_id

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404132145) do
+ActiveRecord::Schema.define(version: 20160404185210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,11 +49,12 @@ ActiveRecord::Schema.define(version: 20160404132145) do
   add_index "front_page_items", ["project_id"], name: "index_front_page_items_on_project_id", using: :btree
 
   create_table "projects", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.string   "title",      null: false
-    t.uuid     "author_id",  null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "slug",       null: false
+    t.string   "title",                       null: false
+    t.uuid     "author_id",                   null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "slug",                        null: false
+    t.string   "language",   default: "ruby", null: false
   end
 
   add_index "projects", ["author_id"], name: "index_projects_on_author_id", using: :btree
@@ -73,12 +74,13 @@ ActiveRecord::Schema.define(version: 20160404132145) do
   add_index "replies", ["repliable_type", "repliable_id"], name: "index_replies_on_repliable_type_and_repliable_id", using: :btree
 
   create_table "source_files", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.uuid     "author_id",  null: false
-    t.uuid     "project_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "slug",       null: false
+    t.string   "name",                        null: false
+    t.uuid     "author_id",                   null: false
+    t.uuid     "project_id",                  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "slug",                        null: false
+    t.string   "language",   default: "ruby", null: false
   end
 
   add_index "source_files", ["author_id"], name: "index_source_files_on_author_id", using: :btree

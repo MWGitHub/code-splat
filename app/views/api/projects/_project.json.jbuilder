@@ -1,4 +1,4 @@
-json.extract! project, :id, :title, :slug
+json.extract! project, :id, :title, :slug, :language
 json.description project.body
 
 show_files ||= false

@@ -5,15 +5,60 @@
 }
 
 .cm-s-material {
-	background-color: #000;
+	background-color: $dark-background-color;
 	height: 100%;
 	font-size: 1.1rem;
 }
+
 
 .cm-s-material div.CodeMirror-selected {
 	background: rgba(255, 255, 255, 0.35);
 }
 
 .cm-s-material.CodeMirror-focused div.CodeMirror-selected {
-	background: rgba(255, 255, 255, 0.35); 
+	background: rgba(255, 255, 255, 0.35);
+}
+
+.cm-s-material .CodeMirror-cursor {
+	border-left: 1px solid $dark-background-color;
+}
+
+
+.cm-s-material-editing {
+	background-color: $dark-background-color;
+	height: 100%;
+	font-size: 1.1rem;
+}
+
+.cm-s-material-editing div.CodeMirror-selected {
+	background: rgba(255, 255, 255, 0.35);
+}
+
+.cm-s-material-editing.CodeMirror-focused div.CodeMirror-selected {
+	background: rgba(255, 255, 255, 0.35);
+}
+
+.cm-s-material-editing .CodeMirror-cursor {
+	border-left: 1px solid $dark-background-color;
+}
+
+.CodeMirror-simplescroll-horizontal div, .CodeMirror-simplescroll-vertical div {
+  position: absolute;
+  background: $sub-form-background-color;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 2px;
+}
+
+.CodeMirror-simplescroll-horizontal, .CodeMirror-simplescroll-vertical {
+  position: absolute;
+  z-index: 6;
+  background: $dark-background-color;
+}
+
+.CodeMirror-overlayscroll-horizontal div, .CodeMirror-overlayscroll-vertical div {
+  position: absolute;
+  background: #bcd;
+  border-radius: 3px;
 }
