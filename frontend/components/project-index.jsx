@@ -11,7 +11,6 @@ class ProjectIndex extends React.Component {
 		this.state = {
 			projects: []
 		};
-		console.log(props);
 	}
 
 	componentDidMount() {

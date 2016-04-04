@@ -152,7 +152,7 @@ class Nav extends React.Component {
             <span className="input-icon fa fa-search"></span>
           </div>
           <div className="logo">
-            <h2><Link to='/'>CodeSplat</Link></h2>
+            <h2><Link to='/'>&nbsp;</Link></h2>
           </div>
           <div className="menu">
             {profileBar}
