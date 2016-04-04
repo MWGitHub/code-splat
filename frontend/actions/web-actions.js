@@ -89,5 +89,14 @@ export default {
 			actionType: WebConstants.REMOVE_REPLY,
 			reply: reply
 		});
+	},
+
+
+
+	receieveFrontPageItems: function (items) {
+		Dispatcher.dispatch({
+			actionType: WebConstants.RECEIVE_FRONT_PAGE_ITEMS,
+			items: items
+		});
 	}
 };

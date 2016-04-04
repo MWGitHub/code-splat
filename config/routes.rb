@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 		end
     resources :text_changes, only: [:show]
 		resources :replies, except: [:index, :show]
+
+		resources :front_page_items, only: [:index]
   end
 
   root to: 'static_pages#root'

@@ -3,6 +3,7 @@ import Dispatcher from '../dispatcher/dispatcher';
 import WebConstants from '../constants/web-constants';
 
 let _projects = {};
+let _projectsFront = [];
 
 let ProjectStore = new Store(Dispatcher);
 
@@ -11,6 +12,10 @@ function resetProjects(projects) {
     let project = projects[i];
     _projects[project.slug] = project;
   }
+}
+
+ProjectStore.allFront = function () {
+	return _projectsFront.slice();
 }
 
 ProjectStore.all = function () {
@@ -40,6 +45,10 @@ ProjectStore.__onDispatch = function (payload) {
       delete _projects[payload.project.slug]
       ProjectStore.__emitChange();
       break;
+		case WebConstants.RECEIVE_FRONT_PAGE_ITEMS:
+			_projectsFront = payload.items;
+			ProjectStore.__emitChange();
+			break;
   }
 };
 

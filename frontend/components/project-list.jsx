@@ -2,6 +2,48 @@ import React from 'react';
 import ProjectStore from '../stores/project';
 import { Link } from 'react-router';
 
+class ProjectListFront extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		if (!this.props.projects || this.props.projects.length === 0) {
+			return <div></div>;
+		}
+
+		let projects = this.props.projects.slice();
+		let main = projects.shift();
+		projects = projects.map(project => {
+			return (
+				<div key={"project-front-" + project.id} className="front-item front-secondary">
+					<h3 className="front-title">
+						<Link to={"/projects/" + project.project.slug}>
+							{project.project.title}
+						</Link>
+					</h3>
+					<p className="front-description">{project.description}</p>
+				</div>
+			);
+		});
+
+		return (
+			<div className="front">
+				<div className="front-item front-main">
+					<h1 className="front-main-title">
+						<Link to={"/projects/" + main.project.slug}>
+							{main.project.title}
+						</Link>
+					</h1>
+					<p className="front-description">{main.description}</p>
+				</div>
+				{projects}
+			</div>
+		);
+	}
+}
+module.exports.ProjectListFront = ProjectListFront;
+
 class ProjectListHot extends React.Component {
 	constructor(props) {
     super(props);

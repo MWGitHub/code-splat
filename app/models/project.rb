@@ -12,4 +12,6 @@ class Project < ActiveRecord::Base
 
   has_many :text_changes, as: :changeable, dependent: :destroy
 	has_many :replies, as: :repliable, dependent: :destroy
+
+	has_many :front_page_items, dependent: :destroy
 end

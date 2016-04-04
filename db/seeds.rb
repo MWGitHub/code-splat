@@ -11,6 +11,7 @@ SourceFile.destroy_all
 TextChange.destroy_all
 Reply.destroy_all
 Explanation.destroy_all
+FrontPageItem.destroy_all
 
 tester = User.create!(
   username: 'test',
@@ -18,6 +19,12 @@ tester = User.create!(
   email: 'test@test.com'
 )
 tester.projects.create(title: 'test project')
+
+demo = User.create!(
+	username: 'demo',
+	password: 'password',
+	email: 'demo@example.com'
+)
 
 5.times do |_|
   FactoryGirl.create(:user)
@@ -38,3 +45,8 @@ end
 5.times do |_|
 	FactoryGirl.create(:user_with_all)
 end
+
+
+
+Project.last.front_page_items.create(description: 'Simple recursive merge sort')
+Project.first.front_page_items.create(description: 'Simple recursive quick sort')

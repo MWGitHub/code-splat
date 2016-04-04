@@ -207,5 +207,18 @@ export default {
         WebActions.removeReply(data);
       }
     });
+	},
+
+
+
+	fetchFrontPageItems: function () {
+		$.ajax({
+			type: 'GET',
+			url: '/api/front_page_items',
+			dataType: 'json',
+			success: function (data) {
+				WebActions.receieveFrontPageItems(data);
+			}
+		});
 	}
 };

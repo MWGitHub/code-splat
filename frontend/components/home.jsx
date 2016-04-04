@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProjectListHot } from './project-list';
+import { ProjectListFront, ProjectListHot } from './project-list';
 import ProjectStore from '../stores/project';
 import WebUtil from '../util/web-util';
 import { Link } from 'react-router';
@@ -9,16 +9,22 @@ class Home extends React.Component {
     super(props);
 
     this.state = {
-      projects: ProjectStore.all()
+      projects: ProjectStore.all(),
+			frontProjects: ProjectStore.allFront()
     };
   }
 
   componentDidMount() {
     this.projectToken = ProjectStore.addListener(() => {
-      this.setState({ projects: ProjectStore.all() });
+      this.setState({
+				projects: ProjectStore.all(),
+				frontProjects: ProjectStore.allFront()
+			});
     });
     WebUtil.fetchProjects({
 			type: 'hot'
+		}, () => {
+			WebUtil.fetchFrontPageItems();
 		});
   }
 
@@ -31,6 +37,7 @@ class Home extends React.Component {
       <div className="home group">
         <div className="home-left">
           <p>Latest on Code Splat</p>
+					<ProjectListFront projects={this.state.frontProjects} />
         </div>
         <div className="home-right">
           <p>About Code Splat</p>

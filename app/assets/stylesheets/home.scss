@@ -45,6 +45,32 @@
   width: 70%;
 }
 
+.front {
+	h1, h3 {
+		margin: 0 0 0.5rem 0;
+	}
+
+	h1 {
+		font-size: 1.6rem;
+	}
+
+	h3 {
+		font-size: 1.4rem;
+	}
+
+	a {
+		color: $dark-contrast-color;
+
+		&:hover {
+			color: $dark-contrast-color;
+		}
+	}
+
+	.front-item {
+		margin-bottom: 2rem;
+	}
+}
+
 .hot {
 	width: 100%;
 	position: relative;
