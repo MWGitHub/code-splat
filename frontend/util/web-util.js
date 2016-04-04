@@ -220,5 +220,30 @@ export default {
 				WebActions.receieveFrontPageItems(data);
 			}
 		});
+	},
+
+	fetchExplanations: function (sourceFileId) {
+		$.ajax({
+			type: 'GET',
+			url: '/api/source_files/' + sourceFileId + '/explanations',
+			dataType: 'json',
+			success: function (data) {
+				WebActions.receiveExplanations(data);
+			}
+		});
+	},
+
+	createExplanation: function (sourceFileId, explanation) {
+		$.ajax({
+			type: 'POST',
+			url: '/api/source_files/' + sourceFileId + '/explanations',
+			dataType: 'json',
+			data: {
+				explanation: explanation
+			},
+			success: function (data) {
+				WebActions.receiveExplanation(data);
+			}
+		});
 	}
 };

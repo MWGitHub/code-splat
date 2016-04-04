@@ -19,11 +19,11 @@ function receiveProject(project) {
 
 ProjectStore.allFront = function () {
 	return _projectsFront.slice();
-}
+};
 
 ProjectStore.all = function () {
   return _projects.slice();
-}
+};
 
 ProjectStore.find = function (slug) {
 	for (let i = 0; i < _projects.length; ++i) {
@@ -33,7 +33,7 @@ ProjectStore.find = function (slug) {
 		}
 	}
 	return null;
-}
+};
 
 ProjectStore.__onDispatch = function (payload) {
   switch (payload.actionType) {

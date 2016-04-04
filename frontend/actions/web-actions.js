@@ -98,5 +98,19 @@ export default {
 			actionType: WebConstants.RECEIVE_FRONT_PAGE_ITEMS,
 			items: items
 		});
+	},
+
+	receiveExplanations: function (explanations) {
+		Dispatcher.dispatch({
+			actionType: WebConstants.RECEIVE_EXPLANATIONS,
+			explanations: explanations
+		});
+	},
+
+	receiveExplanation: function (explanation) {
+		Dispatcher.dispatch({
+			actionType: WebConstants.RECEIVE_EXPLANATION,
+			explanation: explanation
+		});
 	}
 };

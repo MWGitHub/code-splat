@@ -3,8 +3,8 @@ Rails.application.routes.draw do
     resources :users, only: [:create, :update]
     resource :session, only: [:show, :create, :destroy]
 
-    resources :projects, except: [:show] do
-      resources :source_files, except: [:index] do
+    resources :projects, except: [:new, :show, :edit] do
+      resources :source_files, except: [:index, :new, :edit] do
         get 'text_changes', to: 'text_changes#index_source_file'
       end
       get 'text_changes', to: 'text_changes#index_project'
@@ -16,11 +16,11 @@ Rails.application.routes.draw do
 			resources :replies, only: [:index, :create]
 		end
     resources :projects, only: [:show], param: :slug
-		resources :explanations, except: [:index, :create] do
+		resources :explanations, except: [:index, :create, :new, :edit] do
 			resources :replies, only: [:index, :create]
 		end
     resources :text_changes, only: [:show]
-		resources :replies, except: [:index, :show]
+		resources :replies, except: [:index, :show, :new, :edit]
 
 		resources :front_page_items, only: [:index]
   end

@@ -11,6 +11,7 @@ import ReplyDetail from './reply-detail';
 import CodeMirror from 'react-codemirror';
 import Ruby from 'codemirror/mode/ruby/ruby';
 import SimpleScrollBars from 'codemirror/addon/scroll/simplescrollbars';
+import ExplanationForm from './explanation-form';
 
 class FileDetail extends React.Component {
   constructor(props) {
@@ -21,7 +22,8 @@ class FileDetail extends React.Component {
 			changes: null,
 			replies: null,
 			isEditing: false,
-			selection: null
+			selection: null,
+			selectionStart: null
     };
   }
 
@@ -70,9 +72,18 @@ class FileDetail extends React.Component {
 			codeMirrorDOM.addEventListener('mouseup', e => {
 				let codeMirror = this.refs.codemirror.getCodeMirror();
 				let selection = codeMirror.getSelection();
-				let start = codeMirror.getCursor();
-				console.log(selection);
-				console.log(start);
+				let start = codeMirror.getCursor('from');
+				let startIndex = 0;
+				for (let i = 0; i < start.line; ++i) {
+					let line = codeMirror.getLine(i);
+					// Make sure to add the chars for the new line
+					startIndex += 1 + line.length;
+				}
+				startIndex += start.ch;
+				this.setState({
+					selectionStart: startIndex,
+					selection: selection
+				});
 			});
 		}
 	}
@@ -141,6 +152,17 @@ class FileDetail extends React.Component {
 			/>
 		);
 
+		let explanationForm = '';
+		if (this.state.selection && this.state.selectionStart) {
+			explanationForm = (
+				<ExplanationForm
+					start={this.state.selectionStart}
+					fragment={this.state.selection}
+					sourceFileId={this.state.file.id}
+				/>
+			);
+		}
+
     return (
       <div className="file-detail detail group">
 				<div className="full">
@@ -157,6 +179,7 @@ class FileDetail extends React.Component {
 					<Link to={editUrl}>Edit</Link>
 					<a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>
 					<a href='#' onClick={this._handleContributions.bind(this)}>Contributions</a>
+					{explanationForm}
 				</div>
 				{changes}
       </div>

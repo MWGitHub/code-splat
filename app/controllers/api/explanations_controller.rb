@@ -19,7 +19,7 @@ class Api::ExplanationsController < ApplicationController
 			fragment_start: explanation_params[:fragment_start],
 			author_id: current_user.id
 		}
-		@explanation = source_file.create!(options)
+		@explanation = source_file.explanations.create!(options)
 		if @explanation && explanation_params[:body]
       @explanation.text_changes.create!(
         body: explanation_params[:body],
