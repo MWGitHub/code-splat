@@ -1,0 +1,88 @@
+@import 'variables';
+
+body {
+  font-family: Futura, sans-serif;
+  font-size: 100%;
+  background-color: $dark-background-color;
+  color: $dark-contrast-color;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+
+  &:hover {
+    color: $link-color-highlight;
+  }
+}
+
+p {
+  line-height: 1.5em;
+}
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.status-page {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 2rem;
+  color: $dark-contrast-color;
+}
+
+.container {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.highlight {
+	color: $dark-contrast-highlight-color;
+}
+
+.detail {
+	a {
+		margin-right: 2rem;
+	}
+
+	.left {
+		width: 40%;
+		display: block;
+		float: left;
+	}
+
+	.right {
+		width: 58%;
+		display: block;
+		float: left;
+		margin-left: 2%;
+	}
+
+	.full {
+		width: 100%;
+		clear: both;
+	}
+
+	h2 {
+		font-size: 1.3rem;
+		margin: 0 0 1rem 0;
+	}
+
+	h3 {
+		margin: 0 0 0.5rem 0;
+	}
+
+	.form {
+		border-radius: 0;
+		margin-top: 0.5rem;
+	}
+
+	.replies {
+		margin-top: 1rem;
+	}
+}

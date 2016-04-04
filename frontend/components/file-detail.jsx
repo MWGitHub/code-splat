@@ -7,6 +7,8 @@ import ReplyStore from '../stores/reply';
 import TextChangeList from './text-change-list';
 import ReplyForm from './reply-form';
 import ReplyDetail from './reply-detail';
+import Codemirror from 'react-codemirror';
+import Ruby from 'codemirror/mode/ruby/ruby';
 
 class FileDetail extends React.Component {
   constructor(props) {
@@ -15,14 +17,13 @@ class FileDetail extends React.Component {
     this.state = {
       file: FileStore.find(this.props.params.fileSlug),
 			changes: null,
-			replies: null
+			replies: null,
+			isEditing: false
     };
   }
 
   componentDidMount() {
-    this.fileToken = FileStore.addListener(() => {
-      this.setState({ file: FileStore.find(this.props.params.fileSlug) });
-    });
+    this.fileToken = FileStore.addListener(this._handleFilechange.bind(this));
 		this.changeToken = ChangeStore.addListener(() => {
 			this.setState({ changes: ChangeStore.all() });
 		});
@@ -35,7 +36,8 @@ class FileDetail extends React.Component {
 			this.props.params.slug,
 			this.props.params.fileSlug, (file) => {
 				WebUtil.fetchSourceFileReplies(file.id);
-			});
+			}
+		);
   }
 
   componentWillUnmount() {
@@ -56,6 +58,10 @@ class FileDetail extends React.Component {
 		});
   }
 
+	_handleFilechange() {
+	  this.setState({ file: FileStore.find(this.props.params.fileSlug) });
+	}
+
   _handleDelete(e) {
     e.preventDefault();
 
@@ -72,6 +78,13 @@ class FileDetail extends React.Component {
 
 	_handleReply(reply) {
 		WebUtil.createSourceFileReply(this.state.file.id, reply);
+	}
+
+	_handleBodyUpdate(newBody) {
+		this.state.file.body = newBody;
+		this.setState({
+			file: this.state.file
+		});
 	}
 
   render() {
@@ -94,15 +107,32 @@ class FileDetail extends React.Component {
 			});
 		}
 
+		let options = {
+			mode: 'ruby',
+			readOnly: !this.state.isEditing,
+			theme: 'material'
+		};
+
     return (
-      <div className="file-detail detail">
-        <h1>{this.state.file.name}</h1>
-        <Link to={editUrl}>Edit</Link>
-        <a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>
-				<a href='#' onClick={this._handleContributions.bind(this)}>Contributions</a>
-        <p>{this.state.file.body}</p>
-				<ReplyForm onSubmit={this._handleReply.bind(this)} />
-				{replies}
+      <div className="file-detail detail group">
+				<div className="full">
+					<h1>{this.state.file.name}</h1>
+				</div>
+				<div className="left">
+					<div className="code">
+						<Codemirror
+							value={this.state.file.body} 	onChange={this._handleBodyUpdate.bind(this)}
+							options={options}
+							/>
+					</div>
+					<ReplyForm onSubmit={this._handleReply.bind(this)} />
+					{replies}
+				</div>
+				<div className="right">
+					<Link to={editUrl}>Edit</Link>
+					<a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>
+					<a href='#' onClick={this._handleContributions.bind(this)}>Contributions</a>
+				</div>
 				{changes}
       </div>
     );

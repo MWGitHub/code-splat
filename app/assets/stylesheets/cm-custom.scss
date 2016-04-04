@@ -1,0 +1,19 @@
+@import 'variables';
+
+.CodeMirror-vscrollbar {
+	width: 0.5rem;
+}
+
+.cm-s-material {
+	background-color: #000;
+	height: 100%;
+	font-size: 1.1rem;
+}
+
+.cm-s-material div.CodeMirror-selected {
+	background: rgba(255, 255, 255, 0.35);
+}
+
+.cm-s-material.CodeMirror-focused div.CodeMirror-selected {
+	background: rgba(255, 255, 255, 0.35); 
+}

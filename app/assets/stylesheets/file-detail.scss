@@ -1,0 +1,27 @@
+.file-detail {
+	.full {
+		width: 100%;
+		clear: both;
+	}
+
+	.left {
+		width: 68%;
+		margin: 0 2% 0 0;
+		float: left;
+	}
+
+	.right {
+		width: 30%;
+		float: left;
+		margin: 0;
+	}
+
+	h1 {
+		margin-top: 0;
+		margin-bottom: 1rem;
+	}
+
+	.code {
+		margin-bottom: 1rem;
+	}
+}

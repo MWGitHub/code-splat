@@ -21,7 +21,7 @@ ProjectStore.allFront = function () {
 ProjectStore.all = function () {
   let projects = [];
   for (let key in _projects) {
-    projects.push(_projects[key]);
+    projects.shift(_projects[key]);
   }
   return projects;
 }

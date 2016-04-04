@@ -15,7 +15,11 @@ class ReplyDetail extends React.Component {
 	render() {
 		return (
 			<div className="reply-detail">
-				<p>{this.props.reply.body} <a href="#" onClick={this._handleDelete.bind(this)}>Delete Reply</a></p>
+				<p>{this.props.reply.username} says:</p>
+				<p>{this.props.reply.body}</p>
+				<p>
+					<a href="#" onClick={this._handleDelete.bind(this)}>Delete Reply</a>
+				</p>
 			</div>
 		);
 	}

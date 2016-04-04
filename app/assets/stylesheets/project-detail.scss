@@ -1,0 +1,38 @@
+@import 'variables';
+.project-detail {
+	.left {
+		width: 40%;
+		display: block;
+		float: left;
+	}
+
+	.right {
+		width: 58%;
+		display: block;
+		float: left;
+		margin-left: 2%;
+	}
+
+	.full {
+		width: 100%;
+		clear: both;
+	}
+
+	h2 {
+		font-size: 1.3rem;
+		margin: 0 0 1rem 0;
+	}
+
+	h3 {
+		margin: 0 0 0.5rem 0;
+	}
+
+	.form {
+		border-radius: 0;
+		margin-top: 0.5rem;
+	}
+
+	.replies {
+		margin-top: 1rem;
+	}
+}

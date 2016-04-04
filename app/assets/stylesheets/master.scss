@@ -1,58 +1,10 @@
+@import 'base';
 @import 'modal';
 @import 'forms';
 @import 'nav';
 @import 'home';
 @import 'list';
-@import 'variables';
-
-
-body {
-  font-family: sans-serif;
-  font-size: 100%;
-  background-color: $dark-background-color;
-  color: $dark-contrast-color;
-}
-
-a {
-  color: $link-color;
-  text-decoration: none;
-
-  &:hover {
-    color: $link-color-highlight;
-  }
-}
-
-p {
-  line-height: 1.5em;
-}
-
-.group:after {
-  content: "";
-  display: block;
-  clear: both;
-}
-
-.status-page {
-  width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  padding: 2rem;
-  color: $dark-contrast-color;
-}
-
-.container {
-  max-width: 1040px;
-  margin: 0 auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-.highlight {
-	color: $dark-contrast-highlight-color;
-}
-
-.detail {
-	a {
-		margin-right: 2rem;
-	}
-}
+@import 'project-detail';
+@import 'reply';
+@import 'file-detail';
+@import 'cm-custom';

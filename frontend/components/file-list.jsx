@@ -11,17 +11,19 @@ class FileList extends React.Component {
 
     let files = this.props.files.map(file => {
       return (
-        <div key={'file-' + file.slug}>
+        <li key={'file-' + file.slug} className="list-result">
           <Link to={'/projects/' + this.props.projectSlug + '/files/' + file.slug}>
             {file.name}
           </Link>
-        </div>
+        </li>
       );
     });
 
     return (
-      <div>
-        {files}
+      <div className="list-index">
+				<ul className="primary-list">
+					{files}
+				</ul>
       </div>
     );
   }

@@ -5,6 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+require_relative 'program_seeds'
+
 User.destroy_all
 Project.destroy_all
 SourceFile.destroy_all
@@ -25,6 +27,8 @@ demo = User.create!(
 	password: 'password',
 	email: 'demo@example.com'
 )
+
+ProgramSeeds.generate
 
 5.times do |_|
   FactoryGirl.create(:user)
@@ -48,5 +52,5 @@ end
 
 
 
-Project.last.front_page_items.create(description: 'Simple recursive merge sort')
-Project.first.front_page_items.create(description: 'Simple recursive quick sort')
+# Project.last.front_page_items.create(description: 'Simple recursive merge sort')
+# Project.first.front_page_items.create(description: 'Simple recursive quick sort')

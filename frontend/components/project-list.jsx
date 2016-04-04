@@ -50,7 +50,7 @@ class ProjectListHot extends React.Component {
   }
 
   render() {
-		if (!this.props.projects || this.props.projects.length === 0) {
+		if (!this.props.projects || this.props.projects.length <= 4) {
 			return <div></div>;
 		}
 

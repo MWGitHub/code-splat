@@ -7,7 +7,7 @@ import WebUtil from '../util/web-util';
 import FileList from './file-list';
 import TextChangeList from './text-change-list';
 import ReplyForm from './reply-form';
-import ReplyDetail from './reply-detail';
+import ReplyList from './reply-list';
 
 class ProjectDetail extends React.Component {
   constructor(props) {
@@ -84,25 +84,33 @@ class ProjectDetail extends React.Component {
 
 		let replies = '';
 		if (this.state.replies) {
-			replies = this.state.replies.map(reply => {
-				return (
-					<ReplyDetail key={'reply-' + reply.id} reply={reply} />
-				);
-			});
+			replies = (
+				<div className="replies">
+					<h3>REPLIES</h3>
+					<ReplyList replies={this.state.replies} />
+				</div>
+			)
 		}
 
     return (
-      <div className="project-detail detail">
-        <h1>{this.state.project.title}</h1>
-        <Link to={'/projects/' + this.state.project.slug + '/edit'}>Edit</Link>
-        <a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>
-        <Link to={'/projects/' + this.state.project.slug + '/files/new'}>Create File</Link>
-				<a href='#' onClick={this._handleContributions.bind(this)}>Contributions</a>
-				<ReplyForm onSubmit={this._handleReply.bind(this)} />
-        <p>{this.state.project.description}</p>
-        <FileList files={this.state.project.source_files}
-          projectSlug={this.state.project.slug} />
-				{replies}
+      <div className="project-detail detail group">
+				<div className="full">
+					<h1>{this.state.project.title}</h1>
+					<p>{this.state.project.description}</p>
+				</div>
+				<div className="left">
+					<Link to={'/projects/' + this.state.project.slug + '/edit'}>Edit</Link>
+					<a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>
+					<Link to={'/projects/' + this.state.project.slug + '/files/new'}>Create File</Link>
+					<a href='#' onClick={this._handleContributions.bind(this)}>Contributions</a>
+					<ReplyForm onSubmit={this._handleReply.bind(this)} />
+					{replies}
+				</div>
+				<div className="right">
+					<h2>FILES</h2>
+					<FileList files={this.state.project.source_files}
+						projectSlug={this.state.project.slug} />
+				</div>
 				{changes}
       </div>
     );
