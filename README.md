@@ -120,18 +120,28 @@ user interface.
   - [ ] viewing comments by file or project
 - [ ] Use CSS to style new views
 
+### Phase 5.5: Karma and User Access (1.5 days)
+
+**Objective:** Users gain karma depending on contributions which allow for more actions. Owners and admins have options available all the time.
+
+- [ ] create `Karma` column for users
+- [ ] calculate `Karma` based on contributions
+- [ ] prevent non-owners from changing owning files unless karma high enough
+- [ ] have admin class to be able to modify everything
+- [ ] have specific amounts of karma allow more actions
+
 ### Phase 6: Allow Complex Styling in Code and text selection (1 day)
 
 **Objective:** Code is highlighted and comments and lines can be selected for suggestions. Editor added to file code and explanations.
 
-- [ ] add CodeMirror to allow syntax highlighting and editing
-- [ ] highlight text in file code to create or edit explanations
+- [x] add CodeMirror to allow syntax highlighting and editing
+- [x] highlight text in file code to create or edit explanations
 
 ### Phase 7: Styling Cleanup and Seeding (1 day)
 
 **objective:** Make the site look better and be more usable
 
-- [ ] Get feedback on my UI from others
+- [x] Get feedback on my UI from others
 - [ ] Refactor HTML classes & CSS rules
 - [ ] Add modals, transitions, and other styling flourishes.
 

@@ -35,18 +35,18 @@ class Home extends React.Component {
   render() {
     return (
       <div className="home group">
-        <div className="home-left">
+        <div className="left">
           <p>Latest on Code Splat</p>
 					<ProjectListFront projects={this.state.frontProjects} />
         </div>
-        <div className="home-right">
+        <div className="right">
           <p>About Code Splat</p>
           <div className="home-about group">
             <div className="home-about-icon">
               <img src={window.codeSplat.homeIconPath} />
             </div>
             <div className="home-about-description">
-              <p>Code Splat is dedicated to crowd-sourced annotation of source code, from <a href="#">“Rapper’s Delight”</a> to <a href="#">To Pimp A Butterfly</a>. Fan favorites Rap Stats & The Rap Map also call Code Splat home.</p>
+              <p>Code Splat is dedicated to crowd-sourced annotation of source code, from <Link to="/projects/simple-sorting/files/merge_sort-rb">“Merge Sort”</Link> to <a href="#">To Pimp A Butterfly</a>. Fan favorites Data Structures & Design Patterns also call Code Splat home.</p>
               <p>Find out all the latest on <a href="#">Twitter</a> and <a href="#">Facebook</a></p>
             </div>
           </div>

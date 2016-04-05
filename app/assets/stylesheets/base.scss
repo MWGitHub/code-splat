@@ -50,24 +50,6 @@ p {
 		margin-right: 2rem;
 	}
 
-	.left {
-		width: 40%;
-		display: block;
-		float: left;
-	}
-
-	.right {
-		width: 58%;
-		display: block;
-		float: left;
-		margin-left: 2%;
-	}
-
-	.full {
-		width: 100%;
-		clear: both;
-	}
-
 	h2 {
 		font-size: 1.3rem;
 		margin: 0 0 1rem 0;
@@ -84,5 +66,38 @@ p {
 
 	.replies {
 		margin-top: 1rem;
+	}
+}
+
+.left {
+	width: 40%;
+	display: block;
+	float: left;
+}
+
+.right {
+	width: 58%;
+	display: block;
+	float: left;
+	margin-left: 2%;
+}
+
+.full {
+	width: 100%;
+	clear: both;
+}
+
+@media (max-width: 600px) {
+	.left {
+		width: 100%;
+		display: block;
+		clear: both;
+	}
+
+	.right {
+		width: 100%;
+		display: block;
+		clear: both;
+		margin-left: 0;
 	}
 }

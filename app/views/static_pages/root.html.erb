@@ -1,7 +1,11 @@
 <div id="content">
 	<script type="text/javascript">
 		var codeSplat = {
-			codeLanguages: []
+			codeLanguages: [],
+			codelanguageProperties: {
+				javascript: "<%= asset_path('language_icons/javascript.png') %>",
+				ruby: "<%= asset_path('language_icons/ruby.png') %>"
+			}
 		};
 		window.codeSplat = codeSplat;
 		<% Project::CODE_LANGUAGES.each do |language| %>

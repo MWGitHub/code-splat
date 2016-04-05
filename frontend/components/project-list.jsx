@@ -23,6 +23,9 @@ class ProjectListFront extends React.Component {
 						</Link>
 					</h3>
 					<p className="front-description">{project.description}</p>
+					<p className="front-link">
+						Check out the project <Link to={"/projects/" + project.project.slug}>here!</Link>
+					</p>
 				</div>
 			);
 		});
@@ -36,6 +39,9 @@ class ProjectListFront extends React.Component {
 						</Link>
 					</h1>
 					<p className="front-description">{main.description}</p>
+					<p className="front-link">
+						Check out the project <Link to={"/projects/" + main.project.slug}>here!</Link>
+					</p>
 				</div>
 				{projects}
 			</div>
@@ -63,15 +69,29 @@ class ProjectListHot extends React.Component {
 		topFour = topFour.map(project => {
 			return (
 				<div key={'project-' + project.slug} className="hot-project-mid">
-					<h3><Link to={"/projects/" + project.slug}>{project.title}</Link></h3>
+					<h3>
+						<Link to={"/projects/" + project.slug}>
+							<div className={'language-overlay language-' + project.language}></div>
+							{project.title}
+							<p className="front-author">
+								<i className="fa fa-users"></i>{project.author}
+							</p>
+							<p className="hot-project-description">
+								{project.description}
+							</p>
+						</Link>
+					</h3>
 				</div>
 			);
 		});
 
     let projectsList = projects.map(project => {
       return (
-        <div key={'project-' + project.slug}>
-          <Link to={"/projects/" + project.slug}>{project.title}</Link>
+        <div key={'project-' + project.slug} className="hot-project">
+          <Link to={"/projects/" + project.slug}>
+						<div className={'language-overlay language-' + project.language}></div>
+						{project.title} <span className="front-author"><i className="fa fa-users"></i>{project.author}</span>
+					</Link>
         </div>
       );
     });
@@ -79,7 +99,15 @@ class ProjectListHot extends React.Component {
     return (
       <div className="hot">
 				<div className="hot-project-main">
-					<h2><Link to={"/projects/" + main.slug}>{main.title}</Link></h2>
+					<h2>
+						<Link to={"/projects/" + main.slug}>
+							<div className={'language-overlay language-' + main.language}></div>
+							{main.title} <span className="front-hot-author front-author"><i className="fa fa-users"></i>{main.author}</span>
+							<p className="hot-project-description">
+								{main.description}
+							</p>
+						</Link>
+					</h2>
 				</div>
 				<div className="hot-project-top-four group">
 					{topFour}
@@ -102,7 +130,9 @@ class ProjectList extends React.Component {
     let projects = this.props.projects.map(project => {
       return (
         <li className="list-result" key={'project-' + project.slug}>
-          <Link to={"/projects/" + project.slug}>{project.title}</Link>
+          <Link to={"/projects/" + project.slug}>
+						{project.title} <span className="list-author"><i className="fa fa-users"></i>{project.author}</span>
+					</Link>
         </li>
       );
     });

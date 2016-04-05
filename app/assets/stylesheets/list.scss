@@ -24,12 +24,21 @@
 
 	a {
 		border-top: 1px solid $list-border-color;
-		color: $dark-contrast-highlight-color;
+		color: $dark-contrast-color;
 		display: block;
 		padding: 1rem 0;
 
 		&:hover {
-			color: $dark-contrast-color;
+			color: $dark-contrast-highlight-color;
 		}
+	}
+}
+
+.list-author {
+	float: right;
+	font-size: 0.7rem;
+
+	.fa {
+		margin: 0 0.25rem;
 	}
 }

@@ -6,18 +6,35 @@
   p {
     margin: 0 0 0.25rem 0;
   }
-}
 
-.home-left {
-  float: left;
-  width: 50%;
-  display: block;
-}
+	.left {
+	  float: left;
+	  width: 50%;
+	  display: block;
+		margin: 0;
+	}
 
-.home-right {
-  float: left;
-  width: 50%;
-  display: block;
+	.right {
+	  float: left;
+	  width: 48%;
+	  display: block;
+		margin-left: 2%;
+	}
+
+	@media (max-width: 600px) {
+		.left {
+			width: 100%;
+			display: block;
+			clear: both;
+		}
+
+		.right {
+			width: 100%;
+			display: block;
+			clear: both;
+			margin-left: 0;
+		}
+	}
 }
 
 .home-about {
@@ -48,6 +65,15 @@
 .front {
 	h1, h3 {
 		margin: 0 0 0.5rem 0;
+
+		a {
+			transition: all 0.1s;
+			color: $dark-contrast-color;
+
+			&:hover {
+				color: tint($dark-contrast-color, 50%);
+			}
+		}
 	}
 
 	h1 {
@@ -58,16 +84,12 @@
 		font-size: 1.4rem;
 	}
 
-	a {
-		color: $dark-contrast-color;
-
-		&:hover {
-			color: $dark-contrast-color;
-		}
-	}
-
 	.front-item {
 		margin-bottom: 2rem;
+	}
+
+	.front-link {
+		margin-top: 1rem;
 	}
 }
 
@@ -77,11 +99,21 @@
 	font-weight: $weight-bold;
 
 	a {
+		position: relative;
 		color: $dark-contrast-color;
+		transition: all 0.1s;
 
 		&:hover {
 			color: tint($dark-contrast-color, 80%);
+
+			.front-author {
+				color: tint($hot-author-color, 15%);
+			}
 		}
+	}
+
+	div {
+		overflow: hidden;
 	}
 }
 
@@ -113,6 +145,14 @@
 		bottom: 0;
 	}
 
+	.front-hot-author {
+		font-size: 0.7rem;
+
+		.fa {
+			margin-left: 0.25rem;
+			margin-right: 0.25rem;
+		}
+	}
 }
 
 .hot-project-top-four {
@@ -152,6 +192,11 @@
 			bottom: 0;
 		}
 	}
+
+	.hot-project-description {
+		line-height: 1.5;
+		font-size: 0.6rem;
+	}
 }
 
 .hot-project-list {
@@ -159,7 +204,7 @@
 	font-size: 1rem;
 	position: relative;
 
-	div {
+	.hot-project {
 		width: 100%;
 		min-height: rem(45);
 		border: 1px solid $sub-form-background-color;
@@ -181,6 +226,17 @@
 		top: 0;
 		bottom: 0;
 	}
+
+	.front-author {
+		margin-left: 0.25rem;
+		float: right;
+	}
+}
+
+.front-author {
+	font-size: 0.7rem;
+	color: $hot-author-color;
+	transition: all 0.25s;
 }
 
 .home-aside {
@@ -188,3 +244,33 @@
 	text-align: right;
 	font-size: 0.9rem;
 }
+
+.hot-project-description {
+	color: $hot-author-color;
+	font-size: 0.7rem;
+	line-height: 2;
+}
+
+.language-overlay {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	position: absolute;
+}
+
+// .language-ruby {
+// 	background-color: rgba(255, 75, 75, 0.1);
+//
+// 	&:hover {
+// 		background-color: rgba(255, 75, 75, 0.2);
+// 	}
+// }
+//
+// .language-javascript {
+// 	background-color: rgba(255, 240, 100, 0.1);
+//
+// 	&:hover {
+// 		background-color: rgba(255, 240, 100, 0.2);
+// 	}
+// }
