@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import Register from './register';
 import Login from './login';
@@ -6,6 +7,7 @@ import Modal from 'react-modal';
 import SessionStore from '../stores/session';
 import CSS from '../constants/css';
 import UserUtil from '../util/user-util';
+import DOM from '../util/dom';
 
 const LOGIN_MODAL = 'LOGIN_MODAL';
 const REGISTER_MODAL = 'REGISTER_MODAL';
@@ -22,10 +24,22 @@ class Nav extends React.Component {
 
   componentDidMount() {
     this.userToken = SessionStore.addListener(this._handleUserChange.bind(this));
+		this._profileMenuListener = e => {
+			if (!this.state.profileMenuShown) return;
+
+			let menuButton = ReactDOM.findDOMNode(this.refs.menuProfile);
+			let dropDown = ReactDOM.findDOMNode(this.refs.menuDropdown);
+			if (DOM.hasAncestor(e.target, menuButton)) return;
+			if (DOM.hasAncestor(e.target, dropDown)) return;
+
+			this.setState({ profileMenuShown: false });
+		};
+		document.addEventListener("mousedown", this._profileMenuListener);
   }
 
   componentWillUnmount() {
     this.userToken.remove();
+		document.removeEventListener("mousedown", this._profileMenuListener);
   }
 
   _handleUserChange() {
@@ -94,11 +108,13 @@ class Nav extends React.Component {
         shownModal = <Login
           onClose={this._closeModal.bind(this)}
           onSwitch={this._switchModal.bind(this)}
+					modal={true}
         />
       } else {
         shownModal = <Register
           onClose={this._closeModal.bind(this)}
           onSwitch={this._switchModal.bind(this)}
+					modal={true}
         />
       }
       modal = (
@@ -118,14 +134,14 @@ class Nav extends React.Component {
       let profileMenu = '';
       if (this.state.profileMenuShown) {
         profileMenu = (
-          <ul className="group">
+          <ul ref="menuDropdown" className="group">
             <li><a href="/logout"
               onClick={this._handleLogoutClick.bind(this)}>Sign Out</a></li>
           </ul>
         );
       }
       profileBar = (
-        <div className="menu-profile">
+        <div ref="menuProfile" className="menu-profile">
           <div className="menu-profile-button"
             onClick={this._profileMenuClick.bind(this)}>
             <span>{user.username} 0<i className="fa fa-caret-down"></i></span>

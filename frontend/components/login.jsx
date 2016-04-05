@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import UserUtil from '../util/user-util';
 import SessionStore from '../stores/session';
 
@@ -61,12 +62,32 @@ class Login extends React.Component {
 	}
 
   render() {
-    return (
-      <div className="modal">
-        <h1 className="form-title">SIGN IN</h1>
-        <a className="close-button" href="#" onClick={this.props.onClose}>
+		let loginClass = 'auth-form';
+		let closeButton = '';
+		let switchLink = (
+			<Link to="/register" className="form-link"
+				>Sign up here.
+			</Link>
+		);
+		if (this.props.modal) {
+			loginClass = 'modal';
+			closeButton = (
+				<a className="close-button" href="#" onClick={this.props.onClose}>
           <i className="fa fa-times"></i>
         </a>
+			);
+			switchLink = (
+				<a href="#" className="form-link"
+					onClick={this.props.onSwitch}
+          >Sign up here.
+				</a>
+			);
+		}
+
+    return (
+      <div className={loginClass}>
+        <h1 className="form-title">SIGN IN</h1>
+				{closeButton}
         <a href="#" className="auth-button auth-facebook">
           <i className="fa fa-facebook-official"></i>Sign in with Facebook
         </a>
@@ -96,11 +117,7 @@ class Login extends React.Component {
             <input type="submit" value="Login" />
           </div>
         </form>
-        <p>Don't have an account? <a
-          href="#"
-          className="form-link"
-          onClick={this.props.onSwitch}
-          >Sign up here.</a></p>
+        <p>Don't have an account? {switchLink}</p>
       </div>
     );
   }

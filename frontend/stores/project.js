@@ -12,7 +12,15 @@ function resetProjects(projects) {
 }
 
 function receiveProject(project) {
-	if (_projects.indexOf(project) === -1) {
+	let found = false;
+	for (let i = 0; i < _projects.length; ++i) {
+		if (_projects[i].id === project.id) {
+			_projects[i] = project;
+			found = true;
+			break;
+		}
+	}
+	if (!found) {
 		_projects.push(project);
 	}
 }

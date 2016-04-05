@@ -11,7 +11,15 @@ function resetFiles(files) {
 }
 
 function receiveFile(file) {
-	if (_files.indexOf(file) === -1) {
+	let found = false;
+	for (let i = 0; i < _files.length; ++i) {
+		if (_files[i].id === file.id) {
+			_files[i] = file;
+			found = true;
+			break;
+		}
+	}
+	if (!found) {
 		_files.push(file);
 	}
 }

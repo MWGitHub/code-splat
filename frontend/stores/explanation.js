@@ -11,7 +11,15 @@ function resetExplanations(explanations) {
 }
 
 function receiveExplanation(explanation) {
-	if (_explanations.indexOf(explanation) === -1) {
+	let found = false;
+	for (let i = 0; i < _explanations.length; ++i) {
+		if (_explanations[i].id === explanation.id) {
+			_explanations[i] = explanation;
+			found = true;
+			break;
+		}
+	}
+	if (!found) {
 		_explanations.push(explanation);
 	}
 }

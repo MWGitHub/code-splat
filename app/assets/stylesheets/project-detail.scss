@@ -18,13 +18,15 @@
 		clear: both;
 	}
 
+	h1 {
+		color: $dark-contrast-highlight-color;
+		display: inline-block;
+		margin: 0 0 0.5rem 0;
+	}
+
 	h2 {
 		font-size: 1.3rem;
 		margin: 0 0 1rem 0;
-	}
-
-	h3 {
-		margin: 0 0 0.5rem 0;
 	}
 
 	.form {

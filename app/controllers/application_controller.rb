@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
 
   def require_signed_in!
     return if signed_in?
-    
+
     respond_to do |format|
       format.html do
         flash[:error] = 'Access denied'

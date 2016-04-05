@@ -10,5 +10,9 @@ module Changeable
       end
       result
     end
+
+		def contributor_count
+			self.text_changes.all.distinct.count(:author_id)
+		end
   end
 end

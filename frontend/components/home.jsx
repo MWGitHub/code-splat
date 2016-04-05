@@ -10,7 +10,7 @@ class Home extends React.Component {
 
     this.state = {
       projects: ProjectStore.all(),
-			frontProjects: ProjectStore.allFront()
+			frontProjects: null
     };
   }
 

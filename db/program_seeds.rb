@@ -55,5 +55,32 @@ def merge(left, right)
 end
 			BODY
 		)
+		file = project.source_files.create(
+			name: 'bubble_sort.rb',
+			language: 'ruby',
+			author_id: user.id
+		)
+		file.text_changes.create(
+			author_id: user.id,
+			body: <<-BODY
+def bubble_sort(array)
+	arr = [].concat(array)
+	loop do
+		swapped = false
+
+		(arr.length - 1).times do |i|
+			if arr[i] > arr[i + 1]
+				arr[i], arr[i + 1] = arr[i + 1], arr[i]
+				swapped = true
+			end
+		end
+
+		break unless swapped
+	end
+
+	arr
+end
+			BODY
+		)
 	end
 end

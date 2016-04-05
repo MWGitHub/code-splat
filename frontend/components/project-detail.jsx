@@ -8,6 +8,8 @@ import FileList from './file-list';
 import TextChangeList from './text-change-list';
 import ReplyForm from './reply-form';
 import ReplyList from './reply-list';
+import PermissionConstants from '../constants/permission-constants';
+import PermissionUtil from '../util/permission-util';
 
 class ProjectDetail extends React.Component {
   constructor(props) {
@@ -83,7 +85,7 @@ class ProjectDetail extends React.Component {
 		}
 
 		let replies = '';
-		if (this.state.replies) {
+		if (this.state.replies && this.state.replies.length > 0) {
 			replies = (
 				<div className="replies">
 					<h3>REPLIES</h3>
@@ -92,22 +94,38 @@ class ProjectDetail extends React.Component {
 			)
 		}
 
+		let contributors = ' Contributor';
+		let contributorCount = this.state.project.contributor_count;
+		if (contributorCount === 1) {
+			contributors = contributorCount + contributors;
+		} else {
+			contributors = contributorCount + contributors + 's';
+		}
+
     return (
       <div className="project-detail detail group">
 				<div className="full">
 					<h1>{this.state.project.title}</h1>
-					<p>{this.state.project.description}</p>
 				</div>
 				<div className="left">
-					<Link to={'/projects/' + this.state.project.slug + '/edit'}>Edit</Link>
-					<a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>
-					<Link to={'/projects/' + this.state.project.slug + '/files/new'}>Create File</Link>
-					<a href='#' onClick={this._handleContributions.bind(this)}>Contributions</a>
+					<a className="contributors" href='#'
+						onClick={this._handleContributions.bind(this)}>
+						{contributors}
+					</a>
+					<div className="section">
+						<h3 className="section-header">Description</h3>
+						<p>{this.state.project.description}</p>
+					</div>
+					<div className="detail-actions group">
+						<Link to={'/projects/' + this.state.project.slug + '/edit'}>edit project</Link>
+						<a href="#" onClick={this._handleDelete.bind(this)}>delete project</a>
+					</div>
 					<ReplyForm onSubmit={this._handleReply.bind(this)} />
 					{replies}
 				</div>
 				<div className="right">
 					<h2>FILES</h2>
+					<Link to={'/projects/' + this.state.project.slug + '/files/new'}>Create File</Link>
 					<FileList files={this.state.project.source_files}
 						projectSlug={this.state.project.slug} />
 				</div>

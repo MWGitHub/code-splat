@@ -2,6 +2,7 @@ class Api::ProjectsController < ApplicationController
   before_filter :require_signed_in!, only: [
     :create, :update, :destroy
   ]
+	before_filter :require_permissions!, only: [:create, :update, :destroy]
 
   def index
 		if params[:type] == 'hot'

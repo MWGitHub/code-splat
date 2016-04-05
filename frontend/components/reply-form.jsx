@@ -1,4 +1,7 @@
 import React from 'react';
+import SessionStore from '../stores/session';
+import PermissionConstants from '../constants/permission-constants';
+import PermissionUtil from '../util/permission-util';
 
 class ReplyForm extends React.Component {
 	constructor(props) {
@@ -7,6 +10,16 @@ class ReplyForm extends React.Component {
 		this.state = {
 			body: ''
 		};
+	}
+
+	componentDidMount() {
+		this.sessionToken = SessionStore.addListener(() => {
+			this.setState({ body: '' });
+		});
+	}
+
+	componentWillUnmount() {
+		this.sessionToken.remove();
 	}
 
 	_handleBodyChange(e) {
@@ -26,8 +39,13 @@ class ReplyForm extends React.Component {
 	}
 
 	render() {
+		// No permission to create a reply.
+		if (!PermissionUtil.hasPermission(PermissionConstants.REPLY)) {
+			return <div></div>;
+		}
+
 		return (
-			<form className='form' onSubmit={this._handleSubmit.bind(this)}>
+			<form className='form-light' onSubmit={this._handleSubmit.bind(this)}>
 				<h3>Add Reply</h3>
 				<div className='form-group'>
 					<input

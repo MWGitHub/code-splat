@@ -1,5 +1,11 @@
 @import 'variables';
 
+.auth-form {
+	max-width: rem(400);
+	margin: 0 auto;
+	text-align: center;
+}
+
 .form-title {
   color: $nav-background-color;
   font-size: 2rem;

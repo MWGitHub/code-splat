@@ -1,6 +1,7 @@
 json.extract! project, :id, :title, :slug, :language
 json.description project.body
 json.author project.author.username
+json.contributor_count project.contributor_count
 
 show_files ||= false
   if show_files

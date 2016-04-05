@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'neat';
 
 body {
   font-family: Futura, sans-serif;
@@ -55,10 +56,6 @@ p {
 		margin: 0 0 1rem 0;
 	}
 
-	h3 {
-		margin: 0 0 0.5rem 0;
-	}
-
 	.form {
 		border-radius: 0;
 		margin-top: 0.5rem;
@@ -85,6 +82,57 @@ p {
 .full {
 	width: 100%;
 	clear: both;
+}
+
+.author {
+	font-size: 0.9rem;
+	.fa {
+		margin: 0 0.25rem 0 0.75rem;
+	}
+}
+
+.contributors {
+	font-size: 0.9rem;
+	color: $dark-contrast-color;
+	text-decoration: underline;
+
+	&:hover {
+		color: tint($dark-contrast-color, 30%);
+	}
+}
+
+.section {
+	font-size: 0.9rem;
+
+	margin: 0;
+
+	p {
+		margin-top: 0;
+	}
+}
+
+.section-header {
+	font-size: 0.9rem;
+	color: $nav-background-color;
+	margin: 1rem 0 0.5rem 0;
+}
+
+.detail-actions {
+	font-size: 0.9rem;
+	border-top: 1px solid $dark-gray-border-color;
+	border-bottom: 1px solid $dark-gray-border-color;
+
+	a {
+		padding: 0.25rem;
+		@include span-columns(6);
+		text-align: center;
+		border-right: 1px solid $dark-gray-border-color;
+		color: $dark-contrast-highlight-color;
+
+		&:last-child {
+			border-right: 0;
+		}
+	}
 }
 
 @media (max-width: 600px) {

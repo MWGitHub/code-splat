@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import UserUtil from '../util/user-util';
 import SessionStore from '../stores/session';
 
@@ -71,6 +72,28 @@ class Register extends React.Component {
   }
 
   render() {
+		let authClass = 'auth-form';
+		let closeButton = '';
+		let switchLink = (
+			<Link to="/login" className="form-link"
+				>Sign in here.
+			</Link>
+		);
+		if (this.props.modal) {
+			authClass = 'modal';
+			closeButton = (
+				<a className="close-button" href="#" onClick={this.props.onClose}>
+          <i className="fa fa-times"></i>
+        </a>
+			);
+			switchLink = (
+				<a href="#" className="form-link"
+					onClick={this.props.onSwitch}
+          >Sign in here.
+				</a>
+			);
+		}
+
     let form = '';
     if (this.state.isFormShown) {
       form = (
@@ -101,10 +124,8 @@ class Register extends React.Component {
     }
 
     return (
-      <div className="modal">
-        <a className="close-button" href="#" onClick={this.props.onClose}>
-          <i className="fa fa-times"></i>
-        </a>
+      <div className={authClass}>
+        {closeButton}
         <h1 className="form-title">SIGN UP</h1>
         <p className="form-sub-header">and show off your genius</p>
         <a href="#" className="auth-button auth-facebook">
@@ -121,11 +142,7 @@ class Register extends React.Component {
           <i className="fa fa-envelope"></i>Sign up with email
         </a>
         {form}
-        <p>Already have an account? <a
-          href="#"
-          className="form-link"
-          onClick={this.props.onSwitch}
-          >Sign in here.</a></p>
+        <p>Already have an account? {switchLink}</p>
       </div>
     );
   }
