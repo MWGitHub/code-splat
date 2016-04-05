@@ -144,7 +144,7 @@ class Nav extends React.Component {
         <div ref="menuProfile" className="menu-profile">
           <div className="menu-profile-button"
             onClick={this._profileMenuClick.bind(this)}>
-            <span>{user.username} 0<i className="fa fa-caret-down"></i></span>
+            <span>{user.username} {user.score}<i className="fa fa-caret-down"></i></span>
           </div>
           {profileMenu}
         </div>

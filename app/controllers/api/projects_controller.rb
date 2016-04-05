@@ -2,7 +2,15 @@ class Api::ProjectsController < ApplicationController
   before_filter :require_signed_in!, only: [
     :create, :update, :destroy
   ]
-	before_filter :require_permissions!, only: [:create, :update, :destroy]
+	before_filter only: [:create] do
+		require_permissions!(Project::THRESHOLDS[:create])
+	end
+	before_filter only: [:update] do
+		require_permissions!(Project::THRESHOLDS[:update]) unless is_owner
+	end
+	before_filter only: [:destroy] do
+		require_permissions!(Project::THRESHOLDS[:destroy]) unless is_owner
+	end
 
   def index
 		if params[:type] == 'hot'
@@ -56,4 +64,8 @@ class Api::ProjectsController < ApplicationController
   def project_params
     params.require(:project).permit(:title, :description)
   end
+
+	def is_owner
+		!!Project.find_by(id: params[:id], author_id: current_user.id)
+	end
 end

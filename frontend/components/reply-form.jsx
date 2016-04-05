@@ -1,6 +1,5 @@
 import React from 'react';
 import SessionStore from '../stores/session';
-import PermissionConstants from '../constants/permission-constants';
 import PermissionUtil from '../util/permission-util';
 
 class ReplyForm extends React.Component {
@@ -40,23 +39,26 @@ class ReplyForm extends React.Component {
 
 	render() {
 		// No permission to create a reply.
-		if (!PermissionUtil.hasPermission(PermissionConstants.REPLY)) {
-			return <div></div>;
+		if (!PermissionUtil.hasPermission.reply.create()) {
+			return <div></div>
 		}
 
 		return (
-			<form className='form-light' onSubmit={this._handleSubmit.bind(this)}>
-				<h3>Add Reply</h3>
-				<div className='form-group'>
-					<input
-						type="text"
-						value={this.state.body}
-						onChange={this._handleBodyChange.bind(this)} />
-				</div>
-				<div className='form-group'>
-					<input type="submit" value="Add Reply" />
-				</div>
-			</form>
+			<div className="reply-form">
+				<form className='form-light' onSubmit={this._handleSubmit.bind(this)}>
+					<div className='form-group'>
+						<textarea
+							value={this.state.body}
+							onChange={this._handleBodyChange.bind(this)}
+							placeholder="Let people know your thoughts on this project"
+							></textarea>
+					</div>
+					<div className='form-group'>
+						<input type="submit" value="Post Reply" />
+						<a className="aside" href="#">How to add links and images</a>
+					</div>
+				</form>
+			</div>
 		);
 	}
 }

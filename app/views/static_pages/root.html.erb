@@ -5,12 +5,27 @@
 			codelanguageProperties: {
 				javascript: "<%= asset_path('language_icons/javascript.png') %>",
 				ruby: "<%= asset_path('language_icons/ruby.png') %>"
-			}
+			},
+			thresholds: {}
 		};
+
+		// Populate languages
 		window.codeSplat = codeSplat;
 		<% Project::CODE_LANGUAGES.each do |language| %>
 			codeSplat.codeLanguages.push(<%= "\"#{language}\"".html_safe %>);
 		<% end %>
+
+		// Populate permission thresholds
+		codeSplat.thresholds.project = {};
+		<% Project::THRESHOLDS.each do |k, v| %>
+			codeSplat.thresholds.project["<%= k %>"] = <%= v %>;
+		<% end %>
+		codeSplat.thresholds.reply = {};
+		<% Reply::THRESHOLDS.each do |k, v| %>
+			codeSplat.thresholds.reply["<%= k %>"] = <%= v %>;
+		<% end %>
+
+		// Populate images
 		codeSplat.homeIconPath = "<%= asset_path('home-code-icon.png') %>";
 	</script>
   <h1>CodeSplat</h1>

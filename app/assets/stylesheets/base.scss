@@ -60,10 +60,6 @@ p {
 		border-radius: 0;
 		margin-top: 0.5rem;
 	}
-
-	.replies {
-		margin-top: 1rem;
-	}
 }
 
 .left {
@@ -133,6 +129,11 @@ p {
 			border-right: 0;
 		}
 	}
+}
+
+.aside {
+	margin-left: 1rem;
+	font-size: 0.7rem;
 }
 
 @media (max-width: 600px) {

@@ -4,31 +4,45 @@ import WebConstants from '../constants/web-constants';
 
 let ReplyStore = new Store(Dispatcher);
 
-let _projectReplies = {};
-let _fileReplies = {};
-let _explanationReplies = {};
+let _projectReplies = [];
+let _fileReplies = [];
+let _explanationReplies = [];
 
 function resetReplies(replyArray) {
-	let replies = {};
-	for (let i = 0; i < replyArray.length; i++) {
-		let reply = replyArray[i];
-		replies[reply.id] = reply;
-	}
-	return replies;
+	return replyArray.slice();
 }
 
 function retrieveAll(replies) {
-	let output = [];
-	for (let key in replies) {
-		output.push(replies[key]);
+	return replies.slice();
+}
+
+function remove(arr, id) {
+	for (let i = 0; i < arr.length; ++i) {
+		if (arr[i].id === id) {
+			arr.splice(i, 1);
+			break;
+		}
 	}
-	return output;
 }
 
 function removeReply(id) {
-	delete _projectReplies[id];
-	delete _fileReplies[id];
-	delete _explanationReplies[id];
+	remove(_projectReplies, id);
+	remove(_fileReplies, id);
+	remove(_explanationReplies, id);
+}
+
+function receiveReply(arr, reply) {
+	let found = false;
+	for (let i = 0; i < arr.length; ++i) {
+		if (arr[i].id === reply.id) {
+			found = true;
+			arr[i] = reply;
+			break;
+		}
+	}
+	if (!found) {
+		arr.push(reply);
+	}
 }
 
 ReplyStore.allProjectReplies = function () {
@@ -50,7 +64,7 @@ ReplyStore.__onDispatch = function (payload) {
 			ReplyStore.__emitChange();
 			break;
 		case WebConstants.RECEIVE_PROJECT_REPLY:
-			_projectReplies[payload.reply.id] = payload.reply;
+			receiveReply(_projectReplies, payload.reply);
 			ReplyStore.__emitChange();
 			break;
 		case WebConstants.RECEIVE_FILE_REPLIES:
@@ -58,7 +72,7 @@ ReplyStore.__onDispatch = function (payload) {
 			ReplyStore.__emitChange();
 			break;
 		case WebConstants.RECEIVE_FILE_REPLY:
-			_fileReplies[payload.reply.id] = payload.reply;
+			receiveReply(_fileReplies, payload.reply);
 			ReplyStore.__emitChange();
 			break;
 		case WebConstants.RECEIVE_EXPLANATION_REPLIES:
@@ -66,7 +80,7 @@ ReplyStore.__onDispatch = function (payload) {
 			ReplyStore.__emitChange();
 			break;
 		case WebConstants.RECEIVE_EXPLANATION_REPLY:
-			_explanationReplies[payload.reply.id] = payload.reply;
+			receiveReply(_explanationReplies, payload.reply);
 			ReplyStore.__emitChange();
 			break;
 		case WebConstants.REMOVE_REPLY:

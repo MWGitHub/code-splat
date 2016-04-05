@@ -5,6 +5,22 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user, :signed_in?
 
+	protected
+	def require_permissions!(threshold)
+		allowed = current_user.score >= threshold
+		unless allowed
+			respond_to do |format|
+	      format.html do
+	        flash[:error] = 'Access denied'
+	        redirect_to root_url
+	      end
+	      format.json do
+	        render json: { error: "#{threshold} required to perform the action" }, status: :unauthorized
+	      end
+	    end
+		end
+	end
+
   private
   def current_user
     @current_user ||= User.find_by_session_token(session[:token])

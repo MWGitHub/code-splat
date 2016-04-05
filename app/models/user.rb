@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
-  validates :username, :password_digest, :session_token, presence: true
+  validates :username, :password_digest, :session_token, :score, presence: true
   validates :email, presence: true
   validates :username, length: { minimum: 1 }
   validates :password, length: { minimum: 6, allow_nil: true }

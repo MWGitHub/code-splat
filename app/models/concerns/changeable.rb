@@ -4,7 +4,7 @@ module Changeable
   included do
     def body
       result = ''
-      recent = self.text_changes.order(:id).last
+      recent = self.text_changes.order(created_at: :desc).first
       if recent && recent[:body]
         result = recent[:body]
       end

@@ -2,40 +2,27 @@ class Api::RepliesController < ApplicationController
 	before_filter :require_signed_in!, only: [
     :create, :update, :destroy
   ]
+	before_filter only: [:create] do
+		require_permissions!(Reply::THRESHOLDS[:create])
+	end
+	before_filter only: [:update] do
+		require_permissions!(Reply::THRESHOLDS[:update]) unless is_owner
+	end
+	before_filter only: [:destroy] do
+		require_permissions!(Reply::THRESHOLDS[:destroy]) unless is_owner
+	end
 
 	def index
-		if params[:project_id]
-			project = Project.find(params[:project_id])
-			@replies = project.replies
-		elsif params[:source_file_id]
-			source_file = SourceFile.find(params[:source_file_id])
-			@replies = source_file.replies
-		elsif params[:explanation_id]
-			explanation = Explanation.find(params[:explanation_id])
-			@replies = explanation.replies
-		end
+		obj = get_object
+		@replies = obj.replies
 	end
 
 	def create
-		if params[:project_id]
-			project = Project.find(params[:project_id])
-			@reply = project.replies.create!({
-				author_id: current_user.id,
-				body: replies_param[:body]
-			})
-		elsif params[:source_file_id]
-			source_file = SourceFile.find(params[:source_file_id])
-			@reply = source_file.replies.create!({
-				author_id: current_user.id,
-				body: replies_param[:body]
-			})
-		elsif params[:explanation_id]
-			explanation = Explanation.find(params[:explanation_id])
-			@reply = explanation.replies.create!({
-				author_id: current_user.id,
-				body: replies_param[:body]
-			})
-		end
+		obj = get_object
+		@reply = obj.replies.create!({
+			author_id: current_user.id,
+			body: replies_param[:body]
+		})
 		render :show
 	end
 
@@ -54,5 +41,21 @@ class Api::RepliesController < ApplicationController
 	private
 	def replies_param
 		params.require(:reply).permit(:body)
+	end
+
+	def is_owner
+		!!Reply.find_by(id: params[:id], author_id: current_user.id)
+	end
+
+	def get_object
+		obj = nil
+		if params[:project_id]
+			obj = Project.find(params[:project_id])
+		elsif params[:source_file_id]
+			obj = SourceFile.find(params[:source_file_id])
+		elsif params[:explanation_id]
+			obj = Explanation.find(params[:explanation_id])
+		end
+		obj
 	end
 end

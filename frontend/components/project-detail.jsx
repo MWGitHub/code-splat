@@ -8,8 +8,6 @@ import FileList from './file-list';
 import TextChangeList from './text-change-list';
 import ReplyForm from './reply-form';
 import ReplyList from './reply-list';
-import PermissionConstants from '../constants/permission-constants';
-import PermissionUtil from '../util/permission-util';
 
 class ProjectDetail extends React.Component {
   constructor(props) {
@@ -87,8 +85,8 @@ class ProjectDetail extends React.Component {
 		let replies = '';
 		if (this.state.replies && this.state.replies.length > 0) {
 			replies = (
-				<div className="replies">
-					<h3>REPLIES</h3>
+				<div className="section replies">
+					<h3 className="section-header">Replies</h3>
 					<ReplyList replies={this.state.replies} />
 				</div>
 			)
@@ -120,8 +118,10 @@ class ProjectDetail extends React.Component {
 						<Link to={'/projects/' + this.state.project.slug + '/edit'}>edit project</Link>
 						<a href="#" onClick={this._handleDelete.bind(this)}>delete project</a>
 					</div>
-					<ReplyForm onSubmit={this._handleReply.bind(this)} />
-					{replies}
+					<div className="reply-group">
+						<ReplyForm onSubmit={this._handleReply.bind(this)} />
+						{replies}
+					</div>
 				</div>
 				<div className="right">
 					<h2>FILES</h2>

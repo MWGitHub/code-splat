@@ -1,5 +1,10 @@
 class Project < ActiveRecord::Base
 	CODE_LANGUAGES = %w(ruby javascript)
+	THRESHOLDS = {
+		create: 0,
+		update: 100,
+		destroy: 600
+	}
 
   include FriendlyId
   friendly_id :title, use: :slugged

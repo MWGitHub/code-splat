@@ -18,7 +18,8 @@ FrontPageItem.destroy_all
 tester = User.create!(
   username: 'test',
   password: 'password',
-  email: 'test@test.com'
+  email: 'test@test.com',
+	score: 1000000
 )
 tester.projects.create(title: 'test project')
 

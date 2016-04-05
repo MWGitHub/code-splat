@@ -1,25 +1,34 @@
-import PermissionConstants from '../constants/permission-constants';
 import SessionStore from '../stores/session';
 
-function checkPermission(permission) {
+function checkPermission(threshold) {
+	if (!SessionStore.isLoggedIn()) return false;
 
+	return SessionStore.getUser().score >= threshold;
 }
 
 export default {
-	/**
-	 * Checks if the user has permission to do an action.
-	 * @type {Object|string} item the item to check, if it's an object it
-	 *											 requires an author_id key, else uses it as
-	 *											 the type.
-	 * @type {string|null} permission the permission type to check against.
-	 */
-	hasPermission: function (item, permission) {
-		if (!SessionStore.isLoggedIn()) return false;
-
-		if (!permission) return true;
-
-		switch (permission) {
-
+	hasPermission: {
+		project: {
+			create: function () {
+				return checkPermission(window.codeSplat.thresholds.project.create);
+			},
+			update: function () {
+				return checkPermission(window.codeSplat.thresholds.project.update);
+			},
+			destroy: function () {
+				return checkPermission(window.codeSplat.thresholds.project.destroy);
+			}
+		},
+		reply: {
+			create: function () {
+				return checkPermission(window.codeSplat.thresholds.reply.create);
+			},
+			update: function () {
+				return checkPermission(window.codeSplat.thresholds.reply.update);
+			},
+			destroy: function () {
+				return checkPermission(window.codeSplat.thresholds.reply.destroy);
+			}
 		}
 	}
 };
