@@ -20,7 +20,8 @@
 }
 
 .cm-s-material .CodeMirror-cursor {
-	border-left: 1px solid $dark-background-color;
+	// border-left: 1px solid $dark-background-color;
+	border: 0;
 }
 
 

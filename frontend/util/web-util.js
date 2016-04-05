@@ -170,13 +170,14 @@ export default {
     });
   },
 
-	fetchSourceFileReplies: function (id) {
+	fetchSourceFileReplies: function (id, onSuccess) {
 		$.ajax({
 			type: 'GET',
 			url: '/api/source_files/' + id + '/replies',
 			dataType: 'json',
 			success: function (data) {
 				WebActions.receiveSourceFileReplies(data);
+				onSuccess && onSuccess(data);
 			}
 		})
 	},

@@ -3,6 +3,18 @@ class ProgramSeeds
 		user = User.find_by(username: 'demo')
 
 		project = user.projects.create(
+			title: 'Simple Data Structures',
+		)
+		project.text_changes.create(
+			author_id: user.id,
+			body: 'Data structures implemented in the simplest ways without optimizations.'
+		)
+		project.front_page_items.create(
+			description: 'Read code for data structures in the most basic implementations.'
+		)
+
+
+		project = user.projects.create(
 			title: 'Simple Sorting',
 			language: 'ruby'
 		)
@@ -42,17 +54,6 @@ def merge(left, right)
 	merged_array + left + right
 end
 			BODY
-		)
-
-		project = user.projects.create(
-			title: 'Simple Data Structures',
-		)
-		project.text_changes.create(
-			author_id: user.id,
-			body: 'Data structures implemented in the simplest ways without optimizations.'
-		)
-		project.front_page_items.create(
-			description: 'Read code for data structures in the most basic implementations.'
 		)
 	end
 end

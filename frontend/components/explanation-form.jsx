@@ -20,13 +20,13 @@ class ExplanationForm extends React.Component {
 		e.preventDefault();
 
 		WebUtil.createExplanation(this.props.sourceFileId, {
-			body: this.state.body
+			body: this.state.body,
+			fragment: this.props.fragment,
+			fragment_start: this.props.start
 		});
 
 		this.setState({
-				fragment: this.props.fragment,
-				fragment_start: this.props.selectionStart,
-				body: this.state.body
+			body: ''
 		});
 
 		e.target.reset();

@@ -16,8 +16,7 @@ class Api::ExplanationsController < ApplicationController
 		source_file = SourceFile.find(params[:source_file_id])
 		options = {
 			fragment: explanation_params[:fragment],
-			fragment_start: explanation_params[:fragment_start],
-			author_id: current_user.id
+			fragment_start: explanation_params[:fragment_start]
 		}
 		@explanation = source_file.explanations.create!(options)
 		if @explanation && explanation_params[:body]

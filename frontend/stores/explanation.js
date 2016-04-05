@@ -20,7 +20,7 @@ ExplanationStore.all = function () {
 	return _explanations.slice();
 };
 
-ProjectStore.find = function (id) {
+ExplanationStore.find = function (id) {
 	for (let i = 0; i < _explanations.length; ++i) {
 		let explanation = _explanations[i];
 		if (explanation.id === id) {
@@ -37,7 +37,7 @@ ExplanationStore.__onDispatch = function (payload) {
 			ExplanationStore.__emitChange();
 			break;
 		case WebConstants.RECEIVE_EXPLANATION:
-			_projectReplies[payload.reply.id] = payload.reply;
+			receiveExplanation(payload.explanation);
 			ExplanationStore.__emitChange();
 			break;
 	}
