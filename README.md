@@ -120,15 +120,15 @@ user interface.
   - [ ] viewing comments by file or project
 - [ ] Use CSS to style new views
 
-### Phase 5.5: Karma and User Access (1.5 days)
+### Phase 5.5: Score and User Access (1.5 days)
 
 **Objective:** Users gain karma depending on contributions which allow for more actions. Owners and admins have options available all the time.
 
-- [ ] create `Karma` column for users
-- [ ] calculate `Karma` based on contributions
-- [ ] prevent non-owners from changing owning files unless karma high enough
+- [x] create `score` column for users
+- [ ] add `score` based on contributions
+- [ ] prevent non-owners from changing owning files unless score high enough
 - [ ] have admin class to be able to modify everything
-- [ ] have specific amounts of karma allow more actions
+- [ ] have specific amounts of score allow more actions
 
 ### Phase 6: Allow Complex Styling in Code and text selection (1 day)
 
