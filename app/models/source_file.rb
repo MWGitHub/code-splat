@@ -1,7 +1,7 @@
 class SourceFile < ActiveRecord::Base
 
 	include PgSearch
-	multisearchable against: :name, using: [:tsearch]
+	multisearchable against: :name
 
   include FriendlyId
   friendly_id :name, use: :scoped, scope: :project

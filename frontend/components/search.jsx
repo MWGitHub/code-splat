@@ -5,6 +5,31 @@ import WebUtil from '../util/web-util';
 import { Link } from 'react-router';
 import DOMUtil from '../util/dom-util';
 import SearchActions from '../actions/search-actions';
+import Infinite from 'react-infinite';
+
+function getItemFields(item) {
+	let fields = {
+		id: item.id
+	};
+	switch (item._type) {
+		case 'User':
+			fields.url = '/user/' + item.username;
+			fields.type = 'User';
+			fields.text = item.username
+			break;
+		case 'Project':
+			fields.url = '/projects/' + item.slug;
+			fields.type = 'Project';
+			fields.text = item.title;
+			break;
+		case 'SourceFile':
+			fields.url = '/projects/' + item.project_slug + '/files/' + item.slug;
+			fields.type = 'File';
+			fields.text = item.name;
+			break;
+	}
+	return fields;
+}
 
 class SearchBar extends React.Component {
 	constructor(props) {
@@ -18,7 +43,12 @@ class SearchBar extends React.Component {
 
   componentDidMount() {
     this.storeListener = SearchStore.addListener(() => {
-			this.setState({ results: SearchStore.allBarResults() });
+			// Prevent erasing queries while waiting on a request to run after
+			if (this.state.query.length <= 2) {
+				this.setState({ results: [] });
+			} else {
+				this.setState({ results: SearchStore.allBarResults() });
+			}
 		});
 
 		this.clickListener = e => {
@@ -38,9 +68,12 @@ class SearchBar extends React.Component {
   handleInputChange(e) {
     var query = e.currentTarget.value;
     this.setState({ query: query }, () => {
+			// Only query if the search is long enough
       if (query.length > 2) {
         this.search();
-      }
+      } else {
+				SearchActions.clearSearchBar();
+			}
     });
   }
 
@@ -53,53 +86,28 @@ class SearchBar extends React.Component {
 	}
 
   resultList() {
-		let makeLink = (id, link, type, text) => {
+		let makeLink = (fields) => {
 			return (
-				<li key={id}>
+				<li key={fields.id}>
 					<Link
 						onClick={this.onLinkClick.bind(this)}
-						to={link}>
-						{type} - {text}
+						to={fields.url}>
+						{fields.type} - {fields.text}
 					</Link>
 				</li>
 			);
 		};
 
     return this.state.results.map(function (result) {
-			switch (result._type) {
-				case 'User':
-					return makeLink(
-						result.id,
-						'/user/' + result.username,
-						'User',
-						result.username
-					);
-					break;
-				case 'Project':
-					return makeLink(
-						result.id,
-						'/projects/' + result.slug,
-						'Project',
-						result.title
-					);
-					break;
-				case 'SourceFile':
-					return makeLink(
-						result.id,
-						'/projects/' + result.project_slug + '/files/' + result.slug,
-						'File',
-						result.name
-					);
-					break;
-				default:
-					return '';
-			}
+			let fields = getItemFields(result);
+			return makeLink(fields);
     });
   }
 
 	_handleSubmit(e) {
 		e.preventDefault();
 
+		SearchActions.clearSearchBar();
     this.context.router.push('/search/?q=' + this.state.query);
 	}
 
@@ -133,92 +141,152 @@ SearchBar.contextTypes = {
 
 module.exports.SearchBar = SearchBar;
 
+class SearchItem extends React.Component {
+	render() {
+		return (
+			<li className="list-result">
+				<Link
+					onClick={this.props.onClick}
+					to={this.props.url}>
+					{this.props.type} - {this.props.text}
+				</Link>
+			</li>
+		);
+	}
+}
+
 class Search extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			query: props.location.query.q || '',
-			results: SearchStore.all()
+			results: [],
+			isInfiniteLoading: false
 		};
 	}
 
   componentDidMount() {
     this.storeListener = SearchStore.addListener(() => {
-			this.setState({ results: SearchStore.all() });
+			this.setState({ results: this.buildResults() });
 		});
-		this.search();
+		this.search(1);
   }
 
   componentWillUnmount() {
     this.storeListener.remove();
   }
 
-  search(e) {
-    WebUtil.search(this.state.query, 1);
+	componentWillReceiveProps(newProps) {
+		this.setState({
+			results: [],
+			isInfiniteLoading: false
+		});
+		this.search(1, newProps.location.query.q);
+	}
+
+  search(page, query) {
+		let searchQuery = query || this.props.location.query.q || '';
+		if (searchQuery === '') return;
+
+    WebUtil.search(searchQuery, page, response => {
+			this.setState({
+				results: this.buildResults(),
+				isInfiniteLoading: false
+			});
+		});
   }
 
   nextPage() {
-    var meta = SearchStore.meta();
-    WebUtil.search(meta.query, meta.page + 1);
+		let meta = SearchStore.meta();
+		if (meta.page >= meta.total_pages) {
+			this.setState({ isInfiniteLoading: false });
+			return;
+		}
+
+		this.search(meta.page + 1 || 1);
   }
 
-	resultList() {
-		let makeLink = (id, link, type, text) => {
-			return (
-				<li key={id} className="list-result">
-					<Link	to={link}>
-						{type} - {text}
-					</Link>
-				</li>
-			);
-		};
+  buildResults() {
+		let newResults = SearchStore.all();
+		let results = [];
 
-    return this.state.results.map(function (result) {
-			switch (result._type) {
-				case 'User':
-					return makeLink(
-						result.id,
-						'/user/' + result.username,
-						'User',
-						result.username
-					);
-					break;
-				case 'Project':
-					return makeLink(
-						result.id,
-						'/projects/' + result.slug,
-						'Project',
-						result.title
-					);
-					break;
-				case 'SourceFile':
-					return makeLink(
-						result.id,
-						'/projects/' + result.project_slug + '/files/' + result.slug,
-						'File',
-						result.name
-					);
-					break;
-				default:
-					return '';
+		// Generate results hash to check for existing results quicker
+		let currentResults = {};
+		for (let i = 0; i < this.state.results.length; ++i) {
+			let result = this.state.results[i];
+			currentResults[result.id] = result;
+		}
+
+		for (let i = 0; i < newResults.length; ++i) {
+			let result = newResults[i];
+			if (!currentResults[result.id]) {
+				results.push(result);
 			}
+		}
+
+    return this.state.results.concat(results);
+  }
+
+  handleInfiniteLoad() {
+		let meta = SearchStore.meta();
+		if (meta.page >= meta.total_pages) {
+			this.setState({
+				isInfiniteLoading: false
+			});
+			return;
+		}
+
+    this.setState({
+      isInfiniteLoading: true
     });
+		this.nextPage();
+  }
+
+  elementInfiniteLoad() {
+    return (
+			<div className="infinite-list-item">
+	      Loading...
+	    </div>
+		);
   }
 
   render() {
-    var meta = SearchStore.meta();
+		let results = this.state.results.map(result => {
+			let fields = getItemFields(result);
+			return (
+				<SearchItem
+					key={'search-' + fields.type + '-' + fields.id}
+					type={fields.type}
+					text={fields.text}
+					url={fields.url}
+					onClick={()=>{}} />
+			);
+		});
+
+		let meta = SearchStore.meta();
+		let resultText = '';
+		if (meta.total_count === 1) {
+			resultText = '1 result';
+		} else {
+			resultText = (meta.total_count || 0) + ' results';
+		}
     return (
       <article className="search-results list-index">
-				<h1>Results for "{this.state.query}"</h1>
-        <ul className="primary-list">
-          { this.resultList() }
-        </ul>
-
-				<nav>
-					Displaying page { meta.page } of { meta.total_pages }
-					<button onClick={ this.nextPage }>NEXT PAGE</button>
-				</nav>
+				<h1>
+					{resultText} for "{this.props.location.query.q}"
+				</h1>
+				<ul className="primary-list">
+					<Infinite
+						elementHeight={60}
+						useWindowAsScrollContainer
+						infiniteLoadBeginEdgeOffset={200}
+						onInfiniteLoad={this.handleInfiniteLoad.bind(this)}
+						loadingSpinnerDelegate={this.elementInfiniteLoad()}
+						isInfiniteLoading={this.state.isInfiniteLoading}
+					>
+						{results}
+					</Infinite>
+				</ul>
       </article>
     );
   }

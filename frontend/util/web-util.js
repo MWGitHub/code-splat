@@ -261,7 +261,7 @@ export default {
     });
 	},
 
-	search: function (query, page) {
+	search: function (query, page, onSuccess) {
 		$.ajax({
       type: "GET",
       url: "/api/searches",
@@ -269,6 +269,7 @@ export default {
       data: {query: query, page: page},
       success: function (response) {
         SearchActions.receiveResults(response);
+				onSuccess && onSuccess(response);
       }
     });
 	}

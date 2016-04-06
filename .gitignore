@@ -19,3 +19,5 @@ app/assets/javascripts/bundle.js*
 .byebug_history
 .idea
 *.iml
+
+application.yml

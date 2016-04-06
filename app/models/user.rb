@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
 	include PgSearch
-	multisearchable against: :username, using: [:tsearch]
+	multisearchable against: :username
 
   attr_reader :password
 

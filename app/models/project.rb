@@ -7,7 +7,7 @@ class Project < ActiveRecord::Base
 	}
 
 	include PgSearch
-	multisearchable against: :title, using: [:tsearch]
+	multisearchable against: :title
 
   include FriendlyId
   friendly_id :title, use: :slugged

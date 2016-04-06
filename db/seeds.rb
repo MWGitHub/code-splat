@@ -31,23 +31,23 @@ demo = User.create!(
 
 ProgramSeeds.generate
 
-5.times do |_|
+10.times do |_|
   FactoryGirl.create(:user)
 end
 
-5.times do |_|
+10.times do |_|
   FactoryGirl.create(:user_with_projects)
 end
 
-5.times do |_|
+10.times do |_|
   FactoryGirl.create(:user_with_projects_with_files)
 end
 
-5.times do |_|
+10.times do |_|
   FactoryGirl.create(:user_with_changes)
 end
 
-5.times do |_|
+10.times do |_|
 	FactoryGirl.create(:user_with_all)
 end
 
