@@ -147,12 +147,13 @@ user interface.
 
 ### Bonus Features (TBD)
 - [ ] add user page
-- [ ] add user karma
+- [ ] add user score
 - [ ] add search
 - [ ] add pagination
 - [ ] refactor code
 - [ ] optimize slow requests
 - [ ] check for memory leaks
+- [ ] fix search page bug not showing loading
 
 - [ ] create `Vote` model
 - [ ] API for changes (`VotesController`)
