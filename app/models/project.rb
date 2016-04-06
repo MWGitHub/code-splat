@@ -6,6 +6,9 @@ class Project < ActiveRecord::Base
 		destroy: 600
 	}
 
+	include PgSearch
+	multisearchable against: :title, using: [:tsearch]
+
   include FriendlyId
   friendly_id :title, use: :slugged
 

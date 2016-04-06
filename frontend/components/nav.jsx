@@ -7,7 +7,8 @@ import Modal from 'react-modal';
 import SessionStore from '../stores/session';
 import CSS from '../constants/css';
 import UserUtil from '../util/user-util';
-import DOM from '../util/dom';
+import DOMUtil from '../util/dom-util';
+import { SearchBar } from './search';
 
 const LOGIN_MODAL = 'LOGIN_MODAL';
 const REGISTER_MODAL = 'REGISTER_MODAL';
@@ -29,8 +30,8 @@ class Nav extends React.Component {
 
 			let menuButton = ReactDOM.findDOMNode(this.refs.menuProfile);
 			let dropDown = ReactDOM.findDOMNode(this.refs.menuDropdown);
-			if (DOM.hasAncestor(e.target, menuButton)) return;
-			if (DOM.hasAncestor(e.target, dropDown)) return;
+			if (DOMUtil.hasAncestor(e.target, menuButton)) return;
+			if (DOMUtil.hasAncestor(e.target, dropDown)) return;
 
 			this.setState({ profileMenuShown: false });
 		};
@@ -163,10 +164,7 @@ class Nav extends React.Component {
     return (
       <div>
         <nav className="main-nav group">
-          <div className="search">
-            <input type="text" placeholder="Search projects &amp; files" />
-            <span className="input-icon fa fa-search"></span>
-          </div>
+          <SearchBar />
           <div className="logo">
             <h2><Link to='/'>&nbsp;</Link></h2>
           </div>

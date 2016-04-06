@@ -1,4 +1,5 @@
 import WebActions from '../actions/web-actions';
+import SearchActions from '../actions/search-actions';
 
 export default {
   fetchProjects: function (queries, onSuccess) {
@@ -246,5 +247,29 @@ export default {
 				WebActions.receiveExplanation(data);
 			}
 		});
+	},
+
+	searchBar: function (query) {
+		$.ajax({
+      type: "GET",
+      url: "/api/searches",
+      dataType: "json",
+      data: {query: query, page: 1},
+      success: function (response) {
+        SearchActions.receiveBarResults(response);
+      }
+    });
+	},
+
+	search: function (query, page) {
+		$.ajax({
+      type: "GET",
+      url: "/api/searches",
+      dataType: "json",
+      data: {query: query, page: page},
+      success: function (response) {
+        SearchActions.receiveResults(response);
+      }
+    });
 	}
 };

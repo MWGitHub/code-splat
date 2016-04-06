@@ -40,6 +40,9 @@ gem 'font-awesome-sass'
 gem 'factory_girl_rails'
 gem 'faker'
 
+gem 'pg_search'
+gem 'kaminari'
+
 group :production do
   gem 'newrelic_rpm'
   gem 'rails_12factor'

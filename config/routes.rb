@@ -23,6 +23,8 @@ Rails.application.routes.draw do
 		resources :replies, except: [:index, :show, :new, :edit]
 
 		resources :front_page_items, only: [:index]
+
+		resources :searches, only: [:index]
   end
 
   root to: 'static_pages#root'

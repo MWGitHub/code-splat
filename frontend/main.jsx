@@ -17,6 +17,7 @@ import SessionStore from './stores/session';
 import FileDetail from './components/file-detail';
 import { NewFileForm, EditFileForm } from './components/file-form';
 import ProjectIndex from './components/project-index';
+import Search from './components/search';
 
 class App extends React.Component {
   render() {
@@ -37,6 +38,7 @@ var router = (
       <IndexRoute component={Home} />
       <Route path='register' component={Register} />
       <Route path='login' component={Login} />
+			
 			<Route path='projects' component={ProjectIndex} />
       <Route path='projects/new'
         component={NewProjectForm} onEnter={checkLoggedIn} />
@@ -46,6 +48,9 @@ var router = (
       <Route path='projects/:slug/files/new' component={NewFileForm} />
       <Route path='projects/:slug/files/:fileSlug/edit' component={EditFileForm} />
       <Route path='projects/:slug/files/:fileSlug' component={FileDetail} />
+
+			<Route path='search' component={Search} />
+
       <Route path='*' component={NotFound} />
     </Route>
   </Router>
