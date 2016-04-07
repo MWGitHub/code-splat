@@ -29,7 +29,7 @@ $annotated-text-background: rgba(#ffff63, 0.35);
 $weight-standard: 400;
 $weight-bold: 700;
 
-$border-radius: 3px;
+$border-radius: 2px;
 
 $hot-main-background-color: #222;
 $hot-top-four-background-color: shade($hot-main-background-color, 30%);
@@ -41,6 +41,10 @@ $form-placeholder-color: rgb(128, 128, 128);
 
 $reply-group-background: #1a1a1a;
 $reply-detail-border-color: #333;
+
+$infinite-load-background: #262626;
+$infinite-load-border-color: #444;
+$infinite-load-color: #ccc;
 
 $search-bar-result-background: #000;
 $search-color: #eee;

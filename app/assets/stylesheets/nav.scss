@@ -90,12 +90,23 @@
     right: 1rem;
     background-color: $gray-background-color;
     width: 14rem;
-    padding: 0.75rem 1rem;
+		padding: 0;
+
+		li {
+			width: 100%;
+		}
 
     a {
-      padding: 0;
+			display: block;
+			width: 100%;
+      padding: 0.4rem 1rem;
       font-size: 0.9rem;
       color: $dark-link-color;
+			transition: all 0.25s;
+
+			&:hover {
+				color: $nav-background-color;
+			}
     }
   }
 }

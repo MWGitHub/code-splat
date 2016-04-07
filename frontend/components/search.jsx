@@ -188,7 +188,7 @@ class Search extends React.Component {
 		let searchQuery = query || this.props.location.query.q || '';
 		if (searchQuery === '') return;
 
-    WebUtil.search(searchQuery, page, response => {
+		WebUtil.search(searchQuery, page, response => {
 			this.setState({
 				results: this.buildResults(),
 				isInfiniteLoading: false
@@ -199,7 +199,6 @@ class Search extends React.Component {
   nextPage() {
 		let meta = SearchStore.meta();
 		if (meta.page >= meta.total_pages) {
-			this.setState({ isInfiniteLoading: false });
 			return;
 		}
 
@@ -244,9 +243,9 @@ class Search extends React.Component {
 
   elementInfiniteLoad() {
     return (
-			<div className="infinite-list-item">
-	      Loading...
-	    </div>
+			<div className="infinite-list-loading">
+				<div className="loader">Loading...</div>
+			</div>
 		);
   }
 
