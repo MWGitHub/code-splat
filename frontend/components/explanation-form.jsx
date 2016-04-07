@@ -6,7 +6,7 @@ class ExplanationForm extends React.Component {
 		super(props);
 
 		this.state = {
-			body: ''
+			body: this.props.body || ''
 		}
 	}
 
@@ -34,15 +34,13 @@ class ExplanationForm extends React.Component {
 
 	render() {
 		return (
-			<form className="form" onSubmit={this._handleSubmit.bind(this)}>
-				<p>{this.props.selectionStart}</p>
-				<p>{this.props.fragment}</p>
+			<form className="form-light" onSubmit={this._handleSubmit.bind(this)}>
 				<div className="form-group">
-					<label htmlFor="explanation-body">Explanation</label>
 					<textarea
 						id="explanation-body"
 						onChange={this._handleChange.bind(this)}
 						value={this.state.body}
+						placeholder="Say something about the selected lines"
 					></textarea>
 				</div>
 				<div className="form-group">

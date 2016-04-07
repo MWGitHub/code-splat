@@ -30,3 +30,14 @@
 	background-color: $annotated-text-background;
 	cursor: pointer;
 }
+
+.explanation {
+	h3 {
+		font-size: 0.9rem;
+		margin: 0;
+	}
+
+	p {
+		margin: 0.5rem 0;
+	}
+}

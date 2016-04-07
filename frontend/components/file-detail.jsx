@@ -13,6 +13,7 @@ import Ruby from 'codemirror/mode/ruby/ruby';
 import SimpleScrollBars from 'codemirror/addon/scroll/simplescrollbars';
 import ExplanationForm from './explanation-form';
 import ExplanationStore from '../stores/explanation';
+import ExplanationDetail from './explanation-detail';
 
 class FileDetail extends React.Component {
   constructor(props) {
@@ -79,16 +80,47 @@ class FileDetail extends React.Component {
 		});
   }
 
+	_getExplanationAtPoint(line, index) {
+		for (let i = 0; i < this.explanations.length; ++i) {
+			let explanation = this.explanations[i];
+			let isInLine = line >= explanation.startLine &&
+				line <= explanation.endLine;
+			let isInIndex = index >= explanation.startIndex &&
+				index <= explanation.endIndex;
+
+			if (isInLine && isInIndex) {
+				return ExplanationStore.find(explanation.id);
+			}
+		}
+		return null;
+	}
+
+	_isSelectionAnnotated(start, end) {
+		for (let i = 0; i < this.explanations.length; ++i) {
+			let explanation = this.explanations[i];
+			let isOutLine = start.line > explanation.endLine ||
+				end.line < explanation.startLine;
+			let isOutIndex = start.ch > explanation.endIndex &&
+				end.ch < explanation.startIndex;
+
+			if (!(isOutLine || isOutIndex)) {
+				return true
+			}
+		}
+		return false;
+	}
+
 	_handleFileChange() {
 		this.setState({	file: FileStore.find(this.props.params.fileSlug) });
 
 		if (this.refs.codemirror) {
-			// Add selecting text for annotation adding
 			let codeMirrorDOM = ReactDOM.findDOMNode(this.refs.codemirror);
 			let codeMirror = this.refs.codemirror.getCodeMirror();
 			codeMirrorDOM.addEventListener('mouseup', e => {
+				// Add selecting text for annotation adding
 				let selection = codeMirror.getSelection();
 				let start = codeMirror.getCursor('from');
+				let end = codeMirror.getCursor('to');
 				let startIndex = 0;
 				for (let i = 0; i < start.line; ++i) {
 					let line = codeMirror.getLine(i);
@@ -96,33 +128,27 @@ class FileDetail extends React.Component {
 					startIndex += 1 + line.length;
 				}
 				startIndex += start.ch;
-				this.setState({
-					selectedExplanation: null,
-					selectionStart: startIndex,
-					selection: selection
-				});
+				if (!this._isSelectionAnnotated(start, end)) {
+					this.setState({
+						selectedExplanation: null,
+						selectionStart: startIndex,
+						selection: selection
+					});
+				}
 
-				// Add selecting annotations
+				// Add selecting existing annotations
 				let selectAnnotation = (e) => {
 					let cursor = codeMirror.getCursor();
 					let line = cursor.line;
 					let index = cursor.ch;
 
-					for (let i = 0; i < this.explanations.length; ++i) {
-						let explanation = this.explanations[i];
-						let isInLine = line >= explanation.startLine &&
-							line <= explanation.endLine;
-						let isInIndex = index >= explanation.startIndex &&
-							index <= explanation.endIndex;
-
-						if (isInLine && isInIndex) {
-							this.setState({
-								selectedExplanation: ExplanationStore.find(explanation.id),
-								selectionStart: null,
-								selection: null
-							});
-							break;
-						}
+					let explanation = this._getExplanationAtPoint(line, index);
+					if (explanation) {
+						this.setState({
+							selectedExplanation: ExplanationStore.find(explanation.id),
+							selectionStart: null,
+							selection: null
+						});
 					}
 				}
 
@@ -139,6 +165,8 @@ class FileDetail extends React.Component {
 		if (this.refs.codemirror) {
 			let codeMirror = this.refs.codemirror.getCodeMirror();
 			let codeMirrorDOM = ReactDOM.findDOMNode(this.refs.codemirror);
+
+			// Highlight annotations
 			for (let i = 0; i < this.state.explanations.length; ++i) {
 				let explanation = this.state.explanations[i];
 
@@ -203,11 +231,8 @@ class FileDetail extends React.Component {
     this.context.router.push('/projects/' + this.props.params.slug);
   }
 
-	_handleContributions(e) {
-		e.preventDefault();
-
-		let params = this.props.params;
-		WebUtil.fetchSourceFileChanges(params.slug, this.state.file.slug);
+	_handleContributions() {
+		WebUtil.fetchSourceFileChanges(this.state.file.id);
 	}
 
 	_handleReply(reply) {
@@ -271,25 +296,10 @@ class FileDetail extends React.Component {
 			);
 		}
 
-		let explanations = '';
-		if (this.state.explanations) {
-			explanations = this.state.explanations.map(explanation => {
-				return (
-					<div key={"explanation-" + explanation.id}>
-						<h3>Explanation</h3>
-						<p>{explanation.body}</p>
-					</div>
-				);
-			});
-		}
-
 		let explanation = '';
 		if (this.state.selectedExplanation) {
 			explanation = (
-				<div>
-					<h3>Explanation</h3>
-					<p>{this.state.selectedExplanation.body}</p>
-				</div>
+				<ExplanationDetail explanation={this.state.selectedExplanation} />
 			);
 		}
 

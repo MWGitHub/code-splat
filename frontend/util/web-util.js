@@ -68,10 +68,10 @@ export default {
     });
   },
 
-  fetchProjectChanges: function (slug) {
+  fetchProjectChanges: function (id) {
     $.ajax({
       type: 'GET',
-      url: '/api/projects/' + slug + '/text_changes',
+      url: '/api/projects/' + id + '/text_changes',
       dataType: 'json',
       success: function (data) {
         WebActions.receiveProjectChanges(data);
@@ -159,11 +159,10 @@ export default {
     });
   },
 
-  fetchSourceFileChanges: function (projectSlug, fileSlug) {
+  fetchSourceFileChanges: function (id) {
     $.ajax({
       type: 'GET',
-      url: '/api/projects/' + projectSlug + '/source_files/' +
-        fileSlug + '/text_changes',
+      url: '/api/source_files/' + id + '/text_changes',
       dataType: 'json',
       success: function (data) {
         WebActions.receiveSourceFileChanges(data);
@@ -248,6 +247,19 @@ export default {
 			}
 		});
 	},
+
+	fetchExplanationChanges: function (id) {
+    $.ajax({
+      type: 'GET',
+      url: '/api/explanations/' + id + '/text_changes',
+      dataType: 'json',
+      success: function (data) {
+        WebActions.receiveSourceFileChanges(data);
+      }
+    });
+  },
+
+
 
 	searchBar: function (query) {
 		$.ajax({

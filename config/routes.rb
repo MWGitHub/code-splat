@@ -5,21 +5,26 @@ Rails.application.routes.draw do
 
     resources :projects, except: [:new, :show, :edit] do
       resources :source_files, except: [:index, :new, :edit] do
-        get 'text_changes', to: 'text_changes#index_source_file'
       end
       get 'text_changes', to: 'text_changes#index_project'
 			resources :replies, only: [:index, :create]
     end
 
 		resources :source_files, only: [] do
+			get 'text_changes', to: 'text_changes#index_source_file'
 			resources :explanations, only: [:index, :create]
 			resources :replies, only: [:index, :create]
 		end
+
     resources :projects, only: [:show], param: :slug
+
 		resources :explanations, except: [:index, :create, :new, :edit] do
+			get 'text_changes', to: 'text_changes#index_explanation'
 			resources :replies, only: [:index, :create]
 		end
+
     resources :text_changes, only: [:show]
+
 		resources :replies, except: [:index, :show, :new, :edit]
 
 		resources :front_page_items, only: [:index]

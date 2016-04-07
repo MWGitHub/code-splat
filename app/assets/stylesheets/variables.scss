@@ -1,10 +1,19 @@
 @import 'bourbon';
 
+$primary-background-color: #000;
+$primary-highlight-color: #ffff64;
+$primary-border-color: #555;
+$primary-color: #c4c0c0;
+
+$button-color: $primary-color;
+$button-background: $primary-background-color;
+$button-border-color: $primary-border-color;
+$button-border-highlight-color: $primary-highlight-color;
+
 $secondary-nav-link-color: #99a7ee;
 
-$dark-background-color: #000;
-
-$dark-contrast-color: #c4c0c0;
+$dark-background-color: $primary-background-color;
+$dark-contrast-color: $primary-color;
 $dark-contrast-highlight-color: #eee;
 $gray-background-color: #292929;
 
@@ -13,12 +22,12 @@ $link-color-highlight: tint($link-color, 20%);
 $sub-form-background-color: #333;
 
 $dark-gray-border-color: #444;
-$gray-border-color: #555;
+$gray-border-color: $primary-border-color;
 $gray-border-highlight-color: tint($gray-border-color, 30%);
 
 $gray-light-background-color: #222;
 $modal-background-color: #292929;
-$nav-background-color: #ffff64;
+$nav-background-color: $primary-highlight-color;
 $nav-color: #000;
 $light-contrast-hover: #000;
 $light-contrast-color: #666;

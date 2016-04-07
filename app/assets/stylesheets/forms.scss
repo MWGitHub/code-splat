@@ -1,6 +1,19 @@
 @import 'variables';
 @import 'bourbon';
 
+button {
+	border: 1px solid $button-border-color;
+	background-color: $button-background;
+	color: $button-color;
+	font-size: 0.9rem;
+	outline: 0;
+	transition: all 0.25s;
+
+	&:hover {
+		border: 1px solid $button-border-highlight-color;
+	}
+}
+
 .auth-form {
 	max-width: rem(400);
 	margin: 0 auto;

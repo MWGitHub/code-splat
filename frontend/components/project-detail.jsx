@@ -8,6 +8,7 @@ import FileList from './file-list';
 import TextChangeList from './text-change-list';
 import ReplyForm from './reply-form';
 import ReplyList from './reply-list';
+import ContributorInfo from './contributor-info';
 
 class ProjectDetail extends React.Component {
   constructor(props) {
@@ -64,10 +65,8 @@ class ProjectDetail extends React.Component {
     this.context.router.push('/projects');
   }
 
-	_handleContributions(e) {
-		e.preventDefault();
-
-		WebUtil.fetchProjectChanges(this.state.project.slug);
+	_handleContributions() {
+		WebUtil.fetchProjectChanges(this.state.project.id);
 	}
 
 	_handleReply(reply) {
@@ -92,24 +91,16 @@ class ProjectDetail extends React.Component {
 			)
 		}
 
-		let contributors = ' Contributor';
-		let contributorCount = this.state.project.contributor_count;
-		if (contributorCount === 1) {
-			contributors = contributorCount + contributors;
-		} else {
-			contributors = contributorCount + contributors + 's';
-		}
-
     return (
       <div className="project-detail detail group">
 				<div className="full">
 					<h1>{this.state.project.title}</h1>
 				</div>
 				<div className="left">
-					<a className="contributors" href='#'
-						onClick={this._handleContributions.bind(this)}>
-						{contributors}
-					</a>
+					<ContributorInfo
+						count={this.state.project.contributor_count}
+						onClick={this._handleContributions.bind(this)}
+					/>
 					<div className="section">
 						<h3 className="section-header">Description</h3>
 						<p>{this.state.project.description}</p>
