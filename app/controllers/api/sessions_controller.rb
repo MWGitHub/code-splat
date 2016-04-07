@@ -15,13 +15,13 @@ class Api::SessionsController < ApplicationController
     @user ||= User.find_by_email(session[:username], session[:password])
 
     if @user
-      sign_in(@user)
+      sign_in!(@user)
       render :login
     end
   end
 
   def destroy
-    sign_out
+    sign_out!
     render :json => {}
   end
 

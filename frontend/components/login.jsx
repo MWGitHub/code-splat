@@ -88,13 +88,13 @@ class Login extends React.Component {
       <div className={loginClass}>
         <h1 className="form-title">SIGN IN</h1>
 				{closeButton}
-        <a href="#" className="auth-button auth-facebook">
+        <a href="/auth/facebook" className="auth-button auth-facebook">
           <i className="fa fa-facebook-official"></i>Sign in with Facebook
         </a>
-        <a href="#" className="auth-button auth-twitter">
-          <i className="fa fa-twitter"></i>Sign in with Twitter
+        <a href="/auth/github" className="auth-button auth-github">
+          <i className="fa fa-github"></i>Sign in with GitHub
         </a>
-        <a href="#" className="auth-button auth-google">
+        <a href="/auth/google_oauth2" className="auth-button auth-google">
           <i className="fa fa-google-plus"></i>Sign in with Google
         </a>
 				<a href="#" className="auth-button auth-email"

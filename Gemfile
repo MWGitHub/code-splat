@@ -45,6 +45,10 @@ gem 'kaminari'
 
 gem 'figaro'
 
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-github'
+
 group :production do
   gem 'newrelic_rpm'
   gem 'rails_12factor'

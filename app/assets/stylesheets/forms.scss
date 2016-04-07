@@ -71,6 +71,16 @@ $tw-color: #1e9ed5;
   }
 }
 
+$github-color: #9d6599;
+.auth-github {
+  background-color: $github-color;
+  border: 1px solid $github-color;
+
+  &:hover {
+    background-color: tint($github-color, 20%);
+  }
+}
+
 $google-color: #e47365;
 .auth-google {
   background-color: $google-color;

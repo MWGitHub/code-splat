@@ -23,20 +23,21 @@ class ApplicationController < ActionController::Base
 
   private
   def current_user
-    @current_user ||= User.find_by_session_token(session[:token])
+    @current_user ||= SessionProvider.find_user_by_token(session[:token])
   end
 
   def signed_in?
     !!current_user
   end
 
-  def sign_in(user)
+  def sign_in!(user)
     @current_user = user
-    session[:token] = user.reset_session_token!
+		provider = SessionProvider.create_session_token(user)
+    session[:token] = provider[:identifier]
   end
 
-  def sign_out
-    current_user.try(:reset_session_token!)
+  def sign_out!
+		SessionProvider.remove_token(current_user, session[:token])
     session[:token] = nil
   end
 

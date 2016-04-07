@@ -5,13 +5,10 @@ class User < ActiveRecord::Base
 
   attr_reader :password
 
-  after_initialize :ensure_session_token
-
-  validates :username, :password_digest, :session_token, :score, presence: true
-  validates :email, presence: true
+  validates :username, :password_digest, :score, presence: true
   validates :username, length: { minimum: 1 }
   validates :password, length: { minimum: 6, allow_nil: true }
-  validates :session_token, :username, :email, uniqueness: true
+  validates :username, :email, uniqueness: true
 
   has_many :projects, foreign_key: :author_id
   has_many :source_files, foreign_key: :author_id
@@ -20,6 +17,8 @@ class User < ActiveRecord::Base
     class_name: 'TextChange',
     foreign_key: :author_id
   )
+
+	has_many :session_providers
 
   def is_password?(unencrypted)
     BCrypt::Password.new(self.password_digest).is_password?(unencrypted)
@@ -32,10 +31,23 @@ class User < ActiveRecord::Base
     end
   end
 
-  def reset_session_token!
-    self.session_token = User.generate_session_token
-    self.save!
-    self.session_token
+	def self.find_or_create_by_auth_hash(auth_hash)
+    provider = auth_hash[:provider]
+    uid = auth_hash[:uid]
+
+    user = SessionProvider.find_user_by_provider(provider, uid)
+    return user if user
+
+    user = User.create!(
+      email: provider,
+			password_digest: BCrypt::Password.create(SecureRandom::urlsafe_base64(16)),
+      username: generate_unique_username(auth_hash[:extra][:raw_info][:name].underscore.gsub(' ', '_'))
+    )
+
+		user.session_providers.create!(
+			provider: provider,
+			identifier: uid
+		)
   end
 
   def self.find_by_credentials(username, password)
@@ -46,24 +58,17 @@ class User < ActiveRecord::Base
   def self.find_by_email(email, password)
     user = User.find_by(email: email)
     user.try(:is_password?, password) ? user : nil
-  end
+	end
 
-  def self.find_by_session_token(token)
-    User.find_by(session_token: token)
-  end
 
-  def self.generate_session_token
-    token = nil
-    loop do
-      token = SecureRandom::urlsafe_base64(16)
-      user = User.exists?(session_token: token)
-      break unless user
-    end
-    token
-  end
-
-  private
-  def ensure_session_token
-    self.session_token ||= User.generate_session_token
-  end
+	private
+	def self.generate_unique_username(front)
+		username = ''
+		loop do
+			username = "#{front}_#{rand(999999)}"
+			user = User.find_by(username: username)
+			break unless user
+		end
+		username
+	end
 end

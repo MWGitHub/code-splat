@@ -114,7 +114,7 @@ class Register extends React.Component {
               onChange={this._handlePasswordChange.bind(this)} />
           </div>
           <div className="form-group description">
-            <p>An activation e-mail will be sent on account creation. Activate to enable all features.</p>
+            <p>If an e-mail is provided an activation e-mail will be sent. Providing an e-mail allows for resetting forgotten passwords.</p>
           </div>
           <div className="form-group">
             <input type="submit" value="Create Account" />
@@ -128,13 +128,13 @@ class Register extends React.Component {
         {closeButton}
         <h1 className="form-title">SIGN UP</h1>
         <p className="form-sub-header">and show off your genius</p>
-        <a href="#" className="auth-button auth-facebook">
+        <a href="/auth/facebook" className="auth-button auth-facebook">
           <i className="fa fa-facebook-official"></i>Sign up with Facebook
         </a>
-        <a href="#" className="auth-button auth-twitter">
-          <i className="fa fa-twitter"></i>Sign up with Twitter
+        <a href="/auth/github" className="auth-button auth-github">
+          <i className="fa fa-github"></i>Sign up with GitHub
         </a>
-        <a href="#" className="auth-button auth-google">
+        <a href="/auth/google_oauth2" className="auth-button auth-google">
           <i className="fa fa-google-plus"></i>Sign up with Google
         </a>
         <a href="#" className="auth-button auth-email"
