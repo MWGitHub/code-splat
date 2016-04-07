@@ -15,7 +15,11 @@ class Api::SessionsController < ApplicationController
     @user ||= User.find_by_email(session[:username], session[:password])
 
     if @user
-      sign_in!(@user)
+      sign_in!(
+				@user,
+				SessionProvider::PROVIDER[:password],
+				@user.id
+			)
       render :login
     end
   end

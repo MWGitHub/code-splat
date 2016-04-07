@@ -29,9 +29,9 @@ Rails.application.routes.draw do
 
   root to: 'static_pages#root'
 
-	get "auth/facebook/callback", to: "session_providers#facebook"
-	get "auth/google_oauth2/callback", to: "session_providers#google"
-	get "auth/github/callback", to: "session_providers#github"
+	get "auth/facebook/callback", to: "session_providers#provider"
+	get "auth/google_oauth2/callback", to: "session_providers#provider"
+	get "auth/github/callback", to: "session_providers#provider"
 
   get '*unmatched_route', to: 'static_pages#root'
 end

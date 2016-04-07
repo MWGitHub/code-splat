@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407002418) do
+ActiveRecord::Schema.define(version: 20160407132941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,9 +87,10 @@ ActiveRecord::Schema.define(version: 20160407002418) do
     t.uuid   "user_id",    null: false
     t.string "provider",   null: false
     t.string "identifier", null: false
+    t.string "token",      null: false
   end
 
-  add_index "session_providers", ["provider", "identifier"], name: "index_session_providers_on_provider_and_identifier", using: :btree
+  add_index "session_providers", ["token"], name: "index_session_providers_on_token", unique: true, using: :btree
   add_index "session_providers", ["user_id"], name: "index_session_providers_on_user_id", using: :btree
 
   create_table "source_files", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|

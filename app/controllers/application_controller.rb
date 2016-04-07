@@ -30,14 +30,18 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
-  def sign_in!(user, provider = SessionProvider::PROVIDER[:password])
+  def sign_in!(user, provider, identifier)
     @current_user = user
-		provider = SessionProvider.create_session_token(user)
-    session[:token] = provider[:identifier]
+		provider = SessionProvider.create_session_token(
+			user,
+			provider,
+			identifier
+		)
+    session[:token] = provider[:token]
   end
 
   def sign_out!
-		SessionProvider.remove_token(current_user, session[:token])
+		SessionProvider.remove_token(session[:token])
     session[:token] = nil
   end
 

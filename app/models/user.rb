@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   validates :username, :password_digest, :score, presence: true
   validates :username, length: { minimum: 1 }
   validates :password, length: { minimum: 6, allow_nil: true }
-  validates :username, :email, uniqueness: true
+  validates :username, :email, uniqueness: true, allow_blank: true, allow_nil: true
 
   has_many :projects, foreign_key: :author_id
   has_many :source_files, foreign_key: :author_id
@@ -39,15 +39,9 @@ class User < ActiveRecord::Base
     return user if user
 
     user = User.create!(
-      email: provider,
 			password_digest: BCrypt::Password.create(SecureRandom::urlsafe_base64(16)),
       username: generate_unique_username(auth_hash[:extra][:raw_info][:name].underscore.gsub(' ', '_'))
     )
-
-		user.session_providers.create!(
-			provider: provider,
-			identifier: uid
-		)
   end
 
   def self.find_by_credentials(username, password)

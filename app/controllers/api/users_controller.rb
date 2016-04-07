@@ -1,7 +1,7 @@
 class Api::UsersController < ApplicationController
   def create
     @user = User.create!(user_params)
-		sign_in!(@user)
+		sign_in!(@user, SessionProvider::PROVIDER[:password], @user.id)
     render :create
   end
 
