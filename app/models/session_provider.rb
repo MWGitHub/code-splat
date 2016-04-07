@@ -16,13 +16,16 @@ class SessionProvider < ActiveRecord::Base
 	end
 
 	def self.remove_session_provider(provider, identifier)
-		provider = SessionProvider.find_by(provider: provider, identifier: identifier)
+		provider = SessionProvider.find_by(
+			provider: provider,
+			identifier: identifier
+		)
 		provider.destroy
 	end
 
-	def self.create_session_token(user)
+	def self.create_session_token(user, provider = PROVIDER[:password])
 		user.session_providers.create(
-			provider: PROVIDER[:password],
+			provider: provider,
 			identifier: generate_unique_token
 		)
 	end
@@ -31,20 +34,14 @@ class SessionProvider < ActiveRecord::Base
 		token = nil
     loop do
       token = SecureRandom::urlsafe_base64(16)
-      provider = SessionProvider.exists?(
-				provider: PROVIDER[:password],
-				identifier: token
-			)
+      provider = SessionProvider.exists?(identifier: token)
       break unless provider
     end
     token
 	end
 
 	def self.find_user_by_token(token)
-		provider = SessionProvider.find_by(
-			provider: PROVIDER[:password],
-			identifier: token
-		)
+		provider = SessionProvider.find_by(identifier: token)
 		if provider
 			provider.user
 		else
@@ -52,17 +49,15 @@ class SessionProvider < ActiveRecord::Base
 		end
 	end
 
-	def self.remove_token(user, token)
-		return unless user
-
-		provider = SessionProvider.find_by(
-			provider: PROVIDER[:password],
-			identifier: token
-		).destroy
+	def self.remove_token(token)
+		provider = SessionProvider.find_by(identifier: token).destroy
 	end
 
 	def self.find_user_by_provider(provider, identifier)
-		result = SessionProvider.find_by(provider: provider, identifier: identifier)
+		result = SessionProvider.find_by(
+			provider: provider,
+			identifier: identifier
+		)
 		if result
 			result.user
 		else
