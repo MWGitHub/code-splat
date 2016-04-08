@@ -106,6 +106,8 @@ class FileDetail extends React.Component {
 
 	_handleExplanationSelecting() {
 		if (ExplanationSelectionStore.isSelecting()) {
+			if (!ExplanationSelectionStore.getSelectionCoords()) return;
+			
 			let node = ReactDOM.findDOMNode(this.refs.explanationContainer);
 			let anchor = ReactDOM.findDOMNode(this.refs.explanationAnchor);
 			if (node && anchor) {

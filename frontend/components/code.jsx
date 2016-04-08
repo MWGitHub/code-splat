@@ -93,6 +93,21 @@ class Code extends React.Component {
 	}
 
 	_getExplanationAtPoint(line, ch) {
+		// Check if selecting blank areas at the end.
+		let codeMirror = this.refs.codemirror.getCodeMirror();
+		if (codeMirror) {
+			let codeLine = codeMirror.getLine(line);
+			let range = codeMirror.getRange(
+				{	line: line, ch: ch },
+				{ line: line, ch: codeLine.length }
+			)
+
+			if (range.trim().length === 0) {
+				ExplanationActions.deselectExplanation();
+				return;
+			}
+		}
+
 		let index = this._positionToIndex(line, ch);
 		for (let i = 0; i < this.explanations.length; ++i) {
 			let explanation = this.explanations[i];
