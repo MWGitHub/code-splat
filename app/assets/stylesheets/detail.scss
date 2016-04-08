@@ -1,0 +1,39 @@
+@import 'variables';
+
+.description-group {
+	width: 100%;
+	font-size: 0.9rem;
+	margin: 0.5rem 0;
+}
+
+.description-title {
+	color: $primary-color;
+}
+
+.description-text {
+	margin-left: 0.5rem;
+	color: $dark-contrast-highlight-color;
+}
+
+.detail-actions {
+	font-size: 0.9rem;
+	border-top: 1px solid $dark-gray-border-color;
+	border-bottom: 1px solid $dark-gray-border-color;
+
+	a {
+		padding: 0.25rem;
+		@include span-columns(6);
+		text-align: center;
+		border-right: 1px solid $dark-gray-border-color;
+		color: $dark-contrast-highlight-color;
+		transition: all 0.25s;
+
+		&:hover {
+			color: $primary-highlight-color;
+		}
+
+		&:last-child {
+			border-right: 0;
+		}
+	}
+}

@@ -6,6 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require_relative 'program_seeds'
+require_relative 'seed_texts'
 
 User.destroy_all
 Project.destroy_all
@@ -52,6 +53,30 @@ end
 end
 
 
-
-# Project.last.front_page_items.create(description: 'Simple recursive merge sort')
-# Project.first.front_page_items.create(description: 'Simple recursive quick sort')
+patrick = User.create!(
+	username: '30 Minutes Patrick',
+	password: 'password'
+)
+project = patrick.projects.create!(
+	title: 'Ruby Authentication'
+)
+project.text_changes.create!(
+	author_id: patrick.id,
+	body: 'Quick and easy authentication'
+)
+file = project.source_files.create!(
+	author_id: patrick.id,
+	name: 'User.rb'
+)
+file.text_changes.create!(
+	author_id: patrick.id,
+	body: SeedTexts::USER_RB
+)
+file = project.source_files.create!(
+	author_id: patrick.id,
+	name: 'ApplicationController.rb'
+)
+file.text_changes.create!(
+	author_id: patrick.id,
+	body: SeedTexts::APPLICATION_CONTROLLER_RB
+)

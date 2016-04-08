@@ -13,6 +13,7 @@ import ReplyDetail from './reply-detail';
 import ExplanationForm from './explanation-form';
 import ExplanationStore from '../stores/explanation';
 import ExplanationDetail from './explanation-detail';
+import ContributorInfo from './contributor-info';
 import Code from './code';
 
 class FileDetail extends React.Component {
@@ -141,9 +142,18 @@ class FileDetail extends React.Component {
 					{replies}
 				</div>
 				<div className="right">
-					<Link to={editUrl}>Edit</Link>
-					<a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>
-					<a href='#' onClick={this._handleContributions.bind(this)}>Contributions</a>
+					<ContributorInfo
+						count={this.state.file.contributor_count}
+						onClick={this._handleContributions.bind(this)}
+					/>
+					<div className="description-group">
+						<span className="description-title">Language:</span>
+						<span className="description-text">{this.state.file.language}</span>
+					</div>
+					<div className="detail-actions group">
+						<Link to={editUrl}>Edit File</Link>
+						<a href="#" onClick={this._handleDelete.bind(this)}>Delete File</a>
+					</div>
 					<ExplanationDetail />
 				</div>
 				{changes}

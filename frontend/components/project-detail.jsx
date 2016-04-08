@@ -91,6 +91,16 @@ class ProjectDetail extends React.Component {
 			)
 		}
 
+		let sourceFileCount = '';
+		if (this.state.project.source_files) {
+			sourceFileCount = (
+				<div className="description-group">
+					<span className="description-title">Files:</span>
+					<span className="description-text">{this.state.project.source_files.length}</span>
+				</div>
+			);
+		}
+
     return (
       <div className="project-detail detail group">
 				<div className="full">
@@ -101,6 +111,11 @@ class ProjectDetail extends React.Component {
 						count={this.state.project.contributor_count}
 						onClick={this._handleContributions.bind(this)}
 					/>
+					<div className="description-group">
+						<span className="description-title">Language:</span>
+						<span className="description-text">{this.state.project.language}</span>
+					</div>
+					{sourceFileCount}
 					<div className="section">
 						<h3 className="section-header">Description</h3>
 						<p>{this.state.project.description}</p>

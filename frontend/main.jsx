@@ -45,8 +45,8 @@ var router = (
       <Route path='projects/:slug/edit'
         component={EditProjectForm} onEnter={checkLoggedIn} />
       <Route path='projects/:slug' component={ProjectDetail} />
-      <Route path='projects/:slug/files/new' component={NewFileForm} />
-      <Route path='projects/:slug/files/:fileSlug/edit' component={EditFileForm} />
+      <Route path='projects/:slug/files/new' component={NewFileForm} onEnter={checkLoggedIn} />
+      <Route path='projects/:slug/files/:fileSlug/edit' component={EditFileForm} onEnter={checkLoggedIn} />
       <Route path='projects/:slug/files/:fileSlug' component={FileDetail} />
 
 			<Route path='search' component={Search} />
