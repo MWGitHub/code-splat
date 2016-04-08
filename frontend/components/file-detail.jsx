@@ -17,6 +17,7 @@ import ContributorInfo from './contributor-info';
 import Code from './code';
 import ExplanationSelectionStore from '../stores/explanation-selection';
 import DOMUtil from '../util/dom-util';
+import ReplyList from './reply-list';
 
 class FileDetail extends React.Component {
   constructor(props) {
@@ -107,7 +108,7 @@ class FileDetail extends React.Component {
 	_handleExplanationSelecting() {
 		if (ExplanationSelectionStore.isSelecting()) {
 			if (!ExplanationSelectionStore.getSelectionCoords()) return;
-			
+
 			let node = ReactDOM.findDOMNode(this.refs.explanationContainer);
 			let anchor = ReactDOM.findDOMNode(this.refs.explanationAnchor);
 			if (node && anchor) {
@@ -134,11 +135,17 @@ class FileDetail extends React.Component {
 
 		let replies = '';
 		if (this.state.replies) {
-			replies = this.state.replies.map(reply => {
-				return (
-					<ReplyDetail key={'reply-' + reply.id} reply={reply} />
-				);
-			});
+			replies = (
+				<div className="section replies">
+					<h3 className="section-header">Replies</h3>
+					<ReplyList replies={this.state.replies} />
+				</div>
+			);
+			// replies = this.state.replies.map(reply => {
+			// 	return (
+			// 		<ReplyDetail key={'reply-' + reply.id} reply={reply} />
+			// 	);
+			// });
 		}
 
     return (
@@ -160,8 +167,8 @@ class FileDetail extends React.Component {
 					</div>
 					<div className="reply-group">
 						<ReplyForm onSubmit={this._handleReply.bind(this)} />
+						{replies}
 					</div>
-					{replies}
 				</div>
 				<div className="right">
 					<ContributorInfo
