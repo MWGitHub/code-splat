@@ -162,6 +162,8 @@ user interface.
 	- [ ] viewing votes on comments, explanations, and suggestions
 
 - [ ] have annotations float with view
+- [ ] style the file options
+- [ ] add delete to explanations
 
 [phase-one]: ./docs/phases/phase1.md
 [phase-two]: ./docs/phases/phase2.md

@@ -23,6 +23,12 @@ import CMScheme from 'codemirror/mode/scheme/scheme';
 import CMSass from 'codemirror/mode/sass/sass';
 import CMSQL from 'codemirror/mode/sql/sql';
 
+let CODE_MAP = {
+	'c': 'text/x-csrc',
+	'c++': 'text/x-c++src',
+	'objectivec': 'text/x-objectivec'
+};
+
 class Code extends React.Component {
   constructor(props) {
     super(props);
@@ -220,8 +226,13 @@ class Code extends React.Component {
 		if (this.props.isEditing) {
 			theme += '-editing';
 		}
+		let mode = this.props.language || 'javascript';
+		// Special mapping for the mode
+		if (CODE_MAP[mode]) {
+			mode = CODE_MAP[mode];
+		}
 		let options = {
-			mode: this.props.language || 'javascript',
+			mode: mode,
 			readOnly: !this.props.isEditing,
 			theme: theme,
 			tabSize: 2,

@@ -1,7 +1,8 @@
 class Project < ActiveRecord::Base
 	CODE_LANGUAGES = %w(
 		brainfuck
-		clike
+		c
+		c++
 		coffeescript
 		css
 		haskell
@@ -10,6 +11,7 @@ class Project < ActiveRecord::Base
 		jsx
 		lua
 		markdown
+		objectivec
 		python
 		ruby
 		rust
