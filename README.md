@@ -164,6 +164,7 @@ user interface.
 - [ ] have annotations float with view
 - [ ] style the file options
 - [ ] add delete to explanations
+- [ ] do not allow whitespace selection at end
 
 [phase-one]: ./docs/phases/phase1.md
 [phase-two]: ./docs/phases/phase2.md

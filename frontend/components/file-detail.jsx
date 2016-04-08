@@ -15,6 +15,8 @@ import ExplanationStore from '../stores/explanation';
 import ExplanationDetail from './explanation-detail';
 import ContributorInfo from './contributor-info';
 import Code from './code';
+import ExplanationSelectionStore from '../stores/explanation-selection';
+import DOMUtil from '../util/dom-util';
 
 class FileDetail extends React.Component {
   constructor(props) {
@@ -44,6 +46,7 @@ class FileDetail extends React.Component {
 		this.explanationToken = ExplanationStore.addListener(() => {
 			this.setState({	explanations: ExplanationStore.all() });
 		});
+		this.selectionToken = ExplanationSelectionStore.addListener(this._handleExplanationSelecting.bind(this));
 
 		WebUtil.fetchSourceFile(
 			this.props.params.slug,
@@ -62,6 +65,7 @@ class FileDetail extends React.Component {
 		this.changeToken.remove();
 		this.replyToken.remove();
 		this.explanationToken.remove();
+		this.selectionToken.remove();
   }
 
   componentWillReceiveProps(newProps) {
@@ -76,7 +80,8 @@ class FileDetail extends React.Component {
 			changes: null,
 			replies: null,
 			explanations: null,
-			isEditing: false
+			isEditing: false,
+			isSelecting: false
 		});
   }
 
@@ -97,6 +102,20 @@ class FileDetail extends React.Component {
 
 	_handleFormCancel() {
 		ExplanationActions.deselectExplanation();
+	}
+
+	_handleExplanationSelecting() {
+		if (ExplanationSelectionStore.isSelecting()) {
+			let node = ReactDOM.findDOMNode(this.refs.explanationContainer);
+			let anchor = ReactDOM.findDOMNode(this.refs.explanationAnchor);
+			if (node && anchor) {
+				let top = document.documentElement.scrollTop || document.body.scrollTop;
+				let anchorStart = top + anchor.getBoundingClientRect().top;
+				let result = top - anchorStart;
+				if (result < 0) result = 0;
+				node.style.top = result + 'px';
+			}
+		}
 	}
 
   render() {
@@ -154,7 +173,11 @@ class FileDetail extends React.Component {
 						<Link to={editUrl}>Edit File</Link>
 						<a href="#" onClick={this._handleDelete.bind(this)}>Delete File</a>
 					</div>
-					<ExplanationDetail />
+					<div ref="explanationAnchor" className="explanation-anchor">
+						<div ref="explanationContainer" className="explanation-position">
+							<ExplanationDetail />
+						</div>
+					</div>
 				</div>
 				{changes}
       </div>
