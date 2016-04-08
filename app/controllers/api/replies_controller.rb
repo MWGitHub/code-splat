@@ -14,7 +14,7 @@ class Api::RepliesController < ApplicationController
 
 	def index
 		obj = get_object
-		@replies = obj.replies
+		@replies = obj.replies.order(created_at: :asc)
 	end
 
 	def create

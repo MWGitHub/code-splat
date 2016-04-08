@@ -9,11 +9,13 @@ class FileForm extends React.Component {
     if (this.props.file) {
       this.state = {
         name: this.props.file.name,
+				language: this.props.file.language,
         body: this.props.file.body
       };
     } else {
       this.state = {
         name: '',
+				language: '',
         body: ''
       }
     }
@@ -28,6 +30,7 @@ class FileForm extends React.Component {
         this.props.file.slug,
         {
           name: this.state.name,
+					language: this.state.language,
           body: this.state.body,
         }, this.props.onSuccess
       );
@@ -36,12 +39,14 @@ class FileForm extends React.Component {
         this.props.projectSlug,
         {
           name: this.state.name,
+					language: this.state.language,
           body: this.state.body
         }, this.props.onSuccess
       );
 
       this.setState({
         name: '',
+				language: '',
         body: ''
       });
     }
@@ -53,6 +58,9 @@ class FileForm extends React.Component {
     let handleNameChange = e => {
       this.setState({name: e.target.value});
     };
+		let handleLanguageChange = e => {
+			this.setState({language: e.target.value});
+		};
     let handleBodyChange = e => {
       this.setState({body: e.target.value});
     };
@@ -62,6 +70,14 @@ class FileForm extends React.Component {
       headerText = 'Update File';
       buttonText = 'Update File';
     }
+
+		let languages = window.codeSplat.codeLanguages.map(language => {
+			return (
+				<option key={'language-' + language} value={language}>
+					{language}
+				</option>
+			);
+		});
 
     return (
       <form className="form" onSubmit={this._onSubmit.bind(this)}>
@@ -74,6 +90,14 @@ class FileForm extends React.Component {
             value={this.state.name} />
         </div>
 
+				<div className="form-group">
+					<label htmlFor="language">Language</label>
+					<select value={this.state.language} onChange={handleLanguageChange}>
+						<option value=''> </option>
+						{languages}
+					</select>
+				</div>
+
         <div className="form-group">
           <label htmlFor="body">Description</label>
           <textarea onChange={handleBodyChange} id="body"
@@ -81,7 +105,7 @@ class FileForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <input type="submit" value={buttonText} />
+          <input className="button-full" type="submit" value={buttonText} />
         </div>
       </form>
     );

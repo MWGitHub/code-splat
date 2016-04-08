@@ -7,6 +7,7 @@ import CodeMirror from 'react-codemirror';
 import SimpleScrollBars from 'codemirror/addon/scroll/simplescrollbars';
 
 import Ruby from 'codemirror/mode/ruby/ruby';
+import JavaScript from 'codemirror/mode/javascript/javascript';
 
 class Code extends React.Component {
   constructor(props) {

@@ -12,7 +12,8 @@ class Api::SourceFilesController < ApplicationController
     project = Project.find_by(slug: params[:project_id])
     input = {
       author_id: current_user.id,
-      name: source_file_params[:name]
+      name: source_file_params[:name],
+			language: source_file_params[:language]
     }
     @source_file = project.source_files.create!(input)
     if @source_file && source_file_params[:body]
@@ -29,7 +30,10 @@ class Api::SourceFilesController < ApplicationController
     project = Project.find_by(slug: params[:project_id])
     @source_file = project.source_files.find_by(slug: params[:id])
     @source_file.slug = nil
-    @source_file.update!(name: source_file_params[:name])
+    @source_file.update!(
+			name: source_file_params[:name],
+			language: source_file_params[:language]
+		)
     if @source_file && source_file_params[:body]
       @source_file.text_changes.create!(
         body: source_file_params[:body],
@@ -48,6 +52,6 @@ class Api::SourceFilesController < ApplicationController
 
   private
   def source_file_params
-    params.require(:source_file).permit(:name, :body)
+    params.require(:source_file).permit(:name, :body, :language)
   end
 end

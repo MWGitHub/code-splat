@@ -46,7 +46,7 @@ class Home extends React.Component {
               <img src={window.codeSplat.homeIconPath} />
             </div>
             <div className="home-about-description">
-              <p>Code Splat is dedicated to crowd-sourced annotation of source code, from <Link to="/projects/simple-sorting/files/merge_sort-rb">“Merge Sort”</Link> to <a href="#">To Pimp A Butterfly</a>. Fan favorites Data Structures & Design Patterns also call Code Splat home.</p>
+              <p>Code Splat is dedicated to crowd-sourced annotation of source code, from <Link to="/projects/simple-sorting/files/merge_sort-rb">Merge Sort</Link> to <a href="/projects/simple-sorting/files/bubble_sort-rb">Bubble Sort</a>.</p>
               <p>Find out all the latest on <a href="#">Twitter</a> and <a href="#">Facebook</a></p>
             </div>
           </div>

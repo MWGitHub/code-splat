@@ -20,7 +20,7 @@ class Api::ProjectsController < ApplicationController
 		else
 	    @projects = Project.includes(
 	      :text_changes, source_files: :text_changes
-	    ).all
+	    ).all.order(created_at: :desc)
 		end
   end
 
@@ -31,7 +31,10 @@ class Api::ProjectsController < ApplicationController
   end
 
   def create
-    @project = current_user.projects.create!(title: project_params[:title])
+    @project = current_user.projects.create!(
+			title: project_params[:title],
+			language: project_params[:language]
+		)
     if @project && project_params[:description]
       @project.text_changes.create!(
         body: project_params[:description],
@@ -44,7 +47,10 @@ class Api::ProjectsController < ApplicationController
   def update
     @project = Project.find(params[:id])
     @project.slug = nil
-    @project.update!(title: project_params[:title])
+    @project.update!(
+			title: project_params[:title],
+			language: project_params[:language]
+		)
     if @project && project_params[:description]
       @project.text_changes.create!(
         body: project_params[:description],
@@ -62,7 +68,7 @@ class Api::ProjectsController < ApplicationController
 
   private
   def project_params
-    params.require(:project).permit(:title, :description)
+    params.require(:project).permit(:title, :description, :language)
   end
 
 	def is_owner

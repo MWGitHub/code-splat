@@ -54,7 +54,7 @@ class ReplyForm extends React.Component {
 							></textarea>
 					</div>
 					<div className='form-group'>
-						<input type="submit" value="Post Reply" />
+						<input className="button-light" type="submit" value="Post Reply" />
 						<a className="aside" href="#">How to add links and images</a>
 					</div>
 				</form>

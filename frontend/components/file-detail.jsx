@@ -121,7 +121,10 @@ class FileDetail extends React.Component {
     return (
       <div className="file-detail detail group">
 				<div className="full">
-					<h1>{this.state.file.name}</h1>
+					<div className="title group">
+						<h1 className="title-main">{this.state.file.name}</h1>
+						<span className="title-aside">in <Link to={"/projects/" + this.state.file.project_slug}>{this.state.file.project_title}</Link></span>
+					</div>
 				</div>
 				<div className="left">
 					<div className="code">

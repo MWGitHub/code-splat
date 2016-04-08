@@ -9,11 +9,13 @@ class ProjectForm extends React.Component {
     if (this.props.project) {
       this.state = {
         title: this.props.project.title,
+				language: this.props.project.language,
         description: this.props.project.description
       };
     } else {
       this.state = {
         title: '',
+				language: '',
         description: ''
       }
     }
@@ -27,17 +29,20 @@ class ProjectForm extends React.Component {
         this.props.project.id,
         {
           title: this.state.title,
+					language: this.state.language,
           description: this.state.description,
         }, this.props.onSuccess
       );
     } else {
       WebUtil.createProject({
         title: this.state.title,
+				language: this.state.language,
         description: this.state.description
       }, this.props.onSuccess);
 
       this.setState({
         title: '',
+				language: '',
         description: ''
       });
     }
@@ -49,6 +54,9 @@ class ProjectForm extends React.Component {
     let handleTitleChange = e => {
       this.setState({title: e.target.value});
     };
+		let handleLanguageChange = e => {
+			this.setState({language: e.target.value});
+		};
     let handleDescChange = e => {
       this.setState({description: e.target.value});
     };
@@ -58,6 +66,14 @@ class ProjectForm extends React.Component {
       headerText = 'Update Project';
       buttonText = 'Update Project';
     }
+
+		let languages = window.codeSplat.codeLanguages.map(language => {
+			return (
+				<option key={'language-' + language} value={language}>
+					{language}
+				</option>
+			);
+		});
 
     return (
       <form className="form" onSubmit={this._onSubmit.bind(this)}>
@@ -70,6 +86,14 @@ class ProjectForm extends React.Component {
             value={this.state.title} />
         </div>
 
+				<div className="form-group">
+					<label htmlFor="language">Language</label>
+					<select value={this.state.language} onChange={handleLanguageChange}>
+						<option value=''> </option>
+						{languages}
+					</select>
+				</div>
+
         <div className="form-group">
           <label htmlFor="description">Description</label>
           <textarea onChange={handleDescChange} id="description"
@@ -77,7 +101,7 @@ class ProjectForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <input type="submit" value={buttonText} />
+          <input className="button-full" type="submit" value={buttonText} />
         </div>
       </form>
     );
