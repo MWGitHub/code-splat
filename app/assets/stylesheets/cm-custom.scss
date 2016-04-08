@@ -29,6 +29,8 @@
 	background-color: $dark-background-color;
 	height: 100%;
 	font-size: 1.1rem;
+	border: 1px solid $primary-border-color;
+	border-radius: $border-radius;
 }
 
 .cm-s-material-editing div.CodeMirror-selected {

@@ -11,7 +11,7 @@ class Project < ActiveRecord::Base
 		jsx
 		lua
 		markdown
-		objectivec
+		objective-c
 		python
 		ruby
 		rust

@@ -110,8 +110,9 @@ class FileDetail extends React.Component {
 			let anchor = ReactDOM.findDOMNode(this.refs.explanationAnchor);
 			if (node && anchor) {
 				let top = document.documentElement.scrollTop || document.body.scrollTop;
+				let selectTop = ExplanationSelectionStore.getSelectionCoords().top;
 				let anchorStart = top + anchor.getBoundingClientRect().top;
-				let result = top - anchorStart;
+				let result = selectTop - anchorStart;
 				if (result < 0) result = 0;
 				node.style.top = result + 'px';
 			}

@@ -1,4 +1,5 @@
 @import 'variables';
+
 .project-detail {
 	.left {
 		width: 40%;
@@ -46,5 +47,23 @@
 	.form {
 		border-radius: 0;
 		margin-top: 0.5rem;
+	}
+}
+
+@media (max-width: 600px) {
+	.project-detail {
+		.left {
+			width: 100%;
+			display: block;
+			clear: both;
+		}
+
+		.right {
+			width: 100%;
+			display: block;
+			clear: both;
+			margin-left: 0;
+			margin-top: 1rem;
+		}
 	}
 }

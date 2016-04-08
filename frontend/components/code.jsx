@@ -26,7 +26,7 @@ import CMSQL from 'codemirror/mode/sql/sql';
 let CODE_MAP = {
 	'c': 'text/x-csrc',
 	'c++': 'text/x-c++src',
-	'objectivec': 'text/x-objectivec'
+	'objective-c': 'text/x-objectivec'
 };
 
 class Code extends React.Component {
@@ -134,7 +134,8 @@ class Code extends React.Component {
 				sourceFileId: this.props.file.id,
 				fragment: instance.fragment,
 				fragmentStart: instance.fragment_start,
-				explanation: instance
+				explanation: instance,
+				selectionCoords: codeMirror.charCoords(cursor, 'page')
 			});
 		}
 	}
@@ -157,7 +158,8 @@ class Code extends React.Component {
 					sourceFileId: this.props.file.id,
 					fragment: fragment,
 					start: startIndex,
-					explanation: null
+					explanation: null,
+					selectionCoords: codeMirror.charCoords(start, 'page')
 				});
 			}
 		}

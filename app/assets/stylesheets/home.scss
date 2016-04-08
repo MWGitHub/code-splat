@@ -147,11 +147,8 @@
 
 	.front-hot-author {
 		font-size: 0.7rem;
-
-		.fa {
-			margin-left: 0.25rem;
-			margin-right: 0.25rem;
-		}
+		margin-left: 0.25rem;
+		margin-right: 0.25rem;
 	}
 }
 
@@ -237,6 +234,10 @@
 	font-size: 0.7rem;
 	color: $hot-author-color;
 	transition: all 0.25s;
+
+	.fa {
+		margin-right: 0.25rem;
+	}
 }
 
 .home-aside {

@@ -6,6 +6,7 @@ let _sourceFileId = null;
 let _explanation = null;
 let _fragment = null;
 let _start = null;
+let _selectionCoords = null;
 
 let ExplanationSelectionStore = new Store(Dispatcher);
 
@@ -33,6 +34,10 @@ ExplanationSelectionStore.getStart = function () {
 	return _start;
 };
 
+ExplanationSelectionStore.getSelectionCoords = function () {
+	return _selectionCoords;
+}
+
 ExplanationSelectionStore.__onDispatch = function (payload) {
 	switch (payload.actionType) {
 		case ExplanationConstants.SELECT_EXPLANATION:
@@ -40,6 +45,7 @@ ExplanationSelectionStore.__onDispatch = function (payload) {
 			_explanation = payload.selection.explanation;
 			_fragment = payload.selection.fragment;
 			_start = payload.selection.start;
+			_selectionCoords = payload.selection.selectionCoords;
 			ExplanationSelectionStore.__emitChange();
 			break;
 		case ExplanationConstants.DESELECT_EXPLANATION:
@@ -47,6 +53,7 @@ ExplanationSelectionStore.__onDispatch = function (payload) {
 			_explanation = null;
 			_fragment = null;
 			_start = null;
+			_selectionCoords = null;
 			ExplanationSelectionStore.__emitChange();
 			break;
 	}
