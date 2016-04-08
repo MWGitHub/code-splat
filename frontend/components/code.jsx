@@ -31,19 +31,51 @@ class Code extends React.Component {
 		this._bindListeners();
 	}
 
-	_positionToIndex(line, index) {
+	_positionToIndex(line, ch) {
+		let codeMirror = this.refs.codemirror.getCodeMirror();
 
+		// Add selecting text for annotation adding
+		let index = 0;
+		for (let i = 0; i < line; ++i) {
+			let codeLine = codeMirror.getLine(i);
+			// Make sure to add the chars for the new line
+			index += 1 + codeLine.length;
+		}
+		index += ch;
+
+		return index;
 	}
 
-	_getExplanationAtPoint(line, index) {
+	_indexToPosition(index) {
+		let codeMirror = this.refs.codemirror.getCodeMirror();
+
+		let countIndex = 0;
+		let line = 0;
+		let ch = 0;
+		// Find start line and ch
+		for (let i = 0; i < codeMirror.lineCount(); ++i) {
+			let codeLine = codeMirror.getLine(i);
+			if (i !== 0) countIndex += 1;
+			countIndex += codeLine.length;
+			if (countIndex >= index) {
+				line = i;
+				ch = index - (countIndex - codeLine.length);
+				break;
+			}
+		}
+		return {
+			line: line,
+			ch: ch
+		};
+	}
+
+	_getExplanationAtPoint(line, ch) {
+		let index = this._positionToIndex(line, ch);
 		for (let i = 0; i < this.explanations.length; ++i) {
 			let explanation = this.explanations[i];
-			let isInLine = line >= explanation.startLine &&
-				line <= explanation.endLine;
-			let isInIndex = index >= explanation.startIndex &&
-				index <= explanation.endIndex;
+			let isIn = index >= explanation.startIndex && index <= explanation.endIndex;
 
-			if (isInLine && isInIndex) {
+			if (isIn) {
 				return ExplanationStore.find(explanation.id);
 			}
 		}
@@ -51,14 +83,14 @@ class Code extends React.Component {
 	}
 
 	_isSelectionAnnotated(start, end) {
+		let startIndex = this._positionToIndex(start.line, start.ch);
+		let endIndex = this._positionToIndex(end.line, end.ch);
+
 		for (let i = 0; i < this.explanations.length; ++i) {
 			let explanation = this.explanations[i];
-			let isOutLine = start.line > explanation.endLine ||
-				end.line < explanation.startLine;
-			let isOutIndex = start.ch > explanation.endIndex ||
-				end.ch < explanation.startIndex;
+			let isOut = startIndex > explanation.endIndex || endIndex < explanation.startIndex;
 
-			if (!(isOutLine || isOutIndex)) {
+			if (!isOut) {
 				return true
 			}
 		}
@@ -92,16 +124,10 @@ class Code extends React.Component {
 		let fragment = codeMirror.getSelection();
 		let start = codeMirror.getCursor('from');
 		let end = codeMirror.getCursor('to');
-		let startIndex = 0;
-		for (let i = 0; i < start.line; ++i) {
-			let line = codeMirror.getLine(i);
-			// Make sure to add the chars for the new line
-			startIndex += 1 + line.length;
-		}
-		startIndex += start.ch;
+		let startIndex = this._positionToIndex(start.line, start.ch);
 
 		if (!this._isSelectionAnnotated(start, end)) {
-			if (fragment.length === 0) {
+			if (fragment.trim().length === 0) {
 				ExplanationActions.deselectExplanation();
 			} else {
 				ExplanationActions.selectExplanation({
@@ -143,55 +169,21 @@ class Code extends React.Component {
 			for (let i = 0; i < this.props.explanations.length; ++i) {
 				let explanation = this.props.explanations[i];
 
-				let index = 0;
-				let startLine = 0;
-				let startIndex = 0;
-				// Find start line and index
-				for (let j = 0; j < codeMirror.lineCount(); ++j) {
-					let line = codeMirror.getLine(j);
-					if (j !== 0) index += 1;
-					index += line.length;
-					if (index >= explanation.fragment_start) {
-						startLine = j;
-						startIndex = explanation.fragment_start - (index - line.length);
-						break;
-					}
-				}
+				let start = this._indexToPosition(explanation.fragment_start);
+				let end = this._indexToPosition(explanation.fragment_end);
 
-				index = 0;
-				let endLine = 0;
-				let endIndex = 0;
-				// Find end line and index
-				for (let j = 0; j < codeMirror.lineCount(); ++j) {
-					let line = codeMirror.getLine(j);
-					if (j !== 0) index += 1;
-					index += line.length;
-					if (index >= explanation.fragment_end) {
-						endLine = j;
-						endIndex = explanation.fragment_end - (index - line.length);
-						break;
-					}
-				}
-
-				codeMirror.markText(
-					{
-						line: startLine,
-						ch: startIndex
-					},
-					{
-						line: endLine,
-						ch: endIndex
-					},
+				codeMirror.markText(start, end,
 					{
 						className: 'annotated-text'
 					}
 				);
 				this.explanations.push({
 					id: explanation.id,
-					startLine: startLine,
-					startIndex: startIndex,
-					endLine: endLine,
-					endIndex: endIndex
+					start: start,
+					end: end,
+					startIndex: explanation.fragment_start,
+					endIndex: explanation.fragment_end,
+					explanation: explanation
 				});
 			}
 		}

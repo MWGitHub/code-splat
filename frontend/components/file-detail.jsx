@@ -10,14 +10,10 @@ import ReplyStore from '../stores/reply';
 import TextChangeList from './text-change-list';
 import ReplyForm from './reply-form';
 import ReplyDetail from './reply-detail';
-import CodeMirror from 'react-codemirror';
-import SimpleScrollBars from 'codemirror/addon/scroll/simplescrollbars';
 import ExplanationForm from './explanation-form';
 import ExplanationStore from '../stores/explanation';
 import ExplanationDetail from './explanation-detail';
 import Code from './code';
-
-import Ruby from 'codemirror/mode/ruby/ruby';
 
 class FileDetail extends React.Component {
   constructor(props) {
@@ -35,14 +31,18 @@ class FileDetail extends React.Component {
   }
 
   componentDidMount() {
-    this.fileToken = FileStore.addListener(this._handleFileChange.bind(this));
+    this.fileToken = FileStore.addListener(() => {
+			this.setState({	file: FileStore.find(this.props.params.fileSlug) });
+		});
 		this.changeToken = ChangeStore.addListener(() => {
 			this.setState({ changes: ChangeStore.all() });
 		});
 		this.replyToken = ReplyStore.addListener(() => {
 			this.setState({ replies: ReplyStore.allSourceFileReplies() });
 		});
-		this.explanationToken = ExplanationStore.addListener(this._handleExplanationChange.bind(this));
+		this.explanationToken = ExplanationStore.addListener(() => {
+			this.setState({	explanations: ExplanationStore.all() });
+		});
 
 		WebUtil.fetchSourceFile(
 			this.props.params.slug,
@@ -79,158 +79,6 @@ class FileDetail extends React.Component {
 		});
   }
 
-	_getExplanationAtPoint(line, index) {
-		for (let i = 0; i < this.explanations.length; ++i) {
-			let explanation = this.explanations[i];
-			let isInLine = line >= explanation.startLine &&
-				line <= explanation.endLine;
-			let isInIndex = index >= explanation.startIndex &&
-				index <= explanation.endIndex;
-
-			if (isInLine && isInIndex) {
-				return ExplanationStore.find(explanation.id);
-			}
-		}
-		return null;
-	}
-
-	_isSelectionAnnotated(start, end) {
-		for (let i = 0; i < this.explanations.length; ++i) {
-			let explanation = this.explanations[i];
-			let isOutLine = start.line > explanation.endLine ||
-				end.line < explanation.startLine;
-			let isOutIndex = start.ch > explanation.endIndex ||
-				end.ch < explanation.startIndex;
-
-			if (!(isOutLine || isOutIndex)) {
-				return true
-			}
-		}
-		return false;
-	}
-
-	_handleFileChange() {
-		this.setState({	file: FileStore.find(this.props.params.fileSlug) });
-
-		if (this.refs.codemirror) {
-			let codeMirrorDOM = ReactDOM.findDOMNode(this.refs.codemirror);
-			let codeMirror = this.refs.codemirror.getCodeMirror();
-			codeMirrorDOM.addEventListener('mouseup', e => {
-				// Add selecting text for annotation adding
-				let fragment = codeMirror.getSelection();
-				let start = codeMirror.getCursor('from');
-				let end = codeMirror.getCursor('to');
-				let startIndex = 0;
-				for (let i = 0; i < start.line; ++i) {
-					let line = codeMirror.getLine(i);
-					// Make sure to add the chars for the new line
-					startIndex += 1 + line.length;
-				}
-				startIndex += start.ch;
-
-				if (!this._isSelectionAnnotated(start, end)) {
-					if (fragment.length === 0) {
-						ExplanationActions.deselectExplanation();
-					} else {
-						ExplanationActions.selectExplanation({
-							sourceFileId: this.state.file.id,
-							fragment: fragment,
-							start: startIndex,
-							explanation: null
-						});
-					}
-				}
-
-				// Add selecting existing annotations
-				let selectAnnotation = (e) => {
-					let cursor = codeMirror.getCursor();
-					let line = cursor.line;
-					let index = cursor.ch;
-
-					let explanation = this._getExplanationAtPoint(line, index);
-					if (explanation) {
-						let instance = ExplanationStore.find(explanation.id);
-						ExplanationActions.selectExplanation({
-							sourceFileId: this.state.file.id,
-							fragment: instance.fragment,
-							fragmentStart: instance.fragment_start,
-							explanation: instance
-						});
-					}
-				}
-
-				codeMirrorDOM.addEventListener('mouseup', selectAnnotation);
-				codeMirrorDOM.addEventListener('mousedown', selectAnnotation);
-			});
-		}
-	}
-
-	_handleExplanationChange() {
-		this.setState({	explanations: ExplanationStore.all() });
-
-		this.explanations = [];
-		if (this.refs.codemirror) {
-			let codeMirror = this.refs.codemirror.getCodeMirror();
-			let codeMirrorDOM = ReactDOM.findDOMNode(this.refs.codemirror);
-
-			// Highlight annotations
-			for (let i = 0; i < this.state.explanations.length; ++i) {
-				let explanation = this.state.explanations[i];
-
-				let index = 0;
-				let startLine = 0;
-				let startIndex = 0;
-				// Find start line and index
-				for (let j = 0; j < codeMirror.lineCount(); ++j) {
-					let line = codeMirror.getLine(j);
-					if (j !== 0) index += 1;
-					index += line.length;
-					if (index >= explanation.fragment_start) {
-						startLine = j;
-						startIndex = explanation.fragment_start - (index - line.length);
-						break;
-					}
-				}
-
-				index = 0;
-				let endLine = 0;
-				let endIndex = 0;
-				// Find end line and index
-				for (let j = 0; j < codeMirror.lineCount(); ++j) {
-					let line = codeMirror.getLine(j);
-					if (j !== 0) index += 1;
-					index += line.length;
-					if (index >= explanation.fragment_end) {
-						endLine = j;
-						endIndex = explanation.fragment_end - (index - line.length);
-						break;
-					}
-				}
-
-				codeMirror.markText(
-					{
-						line: startLine,
-						ch: startIndex
-					},
-					{
-						line: endLine,
-						ch: endIndex
-					},
-					{
-						className: 'annotated-text'
-					}
-				);
-				this.explanations.push({
-					id: explanation.id,
-					startLine: startLine,
-					startIndex: startIndex,
-					endLine: endLine,
-					endIndex: endIndex
-				});
-			}
-		}
-	}
-
   _handleDelete(e) {
     e.preventDefault();
 
@@ -244,13 +92,6 @@ class FileDetail extends React.Component {
 
 	_handleReply(reply) {
 		WebUtil.createSourceFileReply(this.state.file.id, reply);
-	}
-
-	_handleBodyUpdate(newBody) {
-		this.state.file.body = newBody;
-		this.setState({
-			file: this.state.file
-		});
 	}
 
 	_handleFormCancel() {
@@ -277,18 +118,6 @@ class FileDetail extends React.Component {
 			});
 		}
 
-		let theme = 'material';
-		if (this.state.isEditing) {
-			theme += '-editing';
-		}
-		let options = {
-			mode: this.state.file.language,
-			readOnly: !this.state.isEditing,
-			theme: theme,
-			tabSize: 2,
-			scrollbarStyle: 'simple'
-		};
-
     return (
       <div className="file-detail detail group">
 				<div className="full">
@@ -301,7 +130,9 @@ class FileDetail extends React.Component {
 							explanations={this.state.explanations}
 						/>
 					</div>
-					<ReplyForm onSubmit={this._handleReply.bind(this)} />
+					<div className="reply-group">
+						<ReplyForm onSubmit={this._handleReply.bind(this)} />
+					</div>
 					{replies}
 				</div>
 				<div className="right">
