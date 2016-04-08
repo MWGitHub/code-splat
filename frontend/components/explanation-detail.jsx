@@ -116,8 +116,7 @@ class ExplanationProvided extends React.Component {
 		});
 	}
 
-	_handleContributions(e) {
-		e.preventDefault();
+	_handleContributions() {
 	}
 
 	render() {

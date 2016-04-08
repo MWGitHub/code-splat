@@ -15,6 +15,7 @@ import SimpleScrollBars from 'codemirror/addon/scroll/simplescrollbars';
 import ExplanationForm from './explanation-form';
 import ExplanationStore from '../stores/explanation';
 import ExplanationDetail from './explanation-detail';
+import Code from './code';
 
 import Ruby from 'codemirror/mode/ruby/ruby';
 
@@ -288,13 +289,6 @@ class FileDetail extends React.Component {
 			scrollbarStyle: 'simple'
 		};
 
-		let codeMirror = (
-			<CodeMirror ref="codemirror"
-				value={this.state.file.body} 	onChange={this._handleBodyUpdate.bind(this)}
-				options={options}
-			/>
-		);
-
     return (
       <div className="file-detail detail group">
 				<div className="full">
@@ -302,7 +296,10 @@ class FileDetail extends React.Component {
 				</div>
 				<div className="left">
 					<div className="code">
-						{codeMirror}
+						<Code
+							file={this.state.file}
+							explanations={this.state.explanations}
+						/>
 					</div>
 					<ReplyForm onSubmit={this._handleReply.bind(this)} />
 					{replies}
