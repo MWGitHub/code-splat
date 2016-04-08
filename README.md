@@ -165,7 +165,8 @@ user interface.
 - [x] have annotations float with view
 - [x] style the file options
 - [x] add delete to explanations
-- [ ] do not allow whitespace selection at end
+- [x] do not allow whitespace selection at end
+- [x] fix bug where characters near fragments are invalid for annotations in the front-end
 
 [phase-one]: ./docs/phases/phase1.md
 [phase-two]: ./docs/phases/phase2.md

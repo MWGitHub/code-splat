@@ -29,6 +29,10 @@
 .annotated-text {
 	background-color: $annotated-text-background;
 	cursor: pointer;
+
+	&:hover {
+		background-color: $annotated-text-background-hover;
+	}
 }
 
 .explanation {

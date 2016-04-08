@@ -220,7 +220,7 @@ class Code extends React.Component {
 				let start = this._indexToPosition(explanation.fragment_start);
 				let end = this._indexToPosition(explanation.fragment_end);
 
-				codeMirror.markText(start, end,
+				let markText = codeMirror.markText(start, end,
 					{
 						className: 'annotated-text'
 					}
@@ -231,7 +231,8 @@ class Code extends React.Component {
 					end: end,
 					startIndex: explanation.fragment_start,
 					endIndex: explanation.fragment_end,
-					explanation: explanation
+					explanation: explanation,
+					markText: markText
 				});
 			}
 		}
