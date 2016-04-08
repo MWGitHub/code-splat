@@ -50,6 +50,12 @@ class ProjectForm extends React.Component {
     e.target.reset();
   }
 
+	_handleCancel(e) {
+		e.preventDefault();
+
+		this.props.onCancel();
+	}
+
   render() {
     let handleTitleChange = e => {
       this.setState({title: e.target.value});
@@ -76,7 +82,7 @@ class ProjectForm extends React.Component {
 		});
 
     return (
-      <form className="form" onSubmit={this._onSubmit.bind(this)}>
+      <form className="form-light" onSubmit={this._onSubmit.bind(this)}>
         <h1>{headerText}</h1>
         <div className="form-group">
           <label htmlFor="title">Title</label>
@@ -101,7 +107,8 @@ class ProjectForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <input className="button-full" type="submit" value={buttonText} />
+          <input className="button-light button-good" type="submit" value={buttonText} />
+					<input className="button-light button-neutral" type="button" value="Cancel" onClick={this._handleCancel.bind(this)} />
         </div>
       </form>
     );
@@ -115,9 +122,14 @@ class NewProjectForm extends React.Component {
 
   render() {
     return (
-      <ProjectForm onSuccess={project => {
-        this.context.router.push('/projects/' + project.slug);
-      }} />
+      <ProjectForm
+				onSuccess={project => {
+        	this.context.router.push('/projects/' + project.slug);
+      	}}
+				onCancel={() => {
+					this.context.router.goBack();
+				}}
+				/>
     );
   }
 }
@@ -154,10 +166,15 @@ class EditProjectForm extends React.Component {
     if (!this.state.project) return <div></div>;
 
     return (
-      <ProjectForm project={this.state.project}
+      <ProjectForm
+				project={this.state.project}
         onSuccess={project => {
           this.context.router.push('/projects/' + project.slug);
-      }} />
+      	}}
+				onCancel={() => {
+					this.context.router.push('/projects/' + this.state.project.slug);
+				}}
+			/>
     )
   }
 }

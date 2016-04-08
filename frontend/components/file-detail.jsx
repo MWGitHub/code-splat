@@ -130,6 +130,8 @@ class FileDetail extends React.Component {
 					<div className="code">
 						<Code
 							file={this.state.file}
+							body={this.state.file.body}
+							language={this.state.file.language}
 							explanations={this.state.explanations}
 						/>
 					</div>

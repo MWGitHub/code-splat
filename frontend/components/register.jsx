@@ -114,7 +114,7 @@ class Register extends React.Component {
               onChange={this._handlePasswordChange.bind(this)} />
           </div>
           <div className="form-group description">
-            <p>If an e-mail is provided an activation e-mail will be sent. Providing an e-mail allows for resetting forgotten passwords.</p>
+            <p>Providing an email allows you to reset forgotten passwords.</p>
           </div>
           <div className="form-group">
             <input className="button-full" type="submit" value="Create Account" />
@@ -142,7 +142,7 @@ class Register extends React.Component {
           <i className="fa fa-envelope"></i>Sign up with email
         </a>
         {form}
-        <p>Already have an account? {switchLink}</p>
+        <p className="form-description">Already have an account? {switchLink}</p>
       </div>
     );
   }

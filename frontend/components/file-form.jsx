@@ -1,6 +1,7 @@
 import React from 'react';
 import FileStore from '../stores/file';
 import WebUtil from '../util/web-util';
+import Code from './code';
 
 class FileForm extends React.Component {
   constructor(props) {
@@ -54,6 +55,12 @@ class FileForm extends React.Component {
     e.target.reset();
   }
 
+	_handleCancel(e) {
+		e.preventDefault();
+
+		this.props.onCancel();
+	}
+
   render() {
     let handleNameChange = e => {
       this.setState({name: e.target.value});
@@ -62,7 +69,7 @@ class FileForm extends React.Component {
 			this.setState({language: e.target.value});
 		};
     let handleBodyChange = e => {
-      this.setState({body: e.target.value});
+      this.setState({body: e});
     };
     let headerText = 'Create File';
     let buttonText = 'Create File';
@@ -79,8 +86,10 @@ class FileForm extends React.Component {
 			);
 		});
 
+		// <textarea onChange={handleBodyChange} id="body"
+		// 	value={this.state.body}></textarea>
     return (
-      <form className="form" onSubmit={this._onSubmit.bind(this)}>
+      <form className="form-lite" onSubmit={this._onSubmit.bind(this)}>
         <h1>{headerText}</h1>
         <div className="form-group">
           <label htmlFor="name">Name</label>
@@ -99,13 +108,21 @@ class FileForm extends React.Component {
 				</div>
 
         <div className="form-group">
-          <label htmlFor="body">Description</label>
-          <textarea onChange={handleBodyChange} id="body"
-            value={this.state.body}></textarea>
+          <label htmlFor="body">Code</label>
+					<Code
+						onChange={handleBodyChange}
+						id="body"
+						language={this.state.language}
+						body={this.props.body}
+						file={{}}
+						isEditing={true}
+					/>
+
         </div>
 
         <div className="form-group">
-          <input className="button-full" type="submit" value={buttonText} />
+          <input className="button-light button-good" type="submit" value={buttonText} />
+          <input className="button-light button-neutral" type="submit" value="Cancel" onClick={this._handleCancel.bind(this)} />
         </div>
       </form>
     );
@@ -119,9 +136,15 @@ class NewFileForm extends React.Component {
 
   render() {
     return (
-      <FileForm projectSlug={this.props.params.slug} onSuccess={file => {
-        this.context.router.push('/projects/' + this.props.params.slug + '/files/' + file.slug);
-      }} />
+      <FileForm
+				projectSlug={this.props.params.slug}
+				onSuccess={file => {
+	        this.context.router.push('/projects/' + this.props.params.slug + '/files/' + file.slug);
+	      }}
+				onCancel={() => {
+					this.context.router.push('/projects/' + this.props.params.slug);
+				}}
+			/>
     );
   }
 }
@@ -158,10 +181,17 @@ class EditFileForm extends React.Component {
     if (!this.state.file) return <div></div>;
 
     return (
-      <FileForm projectSlug={this.props.params.slug} file={this.state.file}
+      <FileForm
+				projectSlug={this.props.params.slug}
+				file={this.state.file}
         onSuccess={file => {
-        this.context.router.push('/projects/' + this.props.params.slug + '/files/' + file.slug);
-      }} />
+	        this.context.router.push('/projects/' + this.props.params.slug + '/files/' + file.slug);
+	      }}
+				onCancel={() => {
+					this.context.router.push('/projects/' + this.props.params.slug + '/files/' + this.state.file.slug);
+				}}
+				body={this.state.file.body}
+			/>
     )
   }
 }

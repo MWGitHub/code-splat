@@ -27,7 +27,7 @@ class Login extends React.Component {
 
   _onChange() {
     if (SessionStore.isLoggedIn()) {
-      this.context.router.push('/');
+      this.context.router.goBack();
     }
   }
 
@@ -117,7 +117,7 @@ class Login extends React.Component {
             <input className="button-full" type="submit" value="Login" />
           </div>
         </form>
-        <p>Don't have an account? {switchLink}</p>
+        <p className="form-description">Don't have an account? {switchLink}</p>
       </div>
     );
   }

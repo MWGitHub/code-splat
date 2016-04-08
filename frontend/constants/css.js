@@ -8,11 +8,13 @@ export default {
       backgroundColor: '#292929',
       top: '4rem',
       bottom: 'auto',
-      width: '30rem',
-      left: 'calc(50% - 15rem)',
+      width: '28rem',
+      left: 'calc(50% - 14rem)',
       border: '0',
       padding: '0',
-			zIndex: '10000'
+			zIndex: '10000',
+			maxHeight: 'calc(100vh - 5rem)',
+			overflow: 'auto'
     }
   }
 }

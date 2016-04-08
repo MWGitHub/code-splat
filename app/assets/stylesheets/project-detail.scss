@@ -29,6 +29,20 @@
 		margin: 0 0 1rem 0;
 	}
 
+	.project-file-heading {
+		width: 100%;
+		margin-bottom: 1rem;
+
+		h2 {
+			font-size: 1rem;
+			float: left;
+		}
+	}
+
+	.project-add-file {
+		float: left;
+	}
+
 	.form {
 		border-radius: 0;
 		margin-top: 0.5rem;

@@ -6,16 +6,29 @@ import ExplanationStore from '../stores/explanation';
 import CodeMirror from 'react-codemirror';
 import SimpleScrollBars from 'codemirror/addon/scroll/simplescrollbars';
 
-import Ruby from 'codemirror/mode/ruby/ruby';
-import JavaScript from 'codemirror/mode/javascript/javascript';
+import CMBrainfuck from 'codemirror/mode/brainfuck/brainfuck';
+import CMCLike from 'codemirror/mode/clike/clike';
+import CMCoffeeScript from 'codemirror/mode/coffeescript/coffeescript';
+import CMCSS from 'codemirror/mode/css/css';
+import CMHaskell from 'codemirror/mode/haskell/haskell';
+import CMHTML from 'codemirror/mode/htmlmixed/htmlmixed';
+import CMJavaScript from 'codemirror/mode/javascript/javascript';
+import CMJSX from 'codemirror/mode/jsx/jsx';
+import CMLua from 'codemirror/mode/lua/lua';
+import CMMarkdown from 'codemirror/mode/markdown/markdown';
+import CMPython from 'codemirror/mode/python/python';
+import CMRuby from 'codemirror/mode/ruby/ruby';
+import CMRust from 'codemirror/mode/rust/rust';
+import CMScheme from 'codemirror/mode/scheme/scheme';
+import CMSass from 'codemirror/mode/sass/sass';
+import CMSQL from 'codemirror/mode/sql/sql';
 
 class Code extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-			isEditing: false,
-			body: '' + this.props.file.body
+			body: this.props.body || ''
     };
 
 		this.explanations = [];
@@ -28,6 +41,8 @@ class Code extends React.Component {
   }
 
 	componentDidUpdate() {
+		if (this.props.isEditing) return;
+
 		this._highlightExplanations();
 		this._bindListeners();
 	}
@@ -190,41 +205,24 @@ class Code extends React.Component {
 		}
 	}
 
-  _handleDelete(e) {
-    e.preventDefault();
-
-    WebUtil.destroySourceFile(this.props.params.slug, this.props.file.slug);
-    this.context.router.push('/projects/' + this.props.params.slug);
-  }
-
-	_handleContributions() {
-		WebUtil.fetchSourceFileChanges(this.props.file.id);
-	}
-
-	_handleReply(reply) {
-		WebUtil.createSourceFileReply(this.props.file.id, reply);
-	}
-
 	_handleBodyUpdate(newBody) {
 		this.setState({
 			body: newBody
 		});
-	}
 
-	_handleFormCancel() {
-		ExplanationActions.deselectExplanation();
+		this.props.onChange && this.props.onChange(newBody);
 	}
 
   render() {
     if (!this.props.file) return <div></div>;
 
 		let theme = 'material';
-		if (this.state.isEditing) {
+		if (this.props.isEditing) {
 			theme += '-editing';
 		}
 		let options = {
-			mode: this.props.file.language,
-			readOnly: !this.state.isEditing,
+			mode: this.props.language || 'javascript',
+			readOnly: !this.props.isEditing,
 			theme: theme,
 			tabSize: 2,
 			scrollbarStyle: 'simple'

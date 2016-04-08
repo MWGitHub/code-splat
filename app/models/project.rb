@@ -1,5 +1,22 @@
 class Project < ActiveRecord::Base
-	CODE_LANGUAGES = %w(ruby javascript)
+	CODE_LANGUAGES = %w(
+		brainfuck
+		clike
+		coffeescript
+		css
+		haskell
+		htmlmixed
+		javascript
+		jsx
+		lua
+		markdown
+		python
+		ruby
+		rust
+		scheme
+		sass
+		sql
+	)
 	THRESHOLDS = {
 		create: 0,
 		update: 100,

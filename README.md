@@ -100,7 +100,7 @@ user interface.
 - [x] position elements on the page
 - [x] add basic colors & styles
 - [ ] style home page
-- [ ] style project page
+- [x] style project page
 - [ ] style file page
 
 ### Phase 5: Project Comments, Files Comment, Explanations, Suggestions, and Votes (2 days)
@@ -148,8 +148,8 @@ user interface.
 ### Bonus Features (TBD)
 - [ ] add user page
 - [ ] add user score
-- [ ] add search
-- [ ] add pagination
+- [x] add search
+- [x] add pagination
 - [ ] refactor code
 - [ ] optimize slow requests
 - [ ] check for memory leaks
@@ -160,6 +160,8 @@ user interface.
 - build out API, Flux loop, and components for:
   - [ ] Vote CRUD
 	- [ ] viewing votes on comments, explanations, and suggestions
+
+- [ ] have annotations float with view
 
 [phase-one]: ./docs/phases/phase1.md
 [phase-two]: ./docs/phases/phase2.md

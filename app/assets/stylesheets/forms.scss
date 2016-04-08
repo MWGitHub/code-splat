@@ -13,11 +13,12 @@
   width: 100%;
   text-align: center;
   margin: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .form-sub-header {
   color: $nav-background-color;
+	margin-bottom: 0.5rem;
 }
 
 .form-link {
@@ -28,6 +29,11 @@
   &:hover {
     color: $link-color-highlight;
   }
+
+}
+
+.form-description {
+	margin: 0.5rem 0 0 0;
 }
 
 .auth-button {

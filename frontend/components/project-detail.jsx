@@ -115,8 +115,9 @@ class ProjectDetail extends React.Component {
 					</div>
 				</div>
 				<div className="right">
-					<h2>FILES</h2>
-					<Link to={'/projects/' + this.state.project.slug + '/files/new'}>Create File</Link>
+					<div className="project-file-heading group">
+						<Link className="project-add-file" to={'/projects/' + this.state.project.slug + '/files/new'}>Add File</Link>
+					</div>
 					<FileList files={this.state.project.source_files}
 						projectSlug={this.state.project.slug} />
 				</div>

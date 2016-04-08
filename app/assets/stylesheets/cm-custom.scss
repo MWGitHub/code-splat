@@ -40,8 +40,12 @@
 }
 
 .cm-s-material-editing .CodeMirror-cursor {
-	border-left: 1px solid $dark-background-color;
+	border-left: 1px solid $primary-color;
 }
+
+
+
+
 
 .CodeMirror-simplescroll-horizontal div, .CodeMirror-simplescroll-vertical div {
   position: absolute;

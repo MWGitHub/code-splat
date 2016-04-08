@@ -124,6 +124,11 @@ p {
 		text-align: center;
 		border-right: 1px solid $dark-gray-border-color;
 		color: $dark-contrast-highlight-color;
+		transition: all 0.25s;
+
+		&:hover {
+			color: $primary-highlight-color;
+		}
 
 		&:last-child {
 			border-right: 0;
