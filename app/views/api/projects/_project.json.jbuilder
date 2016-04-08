@@ -1,4 +1,4 @@
-json.extract! project, :id, :title, :slug, :language
+json.extract! project, :id, :title, :slug, :language, :created_at
 json.description project.body
 json.author project.author.username
 json.contributor_count project.contributor_count

@@ -1,19 +1,6 @@
 @import 'variables';
 @import 'bourbon';
 
-button {
-	border: 1px solid $button-border-color;
-	background-color: $button-background;
-	color: $button-color;
-	font-size: 0.9rem;
-	outline: 0;
-	transition: all 0.25s;
-
-	&:hover {
-		border: 1px solid $button-border-highlight-color;
-	}
-}
-
 .auth-form {
 	max-width: rem(400);
 	margin: 0 auto;
@@ -159,12 +146,12 @@ $email-color: #444;
     color: $dark-contrast-color;
     width: 100%;
     background-color: $gray-light-background-color;
-    border: 1px solid $gray-border-color;
+    border: $border-size solid $primary-border-color;
     border-radius: $border-radius;
     padding: 0.4rem;
 
     &:focus {
-      border: 1px solid $gray-border-highlight-color;
+      border: $border-size solid $gray-border-highlight-color;
     }
 
   }
@@ -173,26 +160,12 @@ $email-color: #444;
 		min-height: 5rem;
 		max-width: 100%;
 		font-size: 0.9rem;
+		outline: 0;
 
 		@include placeholder {
 			color: $form-placeholder-color;
 		}
 	}
-
-  input[type="submit"] {
-    background-color: $gray-background-color;
-    border: 1px solid $gray-border-color;
-    color: $dark-contrast-color;
-    font-size: 0.8rem;
-    padding: 0.3rem;
-    margin-bottom: 0;
-		border-radius: $border-radius;
-
-    &:hover {
-      border: 1px solid tint($gray-border-color, 10%);
-      background-color: tint($gray-background-color, 10%);
-    }
-  }
 
   &:last-child {
     margin-bottom: 0;
@@ -212,5 +185,62 @@ $email-color: #444;
 .form-light {
 	h3 {
 		font-size: 1rem;
+	}
+}
+
+.button-light {
+	border: $border-size solid $button-border-color;
+	background-color: $button-background;
+	color: $button-color;
+	font-size: 0.9rem;
+	outline: 0;
+	transition: all 0.25s;
+	padding: 0.25rem;
+
+	&:hover {
+		border: $border-size solid $button-border-highlight-color;
+	}
+
+	&:not(:first-child) {
+		margin-left: 0.75rem;
+	}
+}
+
+.button-full {
+	background-color: $gray-background-color;
+	border: $border-size solid $gray-border-color;
+	color: $dark-contrast-color;
+	font-size: 0.8rem;
+	padding: 0.3rem;
+	margin-bottom: 0;
+	border-radius: $border-radius;
+
+	&:hover {
+		border: $border-size solid tint($gray-border-color, 10%);
+		background-color: tint($gray-background-color, 10%);
+	}
+
+	&:not(:first-child) {
+		margin-left: 0.75rem;
+	}
+}
+
+.button-good {
+	border: $border-size solid $button-good-color;
+	color: $button-good-color;
+	background-color: $button-good-background;
+
+	&:hover {
+		background-color: $button-good-background-hover;
+		border: $border-size solid $button-good-color;
+	}
+}
+
+.button-neutral {
+	border: 0;
+
+	&:hover {
+		background-color: $button-neutral-background-hover;
+		border: 0;
 	}
 }

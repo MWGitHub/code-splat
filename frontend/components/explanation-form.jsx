@@ -1,5 +1,4 @@
 import React from 'react';
-import WebUtil from '../util/web-util';
 
 class ExplanationForm extends React.Component {
 	constructor(props) {
@@ -19,17 +18,23 @@ class ExplanationForm extends React.Component {
 	_handleSubmit(e) {
 		e.preventDefault();
 
-		WebUtil.createExplanation(this.props.sourceFileId, {
-			body: this.state.body,
-			fragment: this.props.fragment,
-			fragment_start: this.props.start
-		});
+		let data = {
+			body: this.state.body
+		};
+
+		this.props.onSubmit(data);
 
 		this.setState({
 			body: ''
 		});
 
 		e.target.reset();
+	}
+
+	_handleCancel(e) {
+		e.preventDefault();
+
+		this.props.onCancel();
 	}
 
 	render() {
@@ -44,7 +49,8 @@ class ExplanationForm extends React.Component {
 					></textarea>
 				</div>
 				<div className="form-group">
-					<input type="submit" value="Save" />
+					<input className="button-light button-good" type="submit" value="Save" />
+					<input className="button-light button-neutral" type="button" value="Cancel" onClick={this._handleCancel.bind(this)} />
 				</div>
 			</form>
 		);

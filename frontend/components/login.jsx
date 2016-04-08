@@ -114,7 +114,7 @@ class Login extends React.Component {
               onChange={this._handlePasswordChange.bind(this)} />
           </div>
           <div className="form-group">
-            <input type="submit" value="Login" />
+            <input className="button-full" type="submit" value="Login" />
           </div>
         </form>
         <p>Don't have an account? {switchLink}</p>

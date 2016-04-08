@@ -4,11 +4,7 @@ $primary-background-color: #000;
 $primary-highlight-color: #ffff64;
 $primary-border-color: #555;
 $primary-color: #c4c0c0;
-
-$button-color: $primary-color;
-$button-background: $primary-background-color;
-$button-border-color: $primary-border-color;
-$button-border-highlight-color: $primary-highlight-color;
+$border-size: 2px;
 
 $secondary-nav-link-color: #99a7ee;
 
@@ -46,7 +42,16 @@ $hot-author-color: rgb(101, 101, 101);
 
 $list-border-color: #1E1E1E;
 
+// FORM VARIABLES
 $form-placeholder-color: rgb(128, 128, 128);
+$button-color: $primary-color;
+$button-background: $primary-background-color;
+$button-border-color: $primary-border-color;
+$button-border-highlight-color: $primary-highlight-color;
+$button-good-color: #0ecb27;
+$button-good-background: transparent;
+$button-good-background-hover: transparentize($button-good-color, 0.7);
+$button-neutral-background-hover: rgb(35, 35, 35);
 
 $reply-group-background: #1a1a1a;
 $reply-detail-border-color: #333;

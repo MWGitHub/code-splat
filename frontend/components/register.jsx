@@ -117,7 +117,7 @@ class Register extends React.Component {
             <p>If an e-mail is provided an activation e-mail will be sent. Providing an e-mail allows for resetting forgotten passwords.</p>
           </div>
           <div className="form-group">
-            <input type="submit" value="Create Account" />
+            <input className="button-full" type="submit" value="Create Account" />
           </div>
         </form>
       );

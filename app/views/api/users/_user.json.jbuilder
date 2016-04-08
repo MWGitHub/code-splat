@@ -1,3 +1,1 @@
-json.id user.id
-json.username user.username
-json.score user.score
+json.extract! user, :id, :username, :score, :created_at

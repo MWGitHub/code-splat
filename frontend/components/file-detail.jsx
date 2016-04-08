@@ -3,17 +3,20 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import FileStore from '../stores/file';
 import WebUtil from '../util/web-util';
+import ExplanationUtil from '../util/explanation-util';
+import ExplanationActions from '../actions/explanation-actions';
 import ChangeStore from '../stores/change';
 import ReplyStore from '../stores/reply';
 import TextChangeList from './text-change-list';
 import ReplyForm from './reply-form';
 import ReplyDetail from './reply-detail';
 import CodeMirror from 'react-codemirror';
-import Ruby from 'codemirror/mode/ruby/ruby';
 import SimpleScrollBars from 'codemirror/addon/scroll/simplescrollbars';
 import ExplanationForm from './explanation-form';
 import ExplanationStore from '../stores/explanation';
 import ExplanationDetail from './explanation-detail';
+
+import Ruby from 'codemirror/mode/ruby/ruby';
 
 class FileDetail extends React.Component {
   constructor(props) {
@@ -24,10 +27,7 @@ class FileDetail extends React.Component {
 			explanations: null,
 			changes: null,
 			replies: null,
-			isEditing: false,
-			selection: null,
-			selectionStart: null,
-			selectedExplanation: null
+			isEditing: false
     };
 
 		this.explanations = [];
@@ -39,16 +39,17 @@ class FileDetail extends React.Component {
 			this.setState({ changes: ChangeStore.all() });
 		});
 		this.replyToken = ReplyStore.addListener(() => {
-			this.setState({
-				replies: ReplyStore.allSourceFileReplies()
-			});
+			this.setState({ replies: ReplyStore.allSourceFileReplies() });
 		});
 		this.explanationToken = ExplanationStore.addListener(this._handleExplanationChange.bind(this));
-    WebUtil.fetchSourceFile(
+
+		WebUtil.fetchSourceFile(
 			this.props.params.slug,
 			this.props.params.fileSlug, file => {
 				WebUtil.fetchSourceFileReplies(file.id, replies => {
-					WebUtil.fetchExplanations(file.id);
+					ExplanationUtil.fetchExplanations(file.id, explanations => {
+						ExplanationActions.deselectExplanation();
+					});
 				});
 			}
 		);
@@ -73,10 +74,7 @@ class FileDetail extends React.Component {
 			changes: null,
 			replies: null,
 			explanations: null,
-			isEditing: false,
-			selectedExplanation: null,
-			selection: null,
-			selectionStart: null
+			isEditing: false
 		});
   }
 
@@ -100,7 +98,7 @@ class FileDetail extends React.Component {
 			let explanation = this.explanations[i];
 			let isOutLine = start.line > explanation.endLine ||
 				end.line < explanation.startLine;
-			let isOutIndex = start.ch > explanation.endIndex &&
+			let isOutIndex = start.ch > explanation.endIndex ||
 				end.ch < explanation.startIndex;
 
 			if (!(isOutLine || isOutIndex)) {
@@ -118,7 +116,7 @@ class FileDetail extends React.Component {
 			let codeMirror = this.refs.codemirror.getCodeMirror();
 			codeMirrorDOM.addEventListener('mouseup', e => {
 				// Add selecting text for annotation adding
-				let selection = codeMirror.getSelection();
+				let fragment = codeMirror.getSelection();
 				let start = codeMirror.getCursor('from');
 				let end = codeMirror.getCursor('to');
 				let startIndex = 0;
@@ -128,12 +126,18 @@ class FileDetail extends React.Component {
 					startIndex += 1 + line.length;
 				}
 				startIndex += start.ch;
+
 				if (!this._isSelectionAnnotated(start, end)) {
-					this.setState({
-						selectedExplanation: null,
-						selectionStart: startIndex,
-						selection: selection
-					});
+					if (fragment.length === 0) {
+						ExplanationActions.deselectExplanation();
+					} else {
+						ExplanationActions.selectExplanation({
+							sourceFileId: this.state.file.id,
+							fragment: fragment,
+							start: startIndex,
+							explanation: null
+						});
+					}
 				}
 
 				// Add selecting existing annotations
@@ -144,10 +148,12 @@ class FileDetail extends React.Component {
 
 					let explanation = this._getExplanationAtPoint(line, index);
 					if (explanation) {
-						this.setState({
-							selectedExplanation: ExplanationStore.find(explanation.id),
-							selectionStart: null,
-							selection: null
+						let instance = ExplanationStore.find(explanation.id);
+						ExplanationActions.selectExplanation({
+							sourceFileId: this.state.file.id,
+							fragment: instance.fragment,
+							fragmentStart: instance.fragment_start,
+							explanation: instance
 						});
 					}
 				}
@@ -246,6 +252,10 @@ class FileDetail extends React.Component {
 		});
 	}
 
+	_handleFormCancel() {
+		ExplanationActions.deselectExplanation();
+	}
+
   render() {
     if (!this.state.file) return <div></div>;
 
@@ -285,24 +295,6 @@ class FileDetail extends React.Component {
 			/>
 		);
 
-		let explanationForm = '';
-		if (this.state.selection && this.state.selectionStart) {
-			explanationForm = (
-				<ExplanationForm
-					start={this.state.selectionStart}
-					fragment={this.state.selection}
-					sourceFileId={this.state.file.id}
-				/>
-			);
-		}
-
-		let explanation = '';
-		if (this.state.selectedExplanation) {
-			explanation = (
-				<ExplanationDetail explanation={this.state.selectedExplanation} />
-			);
-		}
-
     return (
       <div className="file-detail detail group">
 				<div className="full">
@@ -319,8 +311,7 @@ class FileDetail extends React.Component {
 					<Link to={editUrl}>Edit</Link>
 					<a href="#" onClick={this._handleDelete.bind(this)}>Delete</a>
 					<a href='#' onClick={this._handleContributions.bind(this)}>Contributions</a>
-					{explanation}
-					{explanationForm}
+					<ExplanationDetail />
 				</div>
 				{changes}
       </div>

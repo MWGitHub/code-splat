@@ -38,7 +38,7 @@ var router = (
       <IndexRoute component={Home} />
       <Route path='register' component={Register} />
       <Route path='login' component={Login} />
-			
+
 			<Route path='projects' component={ProjectIndex} />
       <Route path='projects/new'
         component={NewProjectForm} onEnter={checkLoggedIn} />

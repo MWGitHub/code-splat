@@ -223,43 +223,6 @@ export default {
 		});
 	},
 
-	fetchExplanations: function (sourceFileId) {
-		$.ajax({
-			type: 'GET',
-			url: '/api/source_files/' + sourceFileId + '/explanations',
-			dataType: 'json',
-			success: function (data) {
-				WebActions.receiveExplanations(data);
-			}
-		});
-	},
-
-	createExplanation: function (sourceFileId, explanation) {
-		$.ajax({
-			type: 'POST',
-			url: '/api/source_files/' + sourceFileId + '/explanations',
-			dataType: 'json',
-			data: {
-				explanation: explanation
-			},
-			success: function (data) {
-				WebActions.receiveExplanation(data);
-			}
-		});
-	},
-
-	fetchExplanationChanges: function (id) {
-    $.ajax({
-      type: 'GET',
-      url: '/api/explanations/' + id + '/text_changes',
-      dataType: 'json',
-      success: function (data) {
-        WebActions.receiveSourceFileChanges(data);
-      }
-    });
-  },
-
-
 
 	searchBar: function (query) {
 		$.ajax({

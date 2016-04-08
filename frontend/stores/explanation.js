@@ -1,6 +1,6 @@
 import { Store } from 'flux/utils';
 import Dispatcher from '../dispatcher/dispatcher';
-import WebConstants from '../constants/web-constants';
+import ExplanationConstants from '../constants/explanation-constants';
 
 let ExplanationStore = new Store(Dispatcher);
 
@@ -40,11 +40,11 @@ ExplanationStore.find = function (id) {
 
 ExplanationStore.__onDispatch = function (payload) {
 	switch (payload.actionType) {
-		case WebConstants.RECEIVE_EXPLANATIONS:
+		case ExplanationConstants.RECEIVE_EXPLANATIONS:
 			resetExplanations(payload.explanations);
 			ExplanationStore.__emitChange();
 			break;
-		case WebConstants.RECEIVE_EXPLANATION:
+		case ExplanationConstants.RECEIVE_EXPLANATION:
 			receiveExplanation(payload.explanation);
 			ExplanationStore.__emitChange();
 			break;
