@@ -7,10 +7,10 @@ class ProgramSeeds
 		)
 		project.text_changes.create(
 			author_id: user.id,
-			body: 'Data structures implemented in the simplest ways without optimizations.'
+			body: 'Data structures implemented in basic ways without optimizations.'
 		)
 		project.front_page_items.create(
-			description: 'Read code for data structures in the most basic implementations.'
+			description: 'Read code for data structures in basic implementations.'
 		)
 
 
@@ -23,7 +23,7 @@ class ProgramSeeds
 			body: 'Sorting algorithms implemented without optimizations in mind.'
 		)
 		project.front_page_items.create(
-			description: 'Numerous sorting algorithms shown in an easy to understand way. No optimizations added in order to show the basic algorithms.'
+			description: 'Numerous sorting algorithms shown with explanations. No optimizations added in order to show the basic algorithms.'
 		)
 		file = project.source_files.create(
 			name: 'merge_sort.rb',

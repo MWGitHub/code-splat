@@ -110,15 +110,15 @@ user interface.
 - [x] create `Reply` model
 - [x] create `Explanation` model
 - [x] CRUD API for projects (`RepliesController`)
-- [x] jBuilder views for projects
-- [ ] CRUD API for projects (`ExplanationsController`)
-- [ ] jBuilder views for files
+- [x] jBuilder views for replies
+- [x] CRUD API for projects (`ExplanationsController`)
+- [x] jBuilder views for explanations
 - build out API, Flux loop, and components for:
-  - [ ] Reply CRUD
-  - [ ] Explanation CRUD
-  - [ ] adding comments requires a file or project
-  - [ ] viewing comments by file or project
-- [ ] Use CSS to style new views
+  - [x] Reply CRUD
+  - [x] Explanation CRUD
+  - [x] adding comments requires a file, project, or explanation
+  - [x] viewing comments by file, project, or explanation
+- [x] Use CSS to style new views
 
 ### Phase 5.5: Score and User Access (1.5 days)
 
@@ -147,13 +147,14 @@ user interface.
 
 ### Bonus Features (TBD)
 - [ ] add user page
-- [ ] add user score
+- [x] add user score
 - [x] add search
 - [x] add pagination
 - [ ] refactor code
 - [ ] optimize slow requests
 - [ ] check for memory leaks
-- [ ] fix search page bug not showing loading
+- [x] fix search page bug not showing loading
+- [ ] add replies to explanations
 
 - [ ] create `Vote` model
 - [ ] API for changes (`VotesController`)
@@ -163,7 +164,7 @@ user interface.
 
 - [x] have annotations float with view
 - [x] style the file options
-- [ ] add delete to explanations
+- [x] add delete to explanations
 - [ ] do not allow whitespace selection at end
 
 [phase-one]: ./docs/phases/phase1.md
