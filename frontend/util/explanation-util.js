@@ -43,6 +43,18 @@ export default {
 		})
 	},
 
+	destroyExplanation: function (id, onSuccess) {
+		$.ajax({
+			type: 'DELETE',
+			url: '/api/explanations/' + id,
+			dataType: 'json',
+			success: function (data) {
+				ExplanationActions.removeExplanation(data);
+				onSuccess && onSuccess(data);
+			}
+		})
+	},
+
 	fetchExplanationChanges: function (id) {
     $.ajax({
       type: 'GET',

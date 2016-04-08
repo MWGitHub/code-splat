@@ -116,6 +116,14 @@ class ExplanationProvided extends React.Component {
 		});
 	}
 
+	_handleDeleteClick() {
+		ExplanationUtil.destroyExplanation(this.props.explanation.id,
+			explanation => {
+				ExplanationActions.deselectExplanation();
+			}
+		);
+	}
+
 	_handleContributions() {
 	}
 
@@ -138,6 +146,10 @@ class ExplanationProvided extends React.Component {
 						<button className="button-light"
 							onClick={this._handleEditClick.bind(this)}>
 							Edit
+						</button>
+						<button className="button-light button-bad"
+							onClick={this._handleDeleteClick.bind(this)}>
+							Delete
 						</button>
 					</div>
 				</div>

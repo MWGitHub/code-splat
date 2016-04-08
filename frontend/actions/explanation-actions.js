@@ -16,12 +16,20 @@ export default {
 		});
 	},
 
+	removeExplanation: function (explanation) {
+		Dispatcher.dispatch({
+			actionType: ExplanationConstants.REMOVE_EXPLANATION,
+			explanation, explanation
+		});
+	},
+
 	selectExplanation: function (selection) {
 		Dispatcher.dispatch({
 			actionType: ExplanationConstants.SELECT_EXPLANATION,
 			selection: selection
 		});
 	},
+
 
 	deselectExplanation: function () {
 		Dispatcher.dispatch({

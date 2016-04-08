@@ -250,3 +250,14 @@ $email-color: #444;
 		border: 0;
 	}
 }
+
+.button-bad {
+	border: $border-size solid $button-bad-color;
+	color: $button-bad-color;
+	background-color: $button-bad-background;
+
+	&:hover {
+		background-color: $button-bad-background-hover;
+		border: $border-size solid $button-bad-color;
+	}
+}

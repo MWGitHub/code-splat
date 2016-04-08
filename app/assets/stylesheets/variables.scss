@@ -52,6 +52,10 @@ $button-good-color: #0ecb27;
 $button-good-background: transparent;
 $button-good-background-hover: transparentize($button-good-color, 0.7);
 $button-neutral-background-hover: rgb(35, 35, 35);
+$button-bad-color: #d26464;
+$button-bad-background: transparent;
+$button-bad-background-hover: transparentize($button-bad-color, 0.7);
+
 
 $reply-group-background: #1a1a1a;
 $reply-detail-border-color: #333;

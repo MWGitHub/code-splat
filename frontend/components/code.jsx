@@ -49,6 +49,7 @@ class Code extends React.Component {
 	componentDidUpdate() {
 		if (this.props.isEditing) return;
 
+		this._unhighlightExplanations();
 		this._highlightExplanations();
 		this._bindListeners();
 	}
@@ -178,6 +179,13 @@ class Code extends React.Component {
 			}
 			this.selectFree = this._selectFree.bind(this);
 			codeMirrorDOM.addEventListener('mouseup', this.selectFree);
+		}
+	}
+
+	_unhighlightExplanations() {
+		if (this.refs.codemirror) {
+			let codeMirror = this.refs.codemirror.getCodeMirror();
+			codeMirror.getAllMarks().forEach(mark => mark.clear());
 		}
 	}
 

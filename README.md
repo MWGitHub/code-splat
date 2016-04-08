@@ -142,7 +142,7 @@ user interface.
 **objective:** Make the site look better and be more usable
 
 - [x] Get feedback on my UI from others
-- [ ] Refactor HTML classes & CSS rules
+- [x] Refactor HTML classes & CSS rules
 - [ ] Add modals, transitions, and other styling flourishes.
 
 ### Bonus Features (TBD)
@@ -161,8 +161,8 @@ user interface.
   - [ ] Vote CRUD
 	- [ ] viewing votes on comments, explanations, and suggestions
 
-- [ ] have annotations float with view
-- [ ] style the file options
+- [x] have annotations float with view
+- [x] style the file options
 - [ ] add delete to explanations
 - [ ] do not allow whitespace selection at end
 

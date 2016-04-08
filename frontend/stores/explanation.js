@@ -24,6 +24,15 @@ function receiveExplanation(explanation) {
 	}
 }
 
+function removeExplanation(explanation) {
+	for (let i = 0; i < _explanations.length; ++i) {
+		if (_explanations[i].id === explanation.id) {
+			_explanations.splice(i, 1);
+			break;
+		}
+	}
+}
+
 ExplanationStore.all = function () {
 	return _explanations.slice();
 };
@@ -46,6 +55,10 @@ ExplanationStore.__onDispatch = function (payload) {
 			break;
 		case ExplanationConstants.RECEIVE_EXPLANATION:
 			receiveExplanation(payload.explanation);
+			ExplanationStore.__emitChange();
+			break;
+		case ExplanationConstants.REMOVE_EXPLANATION:
+			removeExplanation(payload.explanation);
 			ExplanationStore.__emitChange();
 			break;
 	}
