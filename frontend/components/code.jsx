@@ -129,13 +129,14 @@ class Code extends React.Component {
 
 		let explanation = this._getExplanationAtPoint(line, index);
 		if (explanation) {
+			let start = this._indexToPosition(explanation.fragment_start);
 			let instance = ExplanationStore.find(explanation.id);
 			ExplanationActions.selectExplanation({
 				sourceFileId: this.props.file.id,
 				fragment: instance.fragment,
 				fragmentStart: instance.fragment_start,
 				explanation: instance,
-				selectionCoords: codeMirror.charCoords(cursor, 'page')
+				selectionCoords: codeMirror.charCoords(start, 'page')
 			});
 		}
 	}
