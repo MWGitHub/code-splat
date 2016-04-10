@@ -167,6 +167,7 @@ user interface.
 - [x] add delete to explanations
 - [x] do not allow whitespace selection at end
 - [x] fix bug where characters near fragments are invalid for annotations in the front-end
+- [ ] add demo that guides the user through the site
 
 [phase-one]: ./docs/phases/phase1.md
 [phase-two]: ./docs/phases/phase2.md
