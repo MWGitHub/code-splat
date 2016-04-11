@@ -96,4 +96,4 @@ _isSelectionAnnotated(start, end) {
 [Original Design Docs](./docs/README.md)
 
 [welcome]: ./docs/images/welcome.png
-[code]: ./docs/images/stream.png
+[code]: ./docs/images/code.png
