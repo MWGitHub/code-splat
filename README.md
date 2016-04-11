@@ -1,179 +1,99 @@
-# CodeSplat
+#Code Splat
 
-[Heroku link][heroku] **NB:** This should be a link to your production site
+Code Splat is a web application for annotating code and text. It was
+ inspired by RapGenius and built using Ruby on Rails and React.js.
 
-[heroku]: https://mw-rgc.herokuapp.com/
+Explore and Listen at [mw-rgc.herokuapp.com](http://mw-rgc.herokuapp.com/)
 
-## Minimum Viable Product
+###Welcome View:
 
-CodeSplat is a code review site inspired by Rap Genius' annotation system built using Ruby on Rails and React.js.
+![welcome]
 
-CodeSplat allows users to:
+###Code View:
 
-<!-- This is a Markdown checklist. Use it to keep track of your
-progress. Put an x between the brackets for a checkmark: [x] -->
+![code]
 
-- [x] Create an account
-- [x] Log in / Log out
-- [ ] ~~Upload project files to generate code pages~~
-- [ ] Upload images in replies and suggestions
-- [x] Create, read, edit, and delete code pages
-- [x] Organize code pages into projects
-- [ ] Create, read, edit, and delete suggestions
-- [ ] Create, read, edit, and delete replies
-- [ ] Allow other users to vote on replies
-- [ ] Link code pages to other code pages
-- [ ] Apply styling to code
+###Technical Details:
+* Code Splat displays code with highlights and correct indentations. It uses the CodeMirror library for the editor. In order to highlight text for annotations, the character index had to be calculated from the line and character due to the differences between the library's format and the way the data is stored on the backend. The calculated index is stored and converted back when the text is rendered in order to highlight spots that are annotated.
 
-## Design Docs
-* [View Wireframes][views]
-* [React Components][components]
-* [Flux Stores][stores]
-* [API endpoints][api-endpoints]
-* [DB schema][schema]
+```
+_positionToIndex(line, ch) {
+  let codeMirror = this.refs.codemirror.getCodeMirror();
 
-[views]: ./docs/views.md
-[components]: ./docs/components.md
-[stores]: ./docs/stores.md
-[api-endpoints]: ./docs/api-endpoints.md
-[schema]: ./docs/schema.md
+  // Add selecting text for annotation adding
+  let index = 0;
+  for (let i = 0; i < line; ++i) {
+    let codeLine = codeMirror.getLine(i);
+    // Make sure to add the chars for the new line
+    index += 1 + codeLine.length;
+  }
+  index += ch;
 
-## Implementation Timeline
+  return index;
+}
 
-### Phase 0: Setup
-- [x] create new project
-- [x] create documentation
-- [x] set up production server
+_indexToPosition(index) {
+  let codeMirror = this.refs.codemirror.getCodeMirror();
 
-### Phase 1: Backend setup and User Authentication (0.5 days)
+  let countIndex = 0;
+  let line = 0;
+  let ch = 0;
+  // Find start line and ch
+  for (let i = 0; i < codeMirror.lineCount(); ++i) {
+    let codeLine = codeMirror.getLine(i);
+    if (i !== 0) countIndex += 1;
+    countIndex += codeLine.length;
+    if (countIndex >= index) {
+      line = i;
+      ch = index - (countIndex - codeLine.length);
+      break;
+    }
+  }
+  return {
+    line: line,
+    ch: ch
+  };
+}
+```
 
-**Objective:** Functioning rails project with Authentication
+* Annotations were selected by listening to DOM mouseup and mousedown events. Selections can be retrieved by getting the line and character at the start and ends and converting them to and index. Overlaps are checked by seeing if ranges are outside.
 
-- [x] create `User` model
-- [x] authentication
-- [x] user signup/signin pages
-- [x] blank landing page after signin
+```
+_isSelectionAnnotated(start, end) {
+  let startIndex = this._positionToIndex(start.line, start.ch);
+  let endIndex = this._positionToIndex(end.line, end.ch);
 
-### Phase 2: Project Model, File Model, Changes Model, and JSON API (1 day)
+  for (let i = 0; i < this.explanations.length; ++i) {
+    let explanation = this.explanations[i];
+    let isOut = startIndex > explanation.endIndex || endIndex < explanation.startIndex;
 
-**Objective:** Projects and files can be created, edited, and deleted. Changes are tracked for each action.
+    if (!isOut) {
+      return true
+    }
+  }
+  return false;
+}
+```
 
-- [x] create `Project` model
-- [x] create `File` model
-- [x] create `Change` model
-- [x] seed the database with a small amount of test data
-- [x] CRUD API for projects (`ProjectsController`)
-- [x] jBuilder views for projects
-- [x] CRUD API for projects (`FilesController`)
-- [x] jBuilder views for files
-- [x] API for changes (`ChangesController`)
-- [x] jBuilder views for changes
-- [x] setup Webpack & Flux scaffold
-- [x] setup `APIUtil` to interact with the API
-- [x] test out API interaction in the console.
+###Features
+* Sign up/in with email, Facebook, GitHub, or Google.
+* Explore and read code from others
+* Show popular and hot new projects
+* Annotations are highlighted for quick and easy viewing
+* Clicking on an annotation to read or create them aligns the area next to the focused location, no need to scroll
+* Permissions are gained depending on the amount of score a user has
+* Edit and delete annotations, projects, files, and more
+* Check history in case of vandalism
 
-### Phase 3: Flux Architecture and Project/File/Changes CRUD (1.5 days)
+###To-Do:
+* [ ] Index views for the user
+* [ ] Notifications
+* [ ] Error validations
+* [ ] Comments on Annotations
+* [ ] Search by Language
+* [ ] Automated demo mode
 
-**Objective:** Notes can be created, read, edited and destroyed with the
-user interface.
+[Original Design Docs](./docs/README.md)
 
-- [x] setup the flux loop with skeleton files
-- [x] setup React Router
-- implement each project component, building out the flux loop as needed.
-  - [x] `ProjectsIndex`
-  - [x] `ProjectIndexItem`
-  - [x] `ProjectForm`
-- implement each files component, building out the flux loop as needed.
-  - [x] `FilesIndex`
-  - [x] `FileIndexItem`
-  - [x] `FileForm`
-- implement each project component, building out the flux loop as needed.
-  - [x] `TextChangesIndex`
-  - [x] `TextChangeIndexItem`
-  - [ ] ~~`TextChangeForm`~~
-
-### Phase 4: Start Styling and add Pages(0.5 days)
-
-**Objective:** Existing pages (including sign up/sign in) will look good and be responsive.
-
-- [x] create a basic style guide
-- [x] position elements on the page
-- [x] add basic colors & styles
-- [ ] style home page
-- [x] style project page
-- [ ] style file page
-
-### Phase 5: Project Comments, Files Comment, Explanations, Suggestions, and Votes (2 days)
-
-**Objective:** Projects and files can be commented. Explanations can be made for lines in files. Comments, suggestions, and explanations can be voted on.
-
-- [x] create `Reply` model
-- [x] create `Explanation` model
-- [x] CRUD API for projects (`RepliesController`)
-- [x] jBuilder views for replies
-- [x] CRUD API for projects (`ExplanationsController`)
-- [x] jBuilder views for explanations
-- build out API, Flux loop, and components for:
-  - [x] Reply CRUD
-  - [x] Explanation CRUD
-  - [x] adding comments requires a file, project, or explanation
-  - [x] viewing comments by file, project, or explanation
-- [x] Use CSS to style new views
-
-### Phase 5.5: Score and User Access (1.5 days)
-
-**Objective:** Users gain karma depending on contributions which allow for more actions. Owners and admins have options available all the time.
-
-- [x] create `score` column for users
-- [ ] add `score` based on contributions
-- [ ] prevent non-owners from changing owning files unless score high enough
-- [ ] have admin class to be able to modify everything
-- [ ] have specific amounts of score allow more actions
-
-### Phase 6: Allow Complex Styling in Code and text selection (1 day)
-
-**Objective:** Code is highlighted and comments and lines can be selected for suggestions. Editor added to file code and explanations.
-
-- [x] add CodeMirror to allow syntax highlighting and editing
-- [x] highlight text in file code to create or edit explanations
-
-### Phase 7: Styling Cleanup and Seeding (1 day)
-
-**objective:** Make the site look better and be more usable
-
-- [x] Get feedback on my UI from others
-- [x] Refactor HTML classes & CSS rules
-- [ ] Add modals, transitions, and other styling flourishes.
-
-### Bonus Features (TBD)
-- [ ] add user page
-- [x] add user score
-- [x] add search
-- [x] add pagination
-- [ ] refactor code
-- [ ] optimize slow requests
-- [ ] check for memory leaks
-- [x] fix search page bug not showing loading
-- [ ] add replies to explanations
-
-- [ ] create `Vote` model
-- [ ] API for changes (`VotesController`)
-- build out API, Flux loop, and components for:
-  - [ ] Vote CRUD
-	- [ ] viewing votes on comments, explanations, and suggestions
-
-- [x] have annotations float with view
-- [x] style the file options
-- [x] add delete to explanations
-- [x] do not allow whitespace selection at end
-- [x] fix bug where characters near fragments are invalid for annotations in the front-end
-- [ ] add demo that guides the user through the site
-
-[phase-one]: ./docs/phases/phase1.md
-[phase-two]: ./docs/phases/phase2.md
-[phase-three]: ./docs/phases/phase3.md
-[phase-four]: ./docs/phases/phase4.md
-[phase-five]: ./docs/phases/phase5.md
-
-### TODO
-- [ ] fix order of store items
+[welcome]: ./docs/images/welcome.png
+[code]: ./docs/images/stream.png
