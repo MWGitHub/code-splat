@@ -1,8 +1,13 @@
 class Api::UsersController < ApplicationController
   def create
-    @user = User.create!(user_params)
-		sign_in!(@user, SessionProvider::PROVIDER[:password], @user.id)
-    render :create
+    @user = User.create(user_params)
+    if @user.valid?
+      sign_in!(@user, SessionProvider::PROVIDER[:password], @user.id)
+      render :create
+    else
+      p @user.errors.to_hash(true)
+      render json: @user.errors.messages, status: :unprocessable_entity
+    end
   end
 
   def update

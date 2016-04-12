@@ -49,7 +49,7 @@
 
   .fa {
     margin-right: 0.5rem;
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
 
   &:hover {
@@ -127,17 +127,6 @@ $email-color: #444;
   width: 100%;
   margin-bottom: 0.5rem;
   text-align: left;
-
-  label {
-    font-size: 0.9rem;
-    display: block;
-    margin-bottom: 0.3rem;
-    cursor: pointer;
-  }
-
-  .label-sub {
-    font-size: 0.8rem;
-  }
 
   input {
     outline: none;
@@ -260,4 +249,28 @@ $email-color: #444;
 		background-color: $button-bad-background-hover;
 		border: $border-size solid $button-bad-color;
 	}
+}
+
+.form-label-group {
+	width: 100%;
+	display: block;
+	margin-bottom: 0.3rem;
+}
+
+.form-label {
+	font-size: 0.9rem;
+	cursor: pointer;
+	float: left;
+}
+
+.form-label-sub {
+	font-size: 0.8rem;
+}
+
+.form-error {
+	float: left;
+	color: $button-bad-color;
+	font-size: 0.8rem;
+	margin-left: 0.25rem;
+	margin-top: 0.05rem;
 }

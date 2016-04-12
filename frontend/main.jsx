@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory, Redirect } from 'react-router';
+import co from 'co';
 
 import UserUtil from './util/user-util';
 
@@ -18,6 +19,9 @@ import FileDetail from './components/file-detail';
 import { NewFileForm, EditFileForm } from './components/file-form';
 import ProjectIndex from './components/project-index';
 import Search from './components/search';
+
+import configureStore from './stores/configure-store';
+configureStore();
 
 class App extends React.Component {
   render() {
@@ -72,8 +76,15 @@ function checkLoggedIn(nextState, replace, callback) {
 }
 
 $(function () {
-  UserUtil.checkLogin(data => {
+  let render = function() {
     Modal.setAppElement(document.body);
     ReactDOM.render(router, $('#content')[0]);
+  };
+
+  co(function* () {
+    yield UserUtil.checkLogin();
+    render();
+  }).catch(e => {
+    render();
   });
 });

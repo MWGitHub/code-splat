@@ -21,6 +21,11 @@ class Api::SessionsController < ApplicationController
 				@user.id
 			)
       render :login
+    else
+      render(
+        json: {error: 'Invalid username or password'},
+        status: :unprocessable_entity
+      )
     end
   end
 

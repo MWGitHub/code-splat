@@ -2,63 +2,83 @@ import UserActions from '../actions/user-actions';
 
 export default {
   createAccount: function (options) {
-    $.ajax({
-      type: 'POST',
-      url: '/api/users/',
-      dataType: 'json',
-      data: {
-        user: options
-      },
-      success: function (data) {
-        UserActions.receiveLogin(data);
-      }
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        type: 'POST',
+        url: '/api/users/',
+        dataType: 'json',
+        data: {
+          user: options
+        },
+        success: function (data) {
+          UserActions.receiveLogin(data);
+          resolve(data);
+        },
+        error: function (error) {
+          reject(error);
+        }
+      });
     });
   },
 
   login: function (options) {
-    $.ajax({
-      type: 'POST',
-      url: '/api/session/',
-      dataType: 'json',
-      data: {
-        session: options
-      },
-      success: function (data) {
-        UserActions.receiveLogin(data);
-      }
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        type: 'POST',
+        url: '/api/session/',
+        dataType: 'json',
+        data: {
+          session: options
+        },
+        success: function (data) {
+          UserActions.receiveLogin(data);
+          resolve(data);
+        },
+        error: function (error) {
+          reject(error);
+        }
+      });
     });
   },
 
-  checkLogin: function (onComplete) {
-    $.ajax({
-      type: 'GET',
-      url: '/api/session',
-      dataType: 'json',
-      success: function (data) {
-        UserActions.receiveLogin(data);
-        if (onComplete) onComplete(data);
-      },
-      error: function () {
-        if (onComplete) onComplete();
-      }
+  checkLogin: function () {
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        type: 'GET',
+        url: '/api/session',
+        dataType: 'json',
+        success: function (data) {
+          UserActions.receiveLogin(data);
+          resolve(data);
+        },
+        error: function (error) {
+          reject(error);
+        }
+      });
     });
   },
 
   logout: function () {
-    $.ajax({
-      type: 'DELETE',
-      url: '/api/session/',
-      dataType: 'json',
-      success: function (data) {
-        UserActions.receiveLogout();
-      }
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        type: 'DELETE',
+        url: '/api/session/',
+        dataType: 'json',
+        success: function (data) {
+          UserActions.receiveLogout();
+          resolve(data)
+        },
+        error: function (error) {
+          reject(error);
+        }
+      });
     });
   },
 
 	loginAsGuest: function () {
-		this.login({
-			username: 'demo',
-			password: 'password'
-		})
+    return this.login({
+      username: 'demo',
+      password: 'password'
+    });
 	}
 };

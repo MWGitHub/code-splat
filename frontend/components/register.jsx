@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router';
 import UserUtil from '../util/user-util';
 import SessionStore from '../stores/session';
+import FormField from './form-field';
+import co from 'co';
+import ErrorActions from '../actions/error-actions';
 
 class Register extends React.Component {
   constructor(props) {
@@ -21,6 +24,11 @@ class Register extends React.Component {
 
   componentDidMount() {
     this.changeToken = SessionStore.addListener(this._onChange.bind(this));
+    ErrorActions.removeErrors([
+      'register-username',
+      'register-password',
+      'register-email'
+    ]);
   }
 
   componentWillUnmount() {
@@ -36,10 +44,40 @@ class Register extends React.Component {
   _handleSubmit(e) {
     e.preventDefault();
 
-    UserUtil.createAccount({
-      username: this.state.username,
-      password: this.state.password,
-      email: this.state.email
+    var that = this;
+    co(function* () {
+      yield ErrorActions.removeErrors(
+        ['register-username', 'register-password', 'register-email']
+      );
+
+      yield UserUtil.createAccount({
+        username: that.state.username,
+        password: that.state.password,
+        email: that.state.email
+      });
+    }).catch(e => {
+      let json = e.responseJSON;
+      let errors = [];
+      if (json.username) {
+        errors.push({
+          id: 'register-username',
+          text: json.username[json.username.length - 1]
+        });
+      }
+      if (json.password_digest) {
+        errors.push({
+          id: 'register-password',
+          text: json.password_digest[json.password_digest.length - 1]
+        });
+      }
+      if (json.email) {
+        errors.push({
+          id: 'register-email',
+          text: json.email[json.email.length - 1]
+        });
+      }
+      console.log(errors);
+      ErrorActions.receiveErrors(errors);
     });
 
     this.setState({
@@ -99,19 +137,33 @@ class Register extends React.Component {
       form = (
         <form className="form sub-form" onSubmit={this._handleSubmit.bind(this)}>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input type="text" value={this.state.username} id="username"
-              onChange={this._handleUsernameChange.bind(this)} />
+            <FormField
+              id="username"
+              errorId="register-username"
+              label="Username">
+              <input type="text" value={this.state.username} id="username"
+                onChange={this._handleUsernameChange.bind(this)} />
+            </FormField>
           </div>
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <FormField
+              id="email"
+              errorId="register-email"
+              label="Email"
+            >
             <input type="email" value={this.state.email} id="email"
               onChange={this._handleEmailChange.bind(this)} />
+            </FormField>
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <FormField
+              id="password"
+              errorId="register-password"
+              label="Password"
+            >
             <input type="password" value={this.state.password} id="password"
               onChange={this._handlePasswordChange.bind(this)} />
+            </FormField>
           </div>
           <div className="form-group description">
             <p>Providing an email allows you to reset forgotten passwords.</p>

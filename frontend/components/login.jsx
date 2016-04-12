@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router';
 import UserUtil from '../util/user-util';
 import SessionStore from '../stores/session';
+import FormField from '../components/form-field';
+import co from 'co';
+import ErrorActions from '../actions/error-actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -19,6 +22,7 @@ class Login extends React.Component {
 
   componentDidMount() {
     this.changeToken = SessionStore.addListener(this._onChange.bind(this));
+    ErrorActions.removeError('login-error');
   }
 
   componentWillUnmount() {
@@ -34,9 +38,19 @@ class Login extends React.Component {
   _handleSubmit(e) {
     e.preventDefault();
 
-    UserUtil.login({
-      username: this.state.username,
-      password: this.state.password
+    var that = this;
+    co(function* () {
+      yield ErrorActions.removeError('login-error');
+
+      yield UserUtil.login({
+        username: that.state.username,
+        password: that.state.password
+      });
+    }).catch(e => {
+      ErrorActions.receiveError({
+        id: 'login-error',
+        text: e.responseJSON.error
+      });
     });
 
     this.setState({
@@ -104,14 +118,17 @@ class Login extends React.Component {
         <form className="form sub-form"
           onSubmit={this._handleSubmit.bind(this)}>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input type="text" value={this.state.username} id="username"
-              onChange={this._handleUsernameChange.bind(this)} />
+            <FormField id="username" label="Username" errorId="login-error">
+              <input type="text" value={this.state.username} id="username"
+                onChange={this._handleUsernameChange.bind(this)} />
+            </FormField>
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password <a className="form-link label-sub" href="#" tabIndex="10">(I forgot my password)</a></label>
-            <input type="password" value={this.state.password} id="password"
-              onChange={this._handlePasswordChange.bind(this)} />
+            <FormField id="password">
+              <label htmlFor="password">Password <a className="form-link label-sub" href="#" tabIndex="10">(I forgot my password)</a></label>
+              <input type="password" value={this.state.password} id="password"
+                onChange={this._handlePasswordChange.bind(this)} />
+            </FormField>
           </div>
           <div className="form-group">
             <input className="button-full" type="submit" value="Login" />
