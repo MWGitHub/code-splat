@@ -6,7 +6,7 @@ class Api::UsersController < ApplicationController
       render :create
     else
       p @user.errors.to_hash(true)
-      render json: @user.errors.messages, status: :unprocessable_entity
+      render json: @user.errors.as_json, status: :unprocessable_entity
     end
   end
 

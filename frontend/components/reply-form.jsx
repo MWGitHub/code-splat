@@ -1,6 +1,7 @@
 import React from 'react';
 import SessionStore from '../stores/session';
 import PermissionUtil from '../util/permission-util';
+import Settings from '../constants/settings';
 
 class ReplyForm extends React.Component {
 	constructor(props) {
@@ -43,6 +44,13 @@ class ReplyForm extends React.Component {
 			return <div></div>
 		}
 
+    let replyHelp = '';
+    if (Settings.SHOW_REPLY_HELP) {
+      replyHelp = (
+        <a className="aside" href="#">How to add links and images</a>
+      );
+    }
+
 		return (
 			<div className="reply-form">
 				<form className='form-light' onSubmit={this._handleSubmit.bind(this)}>
@@ -55,7 +63,7 @@ class ReplyForm extends React.Component {
 					</div>
 					<div className='form-group'>
 						<input className="button-light" type="submit" value="Post Reply" />
-						<a className="aside" href="#">How to add links and images</a>
+						{replyHelp}
 					</div>
 				</form>
 			</div>

@@ -1,4 +1,9 @@
 class SourceFile < ActiveRecord::Base
+  THRESHOLDS = {
+		create: 0,
+		update: 100,
+		destroy: 600
+	}
 
 	include PgSearch
 	multisearchable against: :name

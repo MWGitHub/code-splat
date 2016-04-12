@@ -45,6 +45,8 @@ class Register extends React.Component {
     e.preventDefault();
 
     var that = this;
+    let username = this.state.username;
+    let password= this.state.password;
     co(function* () {
       yield ErrorActions.removeErrors(
         ['register-username', 'register-password', 'register-email']
@@ -55,38 +57,24 @@ class Register extends React.Component {
         password: that.state.password,
         email: that.state.email
       });
+
+      if (e.target) e.target.reset();
     }).catch(e => {
-      let json = e.responseJSON;
       let errors = [];
-      if (json.username) {
+      if (username.length === 0) {
         errors.push({
           id: 'register-username',
-          text: json.username[json.username.length - 1]
+          text: "can't be blank"
         });
       }
-      if (json.password_digest) {
+      if (password.length < 6) {
         errors.push({
           id: 'register-password',
-          text: json.password_digest[json.password_digest.length - 1]
+          text: 'is too short (minimum 6 characters)'
         });
       }
-      if (json.email) {
-        errors.push({
-          id: 'register-email',
-          text: json.email[json.email.length - 1]
-        });
-      }
-      console.log(errors);
       ErrorActions.receiveErrors(errors);
     });
-
-    this.setState({
-      username: '',
-      password: '',
-      email: ''
-    });
-
-    e.target.reset();
   }
 
   _handleUsernameChange(e) {

@@ -91,10 +91,12 @@ p {
 	font-size: 0.9rem;
 	color: $dark-contrast-color;
 	text-decoration: underline;
+}
 
-	&:hover {
-		color: tint($dark-contrast-color, 30%);
-	}
+a.contributors:hover {
+  &:hover {
+    color: tint($dark-contrast-color, 30%);
+  }
 }
 
 .section {

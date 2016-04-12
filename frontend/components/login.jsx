@@ -5,6 +5,7 @@ import SessionStore from '../stores/session';
 import FormField from '../components/form-field';
 import co from 'co';
 import ErrorActions from '../actions/error-actions';
+import Settings from '../constants/settings';
 
 class Login extends React.Component {
   constructor(props) {
@@ -46,19 +47,14 @@ class Login extends React.Component {
         username: that.state.username,
         password: that.state.password
       });
+
+      if (e.target) e.target.reset();
     }).catch(e => {
       ErrorActions.receiveError({
         id: 'login-error',
         text: e.responseJSON.error
       });
     });
-
-    this.setState({
-      username: '',
-      password: ''
-    });
-
-    e.target.reset();
   }
 
   _handleUsernameChange(e) {
@@ -98,6 +94,15 @@ class Login extends React.Component {
 			);
 		}
 
+    let passwordForget = '';
+    if (Settings.SHOW_PASSWORD_FORGET) {
+      passwordForget = (
+        <a className="form-link label-sub" href="#" tabIndex="10">
+          (I forgot my password)
+        </a>
+      );
+    }
+
     return (
       <div className={loginClass}>
         <h1 className="form-title">SIGN IN</h1>
@@ -125,7 +130,7 @@ class Login extends React.Component {
           </div>
           <div className="form-group">
             <FormField id="password">
-              <label htmlFor="password">Password <a className="form-link label-sub" href="#" tabIndex="10">(I forgot my password)</a></label>
+              <label htmlFor="password">Password {passwordForget}</label>
               <input type="password" value={this.state.password} id="password"
                 onChange={this._handlePasswordChange.bind(this)} />
             </FormField>

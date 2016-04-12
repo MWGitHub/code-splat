@@ -14,3 +14,9 @@ apm enable pigments
 apm install color-picker
 apm enable color-picker
 apm disable jshint
+apm install react
+apm enable react
+apm install atom-ternjs
+apm enable atom-ternjs
+apm install docblockr
+apm enable docblockr

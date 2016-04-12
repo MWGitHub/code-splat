@@ -134,18 +134,13 @@ class FileDetail extends React.Component {
 		}
 
 		let replies = '';
-		if (this.state.replies) {
+		if (this.state.replies && this.state.replies.length > 0) {
 			replies = (
 				<div className="section replies">
 					<h3 className="section-header">Replies</h3>
 					<ReplyList replies={this.state.replies} />
 				</div>
 			);
-			// replies = this.state.replies.map(reply => {
-			// 	return (
-			// 		<ReplyDetail key={'reply-' + reply.id} reply={reply} />
-			// 	);
-			// });
 		}
 
     return (

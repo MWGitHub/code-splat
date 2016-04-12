@@ -1,4 +1,5 @@
 import React from 'react';
+import Settings from '../constants/settings';
 
 class ContributorInfo extends React.Component {
 	_handleClick(e) {
@@ -16,12 +17,21 @@ class ContributorInfo extends React.Component {
 			contributors = count + contributors + 's';
 		}
 
-		return (
-			<a className="contributors" href='#'
-				onClick={this._handleClick.bind(this)}>
-				{contributors}
-			</a>
-		)
+    if (Settings.SHOW_CONTRIBUTOR_DETAIL) {
+      return (
+        <a className="contributors" href='#'
+          onClick={this._handleClick.bind(this)}>
+          {contributors}
+        </a>
+      );
+    } else {
+      return (
+        <span className="contributors" href='#'>
+          {contributors}
+        </span>
+      );
+    }
+
 	}
 }
 

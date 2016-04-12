@@ -148,7 +148,6 @@ $email-color: #444;
     &:focus {
       border: $border-size solid $gray-border-highlight-color;
     }
-
   }
 
 	textarea {
@@ -161,6 +160,10 @@ $email-color: #444;
 			color: $form-placeholder-color;
 		}
 	}
+
+  select {
+    margin-left: 0.5rem;
+  }
 
   &:last-child {
     margin-bottom: 0;
@@ -272,5 +275,5 @@ $email-color: #444;
 	color: $button-bad-color;
 	font-size: 0.8rem;
 	margin-left: 0.25rem;
-	margin-top: 0.05rem;
+	margin-top: 0.1rem;
 }

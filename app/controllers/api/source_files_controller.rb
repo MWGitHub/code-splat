@@ -1,5 +1,14 @@
 class Api::SourceFilesController < ApplicationController
   before_filter :require_signed_in!, only: [:create, :update, :destroy]
+  before_filter only: [:create] do
+		require_permissions!(SourceFile::THRESHOLDS[:create]) unless is_project_owner
+	end
+	before_filter only: [:update] do
+		require_permissions!(SourceFile::THRESHOLDS[:update]) unless is_owner
+	end
+	before_filter only: [:destroy] do
+		require_permissions!(SourceFile::THRESHOLDS[:destroy]) unless is_owner
+	end
 
   def show
     @source_file = SourceFile.find_by_path(
@@ -54,4 +63,21 @@ class Api::SourceFilesController < ApplicationController
   def source_file_params
     params.require(:source_file).permit(:name, :body, :language)
   end
+
+  def is_project_owner
+    project = Project.find_by(
+      slug: params[:project_id],
+      author_id: current_user.id
+    )
+		!!project
+  end
+
+  def is_owner
+    project = Project.find_by(slug: params[:project_id])
+    source_file = project.source_files.find_by(
+      slug: params[:id],
+      author_id: current_user.id
+    )
+		!!source_file
+	end
 end
