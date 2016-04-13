@@ -7,7 +7,9 @@ export default {
       type: 'GET',
       url: '/api/projects',
       dataType: 'json',
-			data: queries || {},
+			data: queries || {
+        type: 'index'
+      },
       success: function (data) {
         WebActions.receiveProjects(data);
 				onSuccess && onSuccess(data);

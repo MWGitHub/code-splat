@@ -14,20 +14,21 @@ class Api::ProjectsController < ApplicationController
 
   def index
 		if params[:type] == 'hot'
-			@projects = Project.includes(:text_changes)
+			@projects = Project.includes(:author, :text_changes)
 				.order(created_at: :desc)
 				.limit(20)
-		else
+		elsif params[:type] == 'index'
+      @projects = Project.includes(:author).all.order(created_at: :desc)
+      render :index_list
+    else
 	    @projects = Project.includes(
-	      :text_changes, source_files: :text_changes
+	      :author, :text_changes
 	    ).all.order(created_at: :desc)
 		end
   end
 
   def show
-    @project = Project.includes(
-      :text_changes, source_files: :text_changes
-    ).friendly.find(params[:slug])
+    @project = Project.includes(:text_changes).friendly.find(params[:slug])
   end
 
   def create

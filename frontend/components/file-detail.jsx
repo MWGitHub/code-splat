@@ -79,13 +79,13 @@ class FileDetail extends React.Component {
 					WebUtil.fetchExplanations(file.id);
 				});
 			});
-		this.setState({
-			changes: null,
-			replies: null,
-			explanations: null,
-			isEditing: false,
-			isSelecting: false
-		});
+      this.setState({
+        changes: null,
+        replies: null,
+        explanations: null,
+        isEditing: false,
+        isSelecting: false
+      });
   }
 
   _handleDelete(e) {

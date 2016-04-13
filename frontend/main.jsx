@@ -62,12 +62,16 @@ function checkLoggedIn(nextState, replace, callback) {
     callback();
     return;
   }
-  UserUtil.checkLogin(data => {
+  co(function* () {
+    let data = yield UserUtil.checkLogin();
     if (data.username) {
       replace(nextState.location.pathname);
     } else {
       replace('/login');
     }
+    callback();
+  }).catch(e => {
+    replace('/login');
     callback();
   });
 }

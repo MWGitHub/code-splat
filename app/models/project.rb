@@ -1,6 +1,5 @@
 class Project < ActiveRecord::Base
 	CODE_LANGUAGES = %w(
-		brainfuck
 		c
 		c++
 		coffeescript

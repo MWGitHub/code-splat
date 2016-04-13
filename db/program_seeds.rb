@@ -1,6 +1,81 @@
+require_relative './seed_texts.rb'
+
 class ProgramSeeds
 	def self.generate
 		user = User.find_by(username: 'demo')
+
+
+    project = user.projects.create(
+			title: 'Empty Project',
+		)
+		project.text_changes.create(
+			author_id: user.id,
+			body: 'An initially empty project, anything goes!'
+		)
+		project.front_page_items.create(
+			description: 'An empty project, put anything you want here!'
+		)
+
+
+    project = user.projects.create(
+			title: 'CSS Styles',
+		)
+		project.text_changes.create(
+			author_id: user.id,
+			body: 'CSS styles to achieve certain effects.'
+		)
+		project.front_page_items.create(
+			description: 'CSS styles to achieve certain effects.'
+		)
+    file = project.source_files.create(
+      name: 'modal.css',
+      language: 'css',
+      author_id: user.id
+    )
+    file.text_changes.create(
+      author_id: user.id,
+      body: SeedTexts::CSS_MODAL
+    )
+    file = project.source_files.create(
+      name: 'tooltip.css',
+      language: 'css',
+      author_id: user.id
+    )
+    file.text_changes.create(
+      author_id: user.id,
+      body: SeedTexts::CSS_TOOLTIP
+    )
+
+
+    project = user.projects.create(
+			title: 'Code Splat',
+		)
+		project.text_changes.create(
+			author_id: user.id,
+			body: 'Some of the code used in this site.'
+		)
+		project.front_page_items.create(
+			description: 'Read code for the site.'
+		)
+    file = project.source_files.create(
+      name: 'home.jsx',
+      language: 'jsx',
+      author_id: user.id
+    )
+    file.text_changes.create(
+      author_id: user.id,
+      body: SeedTexts::CS_HOME
+    )
+    file = project.source_files.create(
+      name: 'project.rb',
+      language: 'ruby',
+      author_id: user.id
+    )
+    file.text_changes.create(
+      author_id: user.id,
+      body: SeedTexts::CS_PROJECT
+    )
+
 
 		project = user.projects.create(
 			title: 'Simple Data Structures',
@@ -12,6 +87,24 @@ class ProgramSeeds
 		project.front_page_items.create(
 			description: 'Read code for data structures in basic implementations.'
 		)
+    file = project.source_files.create(
+      name: 'binarysearch.scm',
+      language: 'scheme',
+      author_id: user.id
+    )
+    file.text_changes.create(
+      author_id: user.id,
+      body: SeedTexts::DS_BINARY_TREE
+    )
+    file = project.source_files.create(
+      name: 'linkedlist.rs',
+      language: 'rust',
+      author_id: user.id
+    )
+    file.text_changes.create(
+      author_id: user.id,
+      body: SeedTexts::DS_LINKED_LIST
+    )
 
 
 		project = user.projects.create(

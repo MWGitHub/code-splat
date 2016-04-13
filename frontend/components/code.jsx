@@ -54,6 +54,23 @@ class Code extends React.Component {
 		this._bindListeners();
 	}
 
+  componentWillReceiveProps(newProps) {
+    if (this.props.isEditing) return;
+
+    this.setState({
+      body: newProps.body
+    });
+  }
+
+  _replaceBody() {
+    if (this.props.isEditing) return;
+
+    let codeMirror = this.refs.codemirror.getCodeMirror();
+    if (codeMirror) {
+      codeMirror.setValue(this.props.body);
+    }
+  }
+
 	_positionToIndex(line, ch) {
 		let codeMirror = this.refs.codemirror.getCodeMirror();
 
