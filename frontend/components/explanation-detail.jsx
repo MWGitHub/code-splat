@@ -192,6 +192,7 @@ class ExplanationDetail extends React.Component {
 		super(props);
 
 		this.state = {
+      isLoggedIn: SessionStore.isLoggedIn(),
 			sourceFieldId: ExplanationSelectionStore.getSourceFieldId(),
 			explanation: ExplanationSelectionStore.getExplanation(),
 			fragment: ExplanationSelectionStore.getFragment(),
@@ -201,10 +202,16 @@ class ExplanationDetail extends React.Component {
 
 	componentDidMount() {
 		this.explanationSelectionToken = ExplanationSelectionStore.addListener(this._handleExplanationSelectionChange.bind(this));
+    this.sessionToken = SessionStore.addListener(() => {
+      this.setState({
+        isLoggedIn: SessionStore.isLoggedIn()
+      });
+    });
 	}
 
 	componentWillUnmount() {
 		this.explanationSelectionToken.remove();
+    this.sessionToken.remove();
 	}
 
 	_handleExplanationSelectionChange() {
@@ -219,7 +226,7 @@ class ExplanationDetail extends React.Component {
 	render() {
 		if (!ExplanationSelectionStore.isSelecting()) return <div></div>;
 
-    if (!SessionStore.isLoggedIn()) {
+    if (!this.state.isLoggedIn) {
       return (
         <div>
           <p className="explanation-login">
