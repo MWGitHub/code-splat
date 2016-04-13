@@ -20,9 +20,6 @@ import { NewFileForm, EditFileForm } from './components/file-form';
 import ProjectIndex from './components/project-index';
 import Search from './components/search';
 
-import configureStore from './stores/configure-store';
-configureStore();
-
 class App extends React.Component {
   render() {
     return (
