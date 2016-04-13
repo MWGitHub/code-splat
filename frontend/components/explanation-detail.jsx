@@ -5,6 +5,8 @@ import ExplanationUtil from '../util/explanation-util';
 import ExplanationActions from '../actions/explanation-actions';
 import ExplanationSelectionStore from '../stores/explanation-selection';
 import PermissionUtil from '../util/permission-util';
+import SessionStore from '../stores/session';
+import { Link } from 'react-router';
 
 class ExplanationEmpty extends React.Component {
 	constructor(props) {
@@ -216,6 +218,16 @@ class ExplanationDetail extends React.Component {
 
 	render() {
 		if (!ExplanationSelectionStore.isSelecting()) return <div></div>;
+
+    if (!SessionStore.isLoggedIn()) {
+      return (
+        <div>
+          <p className="explanation-login">
+            <Link to="/login">Log in</Link> to start annotating.
+          </p>
+        </div>
+      )
+    }
 
 		if (!ExplanationSelectionStore.isNewExplanation()) {
 			return (

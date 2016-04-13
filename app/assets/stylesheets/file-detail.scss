@@ -68,6 +68,10 @@
   word-wrap: break-word;
 }
 
+.explanation-login a {
+  margin: 0;
+}
+
 @media (max-width: 600px) {
 	.file-detail {
 		.left {
