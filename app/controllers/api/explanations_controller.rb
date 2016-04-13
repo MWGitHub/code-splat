@@ -2,6 +2,15 @@ class Api::ExplanationsController < ApplicationController
 	before_filter :require_signed_in!, only: [
 		:create, :update, :destroy
 	]
+  before_filter only: [:create] do
+		require_permissions!(Explanation::THRESHOLDS[:create])
+	end
+	before_filter only: [:update] do
+		require_permissions!(Explanation::THRESHOLDS[:update])
+	end
+	before_filter only: [:destroy] do
+		require_permissions!(Explanation::THRESHOLDS[:destroy])
+	end
 
 	def index
 		source_file = SourceFile.find(params[:source_file_id])

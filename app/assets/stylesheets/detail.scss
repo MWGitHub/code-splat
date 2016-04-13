@@ -22,11 +22,14 @@
 
 	a {
 		padding: 0.25rem;
-		@include span-columns(6);
+		// @include span-columns(6);
+		width: 100%;
 		text-align: center;
 		border-right: 1px solid $dark-gray-border-color;
 		color: $dark-contrast-highlight-color;
 		transition: all 0.25s;
+    margin: 0;
+    display: block;
 
 		&:hover {
 			color: $primary-highlight-color;
@@ -36,4 +39,50 @@
 			border-right: 0;
 		}
 	}
+}
+
+.permission-wrapper {
+  position: relative;
+  @include span-columns(6);
+  float: left;
+  text-align: center;
+}
+
+.permission-dialog {
+  position: absolute;
+  background-color: $gray-background-color;
+  top: -2.15rem;
+  border-radius: $border-radius;
+  font-size: 0.7rem;
+  padding: 0.25rem;
+  min-height: 1.6rem;
+  width: 13rem;
+  left: calc(50% - 6.5rem);
+
+  p {
+    margin: 0;
+  }
+}
+
+.permission-dialog:after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: calc(50% - 0.25rem);
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-top: 0.5rem solid $gray-background-color;
+  border-bottom: none;
+  border-left: 0.5rem solid transparent;
+  border-right: 0.5rem solid transparent;
+}
+
+.permission-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
 }

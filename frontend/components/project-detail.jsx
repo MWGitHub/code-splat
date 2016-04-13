@@ -9,6 +9,8 @@ import TextChangeList from './text-change-list';
 import ReplyForm from './reply-form';
 import ReplyList from './reply-list';
 import ContributorInfo from './contributor-info';
+import PermissionWrapper from './permission-wrapper';
+import PermissionUtil from '../util/permission-util';
 
 class ProjectDetail extends React.Component {
   constructor(props) {
@@ -121,8 +123,14 @@ class ProjectDetail extends React.Component {
 						<p>{this.state.project.description}</p>
 					</div>
 					<div className="detail-actions group">
-						<Link to={'/projects/' + this.state.project.slug + '/edit'}>edit project</Link>
-						<a href="#" onClick={this._handleDelete.bind(this)}>delete project</a>
+            <PermissionWrapper owner={this.state.project.author_id}
+              threshold={PermissionUtil.hasPermission.project.update}>
+              <Link to={'/projects/' + this.state.project.slug + '/edit'}>edit project</Link>
+            </PermissionWrapper>
+            <PermissionWrapper owner={this.state.project.author_id}
+              threshold={PermissionUtil.hasPermission.project.destroy}>
+              <a href="#" onClick={this._handleDelete.bind(this)}>delete project</a>
+            </PermissionWrapper>
 					</div>
 					<div className="reply-group">
 						<ReplyForm onSubmit={this._handleReply.bind(this)} />

@@ -18,6 +18,8 @@ import Code from './code';
 import ExplanationSelectionStore from '../stores/explanation-selection';
 import DOMUtil from '../util/dom-util';
 import ReplyList from './reply-list';
+import PermissionWrapper from './permission-wrapper';
+import PermissionUtil from '../util/permission-util';
 
 class FileDetail extends React.Component {
   constructor(props) {
@@ -175,8 +177,14 @@ class FileDetail extends React.Component {
 						<span className="description-text">{this.state.file.language}</span>
 					</div>
 					<div className="detail-actions group">
-						<Link to={editUrl}>Edit File</Link>
-						<a href="#" onClick={this._handleDelete.bind(this)}>Delete File</a>
+            <PermissionWrapper owner={this.state.file.author_id}
+              threshold={PermissionUtil.hasPermission.file.update}>
+              <Link to={editUrl}>Edit File</Link>
+            </PermissionWrapper>
+            <PermissionWrapper owner={this.state.file.author_id}
+              threshold={PermissionUtil.hasPermission.file.destroy}>
+              <a href="#" onClick={this._handleDelete.bind(this)}>Delete File</a>
+            </PermissionWrapper>
 					</div>
 					<div ref="explanationAnchor" className="explanation-anchor">
 						<div ref="explanationContainer" className="explanation-position">

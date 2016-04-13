@@ -20,9 +20,17 @@
 		<% Project::THRESHOLDS.each do |k, v| %>
 			codeSplat.thresholds.project["<%= k %>"] = <%= v %>;
 		<% end %>
+    codeSplat.thresholds.file = {};
+		<% SourceFile::THRESHOLDS.each do |k, v| %>
+			codeSplat.thresholds.file["<%= k %>"] = <%= v %>;
+		<% end %>
 		codeSplat.thresholds.reply = {};
 		<% Reply::THRESHOLDS.each do |k, v| %>
 			codeSplat.thresholds.reply["<%= k %>"] = <%= v %>;
+		<% end %>
+    codeSplat.thresholds.explanation = {};
+		<% Explanation::THRESHOLDS.each do |k, v| %>
+			codeSplat.thresholds.explanation["<%= k %>"] = <%= v %>;
 		<% end %>
 
 		// Populate images

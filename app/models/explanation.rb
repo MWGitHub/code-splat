@@ -1,4 +1,10 @@
 class Explanation < ActiveRecord::Base
+  THRESHOLDS = {
+		create: 0,
+		update: 100,
+		destroy: 600
+	}
+
 	include Changeable
 
 	before_validation :set_fragment_end

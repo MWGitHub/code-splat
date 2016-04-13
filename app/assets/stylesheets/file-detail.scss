@@ -30,9 +30,9 @@
 	background-color: $annotated-text-background;
 	cursor: pointer;
 
-	&:hover {
-		background-color: $annotated-text-background-hover;
-	}
+	// &:hover {
+	// 	background-color: $annotated-text-background-hover;
+	// }
 }
 
 .explanation {
@@ -48,8 +48,13 @@
 	}
 
 	.form-light {
+    width: 100%;
 		margin-top: 1rem;
 	}
+
+  textarea {
+    width: 100%;
+  }
 }
 
 .explanation-anchor {
@@ -58,6 +63,9 @@
 
 .explanation-position {
 	position: absolute;
+  left: 0;
+  right: 0;
+  word-wrap: break-word;
 }
 
 @media (max-width: 600px) {

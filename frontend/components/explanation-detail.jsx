@@ -4,6 +4,7 @@ import ContributorInfo from './contributor-info';
 import ExplanationUtil from '../util/explanation-util';
 import ExplanationActions from '../actions/explanation-actions';
 import ExplanationSelectionStore from '../stores/explanation-selection';
+import PermissionUtil from '../util/permission-util';
 
 class ExplanationEmpty extends React.Component {
 	constructor(props) {
@@ -139,18 +140,31 @@ class ExplanationProvided extends React.Component {
 				/>
 			);
 		} else {
+      let editButton = '';
+      if (PermissionUtil.hasPermission.explanation.update()) {
+        editButton = (
+          <button className="button-light"
+            onClick={this._handleEditClick.bind(this)}>
+            Edit
+          </button>
+        );
+      }
+      let destroyButton = '';
+      if (PermissionUtil.hasPermission.explanation.destroy()) {
+        destroyButton = (
+          <button className="button-light button-bad"
+            onClick={this._handleDeleteClick.bind(this)}>
+            Delete
+          </button>
+        );
+      }
+
 			content = (
 				<div>
 					<p>{explanation.body}</p>
 					<div className="form-group">
-						<button className="button-light"
-							onClick={this._handleEditClick.bind(this)}>
-							Edit
-						</button>
-						<button className="button-light button-bad"
-							onClick={this._handleDeleteClick.bind(this)}>
-							Delete
-						</button>
+						{editButton}
+						{destroyButton}
 					</div>
 				</div>
 			);
