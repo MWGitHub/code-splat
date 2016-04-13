@@ -88,10 +88,11 @@ _isSelectionAnnotated(start, end) {
 ###To-Do:
 * [ ] Index views for the user
 * [ ] Notifications
-* [ ] Error validations
+* [x] Error validations
 * [ ] Comments on Annotations
 * [ ] Search by Language
 * [ ] Automated demo mode
+* [ ] Align annotations on text update
 
 [Original Design Docs](./docs/README.md)
 
