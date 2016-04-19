@@ -1,7 +1,6 @@
 #Code Splat
 
-Code Splat is a web application for annotating code and text. It was
- inspired by RapGenius and built using Ruby on Rails and React.js.
+Code Splat is a web application for annotating code and text. It was inspired by RapGenius and built using Ruby on Rails and React.js.
 
 Explore and Listen at [www.code-splat.com](https://www.code-splat.com/)
 
