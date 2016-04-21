@@ -226,15 +226,7 @@ class ExplanationDetail extends React.Component {
 	render() {
 		if (!ExplanationSelectionStore.isSelecting()) return <div></div>;
 
-    if (!this.state.isLoggedIn) {
-      return (
-        <div>
-          <p className="explanation-login">
-            <Link to="/login">Log in</Link> to start annotating.
-          </p>
-        </div>
-      )
-    }
+
 
 		if (!ExplanationSelectionStore.isNewExplanation()) {
 			return (
@@ -245,7 +237,7 @@ class ExplanationDetail extends React.Component {
 					explanation={this.state.explanation}
 				/>
 			);
-		} else {
+		} else if (this.state.isLoggedIn) {
 			return (
 				<ExplanationEmpty
 					fragment={this.state.fragment}
@@ -253,7 +245,15 @@ class ExplanationDetail extends React.Component {
 					sourceFileId={this.state.sourceFileId}
 				/>
 			);
-		}
+		} else {
+      return (
+        <div>
+          <p className="explanation-login">
+            <Link to="/login">Log in</Link> to start annotating.
+          </p>
+        </div>
+      )
+    }
 	}
 }
 
