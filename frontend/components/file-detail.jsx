@@ -72,20 +72,23 @@ class FileDetail extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
+    this.setState({
+      changes: null,
+      replies: null,
+      explanations: null,
+      isEditing: false,
+      isSelecting: false
+    });
+
 		WebUtil.fetchSourceFile(
-			this.props.params.slug,
-			this.props.params.fileSlug, file => {
+			newProps.params.slug,
+			newProps.params.fileSlug, file => {
 				WebUtil.fetchSourceFileReplies(file.id, replies => {
-					WebUtil.fetchExplanations(file.id);
+					ExplanationUtil.fetchExplanations(file.id, explanations => {
+            ExplanationActions.deselectExplanation();
+          });
 				});
 			});
-      this.setState({
-        changes: null,
-        replies: null,
-        explanations: null,
-        isEditing: false,
-        isSelecting: false
-      });
   }
 
   _handleDelete(e) {

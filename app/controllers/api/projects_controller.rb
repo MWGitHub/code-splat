@@ -17,9 +17,17 @@ class Api::ProjectsController < ApplicationController
 			@projects = Project.includes(:author, :text_changes)
 				.order(created_at: :desc)
 				.limit(20)
-		elsif params[:type] == 'index'
-      @projects = Project.includes(:author).all.order(created_at: :desc)
-      render :index_list
+		elsif params[:type] == 'index' || params[:page]
+      if params[:page]
+        @projects = Project.includes(:author)
+          .page(params[:page])
+          .per(20)
+          .order(created_at: :desc)
+        render :index_list_paginate
+      else
+        @projects = Project.includes(:author).all.order(created_at: :desc)
+        render :index_list
+      end
     else
 	    @projects = Project.includes(
 	      :author, :text_changes

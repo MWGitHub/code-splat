@@ -249,5 +249,18 @@ export default {
 				onSuccess && onSuccess(response);
       }
     });
-	}
+	},
+
+  fetchProjectsPage: function (page, onSuccess) {
+    $.ajax({
+      type: "GET",
+      url: "/api/projects",
+      dataType: "json",
+      data: {page: page},
+      success: function (response) {
+        SearchActions.receiveResults(response);
+				onSuccess && onSuccess(response);
+      }
+    });
+  }
 };

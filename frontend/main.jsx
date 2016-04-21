@@ -19,6 +19,7 @@ import FileDetail from './components/file-detail';
 import { NewFileForm, EditFileForm } from './components/file-form';
 import ProjectIndex from './components/project-index';
 import Search from './components/search';
+import { ProjectListPage } from './components/project-list';
 
 class App extends React.Component {
   render() {
@@ -40,7 +41,7 @@ var router = (
       <Route path='register' component={Register} />
       <Route path='login' component={Login} />
 
-			<Route path='projects' component={ProjectIndex} />
+			<Route path='projects' component={ProjectListPage} />
       <Route path='projects/new'
         component={NewProjectForm} onEnter={checkLoggedIn} />
       <Route path='projects/:slug/edit'

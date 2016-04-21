@@ -21,3 +21,7 @@ app/assets/javascripts/bundle.js*
 *.iml
 
 application.yml
+/shared/*
+!/shared/.keep
+!/shared/log/.keep
+!/shared/sockets/.keep

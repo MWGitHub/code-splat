@@ -65,6 +65,15 @@ class SearchBar extends React.Component {
 		document.removeEventListener('mousedown', this.clickListener);
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({
+      query: ''
+    });
+    SearchActions.clearSearchBar();
+    let searchText = ReactDOM.findDOMNode(this.refs.searchText);
+    searchText.value = '';
+  }
+
   handleInputChange(e) {
     var query = e.currentTarget.value;
     this.setState({ query: query }, () => {
@@ -119,7 +128,8 @@ class SearchBar extends React.Component {
 						<input
 							type="text"
 							placeholder="Search projects &amp; more"
-							onChange={ this.handleInputChange.bind(this) }/>
+							onChange={ this.handleInputChange.bind(this) }
+              ref="searchText" />
 						<span
 							onClick={this._handleSubmit.bind(this)}
 							className="search-icon input-icon fa fa-search">

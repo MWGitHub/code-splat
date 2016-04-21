@@ -1,6 +1,8 @@
 import React from 'react';
 import ProjectStore from '../stores/project';
 import { Link } from 'react-router';
+import SearchStore from '../stores/search';
+import WebUtil from '../util/web-util';
 
 class ProjectListFront extends React.Component {
 	constructor(props) {
@@ -122,6 +124,131 @@ class ProjectListHot extends React.Component {
   }
 }
 module.exports.ProjectListHot = ProjectListHot;
+
+class ProjectListPage extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			results: [],
+			isInfiniteLoading: false
+		};
+	}
+
+  componentDidMount() {
+    this.storeListener = SearchStore.addListener(() => {
+			this.setState({ results: this.buildResults() });
+		});
+		this.paginate(1);
+  }
+
+  componentWillUnmount() {
+    this.storeListener.remove();
+  }
+
+  paginate(page) {
+		WebUtil.fetchProjectsPage(page, response => {
+			this.setState({
+				results: this.buildResults(),
+				isInfiniteLoading: false
+			});
+		});
+  }
+
+  nextPage() {
+		let meta = SearchStore.meta();
+		if (meta.page >= meta.total_pages) {
+			return;
+		}
+
+		this.paginate(meta.page + 1 || 1);
+  }
+
+  buildResults() {
+		let newResults = SearchStore.all();
+		let results = [];
+
+		// Generate results hash to check for existing results quicker
+		let currentResults = {};
+		for (let i = 0; i < this.state.results.length; ++i) {
+			let result = this.state.results[i];
+			currentResults[result.id] = result;
+		}
+
+		for (let i = 0; i < newResults.length; ++i) {
+			let result = newResults[i];
+			if (!currentResults[result.id]) {
+				results.push(result);
+			}
+		}
+
+    return this.state.results.concat(results);
+  }
+
+  handleInfiniteLoad() {
+		let meta = SearchStore.meta();
+		if (meta.page >= meta.total_pages) {
+			this.setState({
+				isInfiniteLoading: false
+			});
+			return;
+		}
+
+    this.setState({
+      isInfiniteLoading: true
+    });
+		this.nextPage();
+  }
+
+  elementInfiniteLoad() {
+    return (
+			<div className="infinite-list-loading">
+				<div className="loader">Loading...</div>
+			</div>
+		);
+  }
+
+  render() {
+		let results = this.state.results.map(project => {
+			return (
+        <li className="list-result" key={'list-project-' + project.slug}>
+          <Link to={"/projects/" + project.slug}>
+						{project.title} <span className="list-author"><i className="fa fa-users"></i>{project.author}</span>
+					</Link>
+        </li>
+      );
+		});
+
+		let meta = SearchStore.meta();
+		let resultText = '';
+		if (meta.total_count === 1) {
+			resultText = '1 result';
+		} else {
+			resultText = (meta.total_count || 0) + ' results';
+		}
+    return (
+      <article className="search-results list-index">
+				<h1>
+					Projects
+				</h1>
+				<ul className="primary-list">
+					<Infinite
+						elementHeight={60}
+						useWindowAsScrollContainer
+						infiniteLoadBeginEdgeOffset={200}
+						onInfiniteLoad={this.handleInfiniteLoad.bind(this)}
+						loadingSpinnerDelegate={this.elementInfiniteLoad()}
+						isInfiniteLoading={this.state.isInfiniteLoading}
+					>
+						{results}
+					</Infinite>
+				</ul>
+      </article>
+    );
+  }
+}
+
+module.exports.ProjectListPage = ProjectListPage;
 
 class ProjectList extends React.Component {
   constructor(props) {
