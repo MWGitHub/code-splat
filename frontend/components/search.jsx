@@ -66,10 +66,6 @@ class SearchBar extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    // this.setState({
-    //   query: ''
-    // });
-    // SearchActions.clearSearchBar();
     let searchText = ReactDOM.findDOMNode(this.refs.searchText);
     searchText.value = '';
   }
