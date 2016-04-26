@@ -3,6 +3,7 @@ import { ProjectListFront, ProjectListHot } from './project-list';
 import ProjectStore from '../stores/project';
 import WebUtil from '../util/web-util';
 import { Link } from 'react-router';
+import TourUtil from '../util/tour-util';
 
 class Home extends React.Component {
   constructor(props) {
@@ -30,14 +31,29 @@ class Home extends React.Component {
 
   componentWillUnmount() {
     this.projectToken.remove();
+
+    TourUtil.exit();
+  }
+
+  componentDidUpdate() {
+    if (this.state.frontProjects.length > 0) {
+      TourUtil.play('home');
+    }
   }
 
   render() {
+    let projectsFront = '';
+    if (this.state.frontProjects) {
+      projectsFront = (
+        <ProjectListFront ref="projectFront"
+          projects={this.state.frontProjects} />
+      );
+    }
     return (
       <div className="home group">
         <div className="left">
           <p>Latest on Code Splat</p>
-					<ProjectListFront projects={this.state.frontProjects} />
+					{projectsFront}
         </div>
         <div className="right">
           <p>About Code Splat</p>
@@ -47,7 +63,6 @@ class Home extends React.Component {
             </div>
             <div className="home-about-description">
               <p>Code Splat is dedicated to crowd-sourced annotation of source code, from <Link to="/projects/simple-sorting/files/merge_sort-rb">Merge Sort</Link> to <a href="/projects/simple-sorting/files/bubble_sort-rb">Bubble Sort</a>.</p>
-              <p>Find out all the latest on <a href="#">Twitter</a> and <a href="#">Facebook</a></p>
             </div>
           </div>
           <p>Hot on Code Splat</p>

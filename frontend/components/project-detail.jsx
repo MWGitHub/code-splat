@@ -11,6 +11,7 @@ import ReplyList from './reply-list';
 import ContributorInfo from './contributor-info';
 import PermissionWrapper from './permission-wrapper';
 import PermissionUtil from '../util/permission-util';
+import TourUtil from '../util/tour-util';
 
 class ProjectDetail extends React.Component {
   constructor(props) {
@@ -48,6 +49,8 @@ class ProjectDetail extends React.Component {
     this.projectToken.remove();
 		this.changeToken.remove();
 		this.replyToken.remove();
+
+    TourUtil.exit();
   }
 
   componentWillReceiveProps(newProps) {
@@ -74,6 +77,12 @@ class ProjectDetail extends React.Component {
 	_handleReply(reply) {
 		WebUtil.createProjectReply(this.state.project.id, reply);
 	}
+
+  componentDidUpdate() {
+    if (this.state.project) {
+      TourUtil.play('project-detail');
+    }
+  }
 
   render() {
     if (!this.state.project) return <div></div>;

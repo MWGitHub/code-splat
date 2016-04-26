@@ -37,6 +37,7 @@
     "co": "^4.6.0",
     "codemirror": "^5.13.2",
     "flux": "^2.1.1",
+    "intro.js": "^2.0.0",
     "lodash": "^4.8.2",
     "normalize.css": "^4.0.0",
     "react": "^0.14.8",

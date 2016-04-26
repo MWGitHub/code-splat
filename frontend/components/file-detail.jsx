@@ -20,6 +20,7 @@ import DOMUtil from '../util/dom-util';
 import ReplyList from './reply-list';
 import PermissionWrapper from './permission-wrapper';
 import PermissionUtil from '../util/permission-util';
+import TourUtil from '../util/tour-util';
 
 class FileDetail extends React.Component {
   constructor(props) {
@@ -69,6 +70,8 @@ class FileDetail extends React.Component {
 		this.replyToken.remove();
 		this.explanationToken.remove();
 		this.selectionToken.remove();
+
+    TourUtil.exit();
   }
 
   componentWillReceiveProps(newProps) {
@@ -89,6 +92,12 @@ class FileDetail extends React.Component {
           });
 				});
 			});
+  }
+
+  componentDidUpdate() {
+    if (this.state.file) {
+      TourUtil.play('file');
+    }
   }
 
   _handleDelete(e) {
@@ -157,7 +166,7 @@ class FileDetail extends React.Component {
 					</div>
 				</div>
 				<div className="left">
-					<div className="code">
+					<div className="code" data-intro="Click on highlighted areas to read explanations or create a new one.">
 						<Code
 							file={this.state.file}
 							body={this.state.file.body}

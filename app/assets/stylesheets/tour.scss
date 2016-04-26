@@ -1,0 +1,31 @@
+@import 'variables';
+
+.introjs-helperNumberLayer {
+  line-height: 10px;
+}
+
+// .introjs-showElement.introjs-relativePosition {
+//   color: $primary-background-color;
+//
+//   &:hover {
+//     color: tint($primary-background-color, 50%);
+//   }
+// }
+//
+// .introjs-tooltiptext {
+//   color: $primary-background-color;
+// }
+
+.introjs-helperLayer {
+  position: absolute;
+  z-index: 9999998;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 15px rgba(0,0,0,.4);
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+      -ms-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
+}
