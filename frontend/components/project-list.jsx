@@ -36,7 +36,7 @@ class ProjectListFront extends React.Component {
 			<div className="front">
 				<div className="front-item front-main">
 					<h1 className="front-main-title">
-						<Link to={"/projects/" + main.project.slug} data-intro="Click here to look at a project.">
+						<Link to={"/projects/" + main.project.slug} data-intro="Welcome! Click here to look at a project.">
 							{main.project.title}
 						</Link>
 					</h1>
