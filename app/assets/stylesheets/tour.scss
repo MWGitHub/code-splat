@@ -29,3 +29,19 @@
        -o-transition: all 0.3s ease-out;
           transition: all 0.3s ease-out;
 }
+
+.front-main-title a.introjs-showElement {
+  color: $dark-link-color;
+
+  &:hover {
+    color: tint($dark-link-color, 20%);
+  }
+}
+
+.list-result.introjs-showElement a {
+  color: $dark-link-color;
+
+  &:hover {
+    color: tint($dark-link-color, 20%);
+  }
+}
