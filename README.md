@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/MWGitHub/code-splat.svg?branch=master)](https://travis-ci.org/MWGitHub/code-splat)
+
 #Code Splat
 
 Code Splat is a web application for annotating code and text. It was inspired by RapGenius and built using Ruby on Rails and React.js.
